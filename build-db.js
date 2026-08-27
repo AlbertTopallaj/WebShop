@@ -12,6 +12,7 @@ function add(name, jsonFile) {
 
 // Individuella modul .json filer laddas här
 add("campaign", "campaign.json")
+add("products", "products.json")
 
 try {
     fs.writeFileSync("db.json", JSON.stringify(db, null, 2))
