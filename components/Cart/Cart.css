@@ -1,0 +1,286 @@
+.cart {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    padding: 16px 24px;
+    box-sizing: border-box;
+}
+
+.cart-button {
+    position: relative;
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 26px;
+    line-height: 1;
+
+    border-radius: 10px;
+
+    color: var(--accent);
+    background: var(--accent-bg);
+    border: 2px solid transparent;
+
+    cursor: pointer;
+
+    transition:
+            border-color 0.2s ease,
+            transform 0.2s ease;
+}
+
+.cart-button:hover {
+    border-color: var(--accent-border);
+    transform: translateY(-1px);
+}
+
+.cart-button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.cart-count {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+
+    min-width: 22px;
+    height: 22px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 5px;
+    box-sizing: border-box;
+
+    border-radius: 999px;
+
+    background: var(--accent);
+    color: white;
+
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.cart-overlay {
+    position: fixed;
+    inset: 0;
+
+    display: flex;
+    justify-content: flex-end;
+
+    background: rgba(0, 0, 0, 0.25);
+
+    z-index: 1000;
+}
+
+.cart-popup {
+    width: 400px;
+    max-width: 90vw;
+    height: 100%;
+    padding: 24px;
+
+    box-sizing: border-box;
+
+    background: var(--bg);
+    border-left: 1px solid var(--border);
+
+    overflow-y: auto;
+}
+
+.cart-items {
+    flex: 1;
+    overflow-y: auto;
+}
+
+.cart-summary {
+    flex-shrink: 0;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.cart-sum,
+.cart-freight,
+.cart-subtotal {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    padding: 8px 0;
+}
+
+.cart-sum,
+.cart-freight {
+    font-size: 15px;
+}
+
+.cart-subtotal {
+    margin-top: 8px;
+    padding-top: 16px;
+
+    border-top: 1px solid var(--border);
+
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--text-h);
+}
+
+.order-button {
+    width: 100%;
+    margin-top: 16px;
+    padding: 14px 20px;
+
+    border: none;
+    border-radius: 8px;
+
+    background: var(--accent);
+    color: white;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+}
+
+.order-button:hover {
+    opacity: 0.9;
+}
+
+.cart-discount-code {
+    padding: 12px 0 8px;
+}
+
+.discount-label {
+    display: block;
+
+    margin-bottom: 8px;
+
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-h);
+}
+
+.discount-input-row {
+    display: flex;
+    gap: 8px;
+}
+
+.discount-input-row input {
+    flex: 1;
+    min-width: 0;
+
+    padding: 10px 12px;
+    box-sizing: border-box;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-size: 14px;
+
+    outline: none;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.discount-input-row input::placeholder {
+    color: var(--text);
+    opacity: 0.5;
+}
+
+.discount-input-row input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-bg);
+}
+
+.discount-input-row button {
+    padding: 10px 16px;
+
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+
+    background: var(--accent-bg);
+    color: var(--accent);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            color 0.2s ease,
+            transform 0.2s ease;
+}
+
+.discount-input-row button:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.discount-input-row button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.discount-value {
+    display: block;
+
+    margin-top: 8px;
+
+    text-align: right;
+
+    font-size: 14px;
+    color: var(--text);
+    opacity: 0.7;
+}
+
+.cart-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+
+    width: 32px;
+    height: 32px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0 0 3px 0;
+
+    border: none;
+    border-radius: 8px;
+
+    background: #dc2626;
+    color: white;
+
+    font-size: 24px;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            transform 0.2s ease;
+}
+
+.cart-close:hover {
+    background: #b91c1c;
+    transform: translateY(-1px);
+}
+
+.cart-close:focus-visible {
+    outline: 2px solid #dc2626;
+    outline-offset: 2px;
+}
