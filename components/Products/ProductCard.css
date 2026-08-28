@@ -1,0 +1,130 @@
+.product-card {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 5px;
+
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    transition:
+            box-shadow 0.2s ease,
+            transform 0.2s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow);
+}
+
+/* Product image */
+
+.product-card img {
+    display: block;
+
+    width: 100%;
+    height: 180px;
+
+    object-fit: contain;
+
+    padding: 12px;
+    box-sizing: border-box;
+
+    background: var(--bg);
+}
+
+/* Product information */
+
+.product-card-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+
+    padding: 12px 14px 14px;
+}
+
+.product-card h2 {
+    margin: 0 0 6px;
+
+    font-size: 16px;
+    line-height: 125%;
+    font-weight: 500;
+
+    color: var(--text-h);
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.product-card p {
+    color: var(--text);
+    font-size: 14px;
+    line-height: 135%;
+}
+
+/* Price */
+
+.product-card .price {
+    margin-top: 10px;
+
+    font-size: 17px;
+    font-weight: 600;
+
+    color: var(--text-h);
+}
+
+/* Smaller images on smaller screens */
+
+@media (max-width: 1100px) {
+    .product-card img {
+        height: 160px;
+    }
+}
+
+@media (max-width: 850px) {
+    .product-card img {
+        height: 150px;
+    }
+}
+
+@media (max-width: 600px) {
+    .product-card img {
+        height: 140px;
+        padding: 10px;
+    }
+
+    .product-card-content {
+        padding: 10px;
+    }
+
+    .product-card h2 {
+        font-size: 15px;
+    }
+
+    .product-card p {
+        font-size: 13px;
+    }
+}
+
+.toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    padding: 12px 20px;
+
+    background: var(--text-h);
+    color: var(--bg);
+
+    border-radius: 8px;
+    box-shadow: var(--shadow);
+
+    font-size: 14px;
+    z-index: 1000;
+}

@@ -1,12 +1,21 @@
 import './App.css'
+import Cart from "../components/Cart/Cart.jsx";
+import {addToCart, removeFromCart} from "../components/Cart/CartFunctions.js";
+import {useState} from "react";
+import LoadProductList from "../components/Products/ProductList.jsx";
 
-function App() {
+export default function App() {
+    const [products, setProducts] = useState([])
+    const [cartItems, setCartItems] = useState([])
 
-  return (
-    <>
-      //TODO
-    </>
-  )
+
+    return (
+        <>
+            <Cart cartItems={cartItems} remove={(product) => removeFromCart(setCartItems, product)}/>
+
+            <LoadProductList products={products} setProducts={setProducts}
+                             add={(product) => addToCart(setCartItems, product)}/>
+        </>
+    )
 }
 
-export default App
