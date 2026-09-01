@@ -14,7 +14,7 @@ export default function LoadProductList({products, setProducts, addProduct}) {
     useEffect(() => {
         async function fetchProducts() {
             setLoading(true);
-            const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=20`)
+            const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=10`)
             const data = await response.json()
 
             const newProducts = data.data.map(
@@ -22,8 +22,8 @@ export default function LoadProductList({products, setProducts, addProduct}) {
             );
 
             setProducts(prev => [...prev, ...newProducts]);
-            setHasMore(newProducts.length === 20);
-            await new Promise(resolve => setTimeout(resolve, 800));
+            setHasMore(newProducts.length === 10);
+            await new Promise(resolve => setTimeout(resolve, 2000));
             setLoading(false);
         }
         fetchProducts();
@@ -36,7 +36,7 @@ export default function LoadProductList({products, setProducts, addProduct}) {
                     setPage(prev => prev + 1);
                 }
             },
-            { threshold: 0.1 }
+            { threshold: 1 }
         );
 
         if(sentinelRef.current) observer.observe(sentinelRef.current);
@@ -56,8 +56,8 @@ export default function LoadProductList({products, setProducts, addProduct}) {
             </div>
 
         <div ref={sentinelRef} style={{ height: "10px" }} />
-        {loading && <p style={{ textAlign: "center"}}>Laddar fler produkter...</p>}
-        {!hasMore && <p style={{ textAlign: "center"}}>Inga fler produkter</p>}
+        {loading && <p style={{ textAlign: "center"}}>Loading more products...</p>}
+        {!hasMore && <p style={{ textAlign: "center"}}>No more products found.</p>}
 
         </div>
     )
