@@ -1,10 +1,13 @@
 import "./ProductCard.css"
 import {useState} from "react";
 import {Link} from "react-router";
+import {getCart} from "../CartContext/CartContext.jsx";
 
-export default function ProductCard({product, addToCart}) {
+export default function ProductCard({product}) {
 
     const [showToast, setShowToast] = useState(false)
+
+    const {addToCart} = getCart()
 
     function add(product) {
         addToCart(product);

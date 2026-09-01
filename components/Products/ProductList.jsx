@@ -1,9 +1,10 @@
 import "./ProductList.css"
 import ProductCard from "./ProductCard.jsx";
-import {useEffect} from "react";
+import {useEffect, useState} from "react";
 import Product from "./Product.jsx";
 
-export default function LoadProductList({products, setProducts, addProduct}) {
+export default function LoadProductList() {
+    const [products, setProducts] = useState([])
 
     useEffect(() => {
         const page = Math.floor(Math.random() * 5) + 1;
@@ -32,7 +33,6 @@ export default function LoadProductList({products, setProducts, addProduct}) {
                     <ProductCard
                         key={product.id}
                         product={product}
-                        addToCart={addProduct}
                     />
                 ))}
             </div>
