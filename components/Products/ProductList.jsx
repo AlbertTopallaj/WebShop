@@ -3,12 +3,12 @@ import ProductCard from "./ProductCard.jsx";
 import {useEffect} from "react";
 import Product from "./Product.jsx";
 
-export default function LoadProductList({products, setProducts, add}) {
+export default function LoadProductList({products, setProducts, addProduct}) {
 
     useEffect(() => {
-        const page = Math.floor(Math.random() * 10) + 1;
+        const page = Math.floor(Math.random() * 5) + 1;
         async function fetchProducts() {
-            const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=20`)
+            const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=40`)
             const data = await response.json()
 
             const products = data.data.map(
@@ -32,7 +32,7 @@ export default function LoadProductList({products, setProducts, add}) {
                     <ProductCard
                         key={product.id}
                         product={product}
-                        addToCart={add}
+                        addToCart={addProduct}
                     />
                 ))}
             </div>

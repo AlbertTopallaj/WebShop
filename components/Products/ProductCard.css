@@ -10,9 +10,8 @@
 
     overflow: hidden;
 
-    transition:
-            box-shadow 0.2s ease,
-            transform 0.2s ease;
+    transition: box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
 .product-card:hover {
@@ -128,3 +127,55 @@
     font-size: 14px;
     z-index: 1000;
 }
+
+
+.buyBtn {
+    width: 100%;
+
+    margin-top: 4px;
+    padding: 10px 14px;
+
+    box-sizing: border-box;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.2;
+
+    cursor: pointer;
+
+    transition: border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.buyBtn:hover {
+    border-color: var(--accent-border);
+    background: var(--accent-bg);
+    color: var(--accent);
+    transform: translateY(-1px);
+}
+
+.buyBtn:active {
+    transform: translateY(0);
+}
+
+.buyBtn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+@media (max-width: 600px) {
+    .buyBtn {
+        padding: 9px 12px;
+        font-size: 13px;
+    }
+}
+
+
