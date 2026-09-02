@@ -23,7 +23,6 @@ export default function LoadProductList({products, setProducts, addProduct}) {
 
             setProducts(prev => [...prev, ...newProducts]);
             setHasMore(newProducts.length === 10);
-            await new Promise(resolve => setTimeout(resolve, 2000));
             setLoading(false);
         }
         fetchProducts();
