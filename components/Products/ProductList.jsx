@@ -1,6 +1,5 @@
 import "./ProductList.css"
 import ProductCard from "./ProductCard.jsx";
-import {useEffect, useState} from "react";
 import Product from "./Product.jsx";
 import { useEffect, useRef, useState} from "react";
 
