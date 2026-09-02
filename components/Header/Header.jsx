@@ -1,5 +1,4 @@
 import Cart from "../Cart/Cart.jsx";
-import {removeFromCart} from "../Cart/CartFunctions.js";
 import "./Header.css"
 import {useNavigate} from "react-router";
 
@@ -12,11 +11,11 @@ function HomeBtn() {
     )
 }
 
-export function Header({cartItems, setCartItems}) {
+export function Header() {
     return (
         <div className="header">
             <HomeBtn />
-            <Cart cartItems={cartItems} remove={(product) => removeFromCart(setCartItems, product)}/>
+            <Cart />
         </div>
     )
 }

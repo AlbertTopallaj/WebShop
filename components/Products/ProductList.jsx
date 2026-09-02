@@ -1,9 +1,11 @@
 import "./ProductList.css"
 import ProductCard from "./ProductCard.jsx";
+import {useEffect, useState} from "react";
 import Product from "./Product.jsx";
 import { useEffect, useRef, useState} from "react";
 
-export default function LoadProductList({products, setProducts, addProduct}) {
+export default function LoadProductList() {
+    const [products, setProducts] = useState([])
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -49,7 +51,6 @@ export default function LoadProductList({products, setProducts, addProduct}) {
                     <ProductCard
                         key={product.id}
                         product={product}
-                        addToCart={addProduct}
                     />
                 ))}
             </div>
