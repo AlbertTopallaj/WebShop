@@ -1,6 +1,7 @@
 import Cart from "../Cart/Cart.jsx";
 import "./Header.css"
 import {useNavigate} from "react-router";
+import UserIcon from "../UserIcon/UserIcon.jsx";
 
 function HomeBtn() {
     const navigate = useNavigate()
@@ -14,8 +15,11 @@ function HomeBtn() {
 export function Header() {
     return (
         <div className="header">
-            <HomeBtn />
-            <Cart />
+            <HomeBtn/>
+            <div className="header-right">
+                <UserIcon/>
+                <Cart/>
+            </div>
         </div>
     )
 }

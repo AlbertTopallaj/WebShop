@@ -1,8 +1,8 @@
 import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import "./ProductInfo.css"
-import Product from "../components/Products/Product.jsx";
-import {getCart} from "../components/CartContext/CartContext.jsx";
+import Product from "../../components/ProductCard/Product.jsx";
+import {getCart} from "../../components/CartContext/CartContext.jsx";
 
 export default function ProductInfo() {
 
