@@ -72,7 +72,7 @@ export default function Cart({cartItems, remove}) {
                                     </div>
 
                                     <div className="mail">
-                                        <span className="mail-input">Mail</span>
+                                        <span className="mail-label">Mail</span>
                                         <input className='mail-input' type="mail" placeholder="your@mail.com"></input>
                                     </div>
 
