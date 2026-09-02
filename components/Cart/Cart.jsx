@@ -71,6 +71,12 @@ export default function Cart({cartItems, remove}) {
                                         </span>
                                     </div>
 
+                                    <div className="mail">
+                                        <span>Mail</span>
+                                        <input type="mail" placeholder="your@mail.com"></input>
+                                    </div>
+
+
                                     <div className="cart-freight">
                                         <span>Freight</span>
                                         <span> --- </span>
