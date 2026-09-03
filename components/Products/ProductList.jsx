@@ -2,6 +2,7 @@ import "./ProductList.css"
 import ProductCard from "./ProductCard.jsx";
 import Product from "./Product.jsx";
 import { useEffect, useRef, useState} from "react";
+import PriceCalculatorUI from "../PriceCalculator/PriceCalculatorUI.jsx";
 
 export default function LoadProductList() {
     const [products, setProducts] = useState([])
@@ -10,6 +11,7 @@ export default function LoadProductList() {
     const [loading, setLoading] = useState(false);
     const sentinelRef = useRef(null);
 
+    const [includeVAT, setIncludeVAT] = useState(true);
 
 
     useEffect(() => {
@@ -45,6 +47,13 @@ export default function LoadProductList() {
 
     return(
         <div className="product-list-wrapper">
+
+            <PriceCalculatorUI
+                calc={null}
+                includeVAT={includeVAT}
+                setIncludeVAT={setIncludeVAT}
+            />
+            
             <div className="product-list">
                 {products.map(product => (
                     <ProductCard
