@@ -5,18 +5,21 @@ import ProductInfo from "../pages/ProductInfo/ProductInfo.jsx";
 import LoadProductList from "../pages/ProductList/ProductList.jsx";
 import {CartContext} from "../components/CartContext/CartContext.jsx";
 import UserInfo from "../pages/UserInfo/UserInfo.jsx";
+import {Toast} from "../components/Toast/Toast.jsx";
 
 export default function App() {
 
     return (
         <>
             <CartContext>
-                <Header />
-                <Routes>
-                    <Route index={true} path={"/"} element={<LoadProductList />}/>
-                    <Route path={"/product/"} element={<ProductInfo />}/>
-                    <Route path={"/user/"} element={<UserInfo />}/>
-                </Routes>
+                <Toast>
+                    <Header/>
+                    <Routes>
+                        <Route index={true} path={"/"} element={<LoadProductList/>}/>
+                        <Route path={"/product/"} element={<ProductInfo/>}/>
+                        <Route path={"/user/"} element={<UserInfo/>}/>
+                    </Routes>
+                </Toast>
             </CartContext>
 
         </>
