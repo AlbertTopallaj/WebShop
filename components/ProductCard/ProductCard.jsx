@@ -1,31 +1,20 @@
 import "./ProductCard.css"
-import {useState} from "react";
 import {Link} from "react-router";
 import {getCart} from "../CartContext/CartContext.jsx";
+import {useToast} from "../Toast/Toast.jsx";
 
 export default function ProductCard({product}) {
 
-    const [showToast, setShowToast] = useState(false)
-
     const {addToCart} = getCart()
+    const {toast} = useToast()
 
     function add(product) {
         addToCart(product);
-
-        setShowToast(true);
-
-        setTimeout(() => {
-            setShowToast(false);
-        }, 1000);
+        toast(`${product.name} was added to cart!`)
     }
 
     return (
         <>
-            {showToast && (
-                <div className="toast">
-                    {product.name} was added to cart!
-                </div>
-            )}
             <div className="product-card" id={product.id}>
                 <Link to={`/product?id=${product.id}`}>
                     <img src={product.img[0]} alt={product.name}/>
