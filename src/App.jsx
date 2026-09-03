@@ -1,9 +1,10 @@
 import './App.css'
 import {Header} from "../components/Header/Header.jsx";
 import {Route, Routes} from "react-router";
-import ProductInfo from "../pages/ProductInfo.jsx";
-import LoadProductList from "../components/Products/ProductList.jsx";
+import ProductInfo from "../pages/ProductInfo/ProductInfo.jsx";
+import LoadProductList from "../pages/ProductList/ProductList.jsx";
 import {CartContext} from "../components/CartContext/CartContext.jsx";
+import UserInfo from "../pages/UserInfo/UserInfo.jsx";
 
 export default function App() {
 
@@ -14,6 +15,7 @@ export default function App() {
                 <Routes>
                     <Route index={true} path={"/"} element={<LoadProductList />}/>
                     <Route path={"/product/"} element={<ProductInfo />}/>
+                    <Route path={"/user/"} element={<UserInfo />}/>
                 </Routes>
             </CartContext>
 
