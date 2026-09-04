@@ -1,6 +1,6 @@
 import "./UserInfo.css"
 import {useEffect, useState} from "react"
-import {getUserData} from "../../scritpts/OrderData.js";
+import {getUserData} from "../../scripts/OrderData.js";
 import {useSearchParams} from "react-router";
 
 export default function UserInfo() {

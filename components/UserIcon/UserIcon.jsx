@@ -1,7 +1,7 @@
 import "./UserIcon.css"
 import {useState} from "react";
 import {useNavigate} from "react-router";
-import {UserExists} from "../../scritpts/OrderData.js";
+import {UserExists} from "../../scripts/OrderData.js";
 
 export default function UserIcon() {
 
