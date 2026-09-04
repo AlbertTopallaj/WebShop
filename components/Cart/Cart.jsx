@@ -8,8 +8,13 @@ export default function Cart() {
 
     const [isOpen, setIsOpen] = useState(false)
     const [discountCode, setDiscountCode] = useState([])
+    const [email, setEmail] = useState("");
 
     const {cartItems, CalculateSum, removeFromCart} = getCart()
+
+    async function handlePlaceOrder() {
+        
+    }
 
     return (
         <div className="cart">
