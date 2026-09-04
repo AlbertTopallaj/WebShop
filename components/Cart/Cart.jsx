@@ -2,7 +2,7 @@ import "./Cart.css"
 import {useState} from "react";
 import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
-import {postOrder} from "../scripts/OrderData.js";
+import {postOrder} from "../../scripts/OrderData.js";
 
 
 export default function Cart() {
