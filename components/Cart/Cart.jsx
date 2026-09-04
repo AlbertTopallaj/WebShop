@@ -2,7 +2,7 @@ import "./Cart.css"
 import {useState} from "react";
 import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
-import {postOrder} from "../scritpts/OrderData.js";
+import {postOrder} from "../scripts/OrderData.js";
 
 
 export default function Cart() {
@@ -10,12 +10,19 @@ export default function Cart() {
     const [isOpen, setIsOpen] = useState(false)
     const [discountCode, setDiscountCode] = useState([])
     const [email, setEmail] = useState("");
-
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    
     const {cartItems, CalculateSum, removeFromCart} = getCart()
 
     async function handlePlaceOrder() {
         const success = await postOrder(email, cartItems)
-    }
+        if (success) {
+            alert("Order placed!");
+            setIsOpen(false);
+        } else {
+                alert("Something went wrong, try again");
+            }
+        }
 
     return (
         <div className="cart">
@@ -79,6 +86,13 @@ export default function Cart() {
                                         </span>
                                     </div>
 
+                                    <div className="mail">
+                                        <span className="mail-label">Mail</span>
+                                        <input className='mail-input' type="mail" placeholder="your@mail.com"
+                                             onChange={(e) => setEmail(e.target.value)} value={email}></input>
+                                    </div>
+
+
                                     <div className="cart-freight">
                                         <span>Freight</span>
                                         <span> --- </span>
@@ -89,7 +103,7 @@ export default function Cart() {
                                         <span> --- </span>
                                     </div>
 
-                                    <button className="order-button" onClick={handlePlaceOrder}>
+                                    <button disabled={!isValidEmail} className="order-button" onClick={handlePlaceOrder}>
                                         Place Order
                                     </button>
                                 </div>
