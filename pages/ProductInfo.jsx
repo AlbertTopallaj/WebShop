@@ -2,19 +2,21 @@ import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import "./ProductInfo.css"
 import Product from "../components/Products/Product.jsx";
+import {getCart} from "../components/CartContext/CartContext.jsx";
 
-export default function ProductInfo({addProduct, products}) {
+export default function ProductInfo() {
 
-    const [searchParams, setSearchParams] = useSearchParams()
+    const [searchParams] = useSearchParams()
     const id = searchParams.get("id")
     const navigate = useNavigate()
 
     const [product, setProduct] = useState(null)
     const [selectedImage, setSelectedImage] = useState(0);
 
-    function getProduct(id) {
-        const prod = products.find(it => it.id === id)
-        return prod ? prod : new Product(product.id, product.title, product.price, product.image)
+    const {addToCart} = getCart()
+
+    function getProduct() {
+        return new Product(product.id, product.title, product.price, product.image)
     }
 
     useEffect(() => {
@@ -102,7 +104,7 @@ export default function ProductInfo({addProduct, products}) {
                         <span>{product.stock} available</span>
                     </div>
 
-                    <button className="buyBtn" onClick={() => addProduct(getProduct(id))}>
+                    <button className="buyBtn" onClick={() => addToCart(getProduct(id))}>
                         Add to cart
                     </button>
 

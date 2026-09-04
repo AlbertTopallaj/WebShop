@@ -288,12 +288,15 @@
 }
 
 .mail-label {
-    
+    display: block;
+    margin-bottom: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text-h);
 }
 
 .mail-input {
-    flex: 1;
-    min-width: 0;
+    width: 100%;
     padding: 10px 12px;
     box-sizing: border-box;
     border: 1px solid var(--border);

@@ -1,13 +1,15 @@
 import "./Cart.css"
 import {useState} from "react";
 import CartItem from "./CartItem.jsx";
-import {CalculateSum} from "./CartFunctions.js";
+import {getCart} from "../CartContext/CartContext.jsx";
 
-export default function Cart({cartItems, remove}) {
+
+export default function Cart() {
 
     const [isOpen, setIsOpen] = useState(false)
     const [discountCode, setDiscountCode] = useState([])
 
+    const {cartItems, CalculateSum, removeFromCart} = getCart()
 
     return (
         <div className="cart">
@@ -36,7 +38,7 @@ export default function Cart({cartItems, remove}) {
                                         <CartItem
                                             key={item.id}
                                             item={item}
-                                            remove={remove}
+                                            remove={removeFromCart}
                                         />
                                     ))}
                                 </div>

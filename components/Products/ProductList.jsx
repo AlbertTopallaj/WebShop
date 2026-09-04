@@ -1,29 +1,47 @@
 import "./ProductList.css"
 import ProductCard from "./ProductCard.jsx";
-import {useEffect} from "react";
 import Product from "./Product.jsx";
+import { useEffect, useRef, useState} from "react";
 
-export default function LoadProductList({products, setProducts, addProduct}) {
+export default function LoadProductList() {
+    const [products, setProducts] = useState([])
+    const [page, setPage] = useState(1);
+    const [hasMore, setHasMore] = useState(true);
+    const [loading, setLoading] = useState(false);
+    const sentinelRef = useRef(null);
+
+
 
     useEffect(() => {
-        const page = Math.floor(Math.random() * 5) + 1;
         async function fetchProducts() {
-            const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=40`)
+            setLoading(true);
+            const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=10`)
             const data = await response.json()
 
-            const products = data.data.map(
-                product => new Product(
-                    product.id,
-                    product.title,
-                    product.price,
-                    product.images
-                )
+            const newProducts = data.data.map(
+                product => new Product(product.id, product.title, product.price, product.images)
             );
 
-            setProducts(products);
+            setProducts(prev => [...prev, ...newProducts]);
+            setHasMore(newProducts.length === 10);
+            setLoading(false);
         }
         fetchProducts();
-    }, []);
+    }, [page]);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting && hasMore && !loading) {
+                    setPage(prev => prev + 1);
+                }
+            },
+            { threshold: 1 }
+        );
+
+        if(sentinelRef.current) observer.observe(sentinelRef.current);
+        return () => observer.disconnect();
+    }, [hasMore, loading]);
 
     return(
         <div className="product-list-wrapper">
@@ -32,10 +50,14 @@ export default function LoadProductList({products, setProducts, addProduct}) {
                     <ProductCard
                         key={product.id}
                         product={product}
-                        addToCart={addProduct}
                     />
                 ))}
             </div>
+
+        <div ref={sentinelRef} style={{ height: "10px" }} />
+        {loading && <p style={{ textAlign: "center"}}>Loading more products...</p>}
+        {!hasMore && <p style={{ textAlign: "center"}}>No more products found.</p>}
+
         </div>
     )
 }
