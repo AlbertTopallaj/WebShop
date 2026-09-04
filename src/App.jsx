@@ -4,11 +4,13 @@ import {Route, Routes} from "react-router";
 import ProductInfo from "../pages/ProductInfo.jsx";
 import LoadProductList from "../components/Products/ProductList.jsx";
 import {CartContext} from "../components/CartContext/CartContext.jsx";
+import { VATProvider } from "../components/CartContext/VATContext.jsx";
 
 export default function App() {
 
     return (
         <>
+        <VATProvider>
             <CartContext>
                 <Header />
                 <Routes>
@@ -16,8 +18,8 @@ export default function App() {
                     <Route path={"/product/"} element={<ProductInfo />}/>
                 </Routes>
             </CartContext>
+        </VATProvider>
 
         </>
     )
 }
-
