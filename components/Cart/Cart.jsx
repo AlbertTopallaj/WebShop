@@ -3,6 +3,7 @@ import {useState} from "react";
 import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
 import {postOrder} from "../../scripts/OrderData.js";
+import { Toast, useToast } from "../Toast/Toast.jsx";
 
 
 export default function Cart() {
@@ -11,16 +12,17 @@ export default function Cart() {
     const [discountCode, setDiscountCode] = useState([])
     const [email, setEmail] = useState("");
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const { toast } = useToast()
     
     const {cartItems, CalculateSum, removeFromCart} = getCart()
 
     async function handlePlaceOrder() {
         const success = await postOrder(email, cartItems)
         if (success) {
-            alert("Order placed!");
+            toast("Order placed!", 2000);
             setIsOpen(false);
         } else {
-                alert("Something went wrong, try again");
+                toast("Something went wrong, try again", 2000);
             }
         }
 

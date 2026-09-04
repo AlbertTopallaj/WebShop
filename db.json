@@ -53,6 +53,42 @@
       ],
       "date": "2026-09-04T07:58:29.224Z",
       "id": "P7viIPdKiIw"
+    },
+    {
+      "email": "test@test.com",
+      "cart": [
+        {
+          "product": {
+            "id": "4",
+            "name": "Red Lipstick",
+            "price": 12.99,
+            "img": [
+              "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp"
+            ]
+          },
+          "quantity": 1
+        }
+      ],
+      "date": "2026-09-04T08:07:30.398Z",
+      "id": "ExI8EC2N9xY"
+    },
+    {
+      "email": "test@test.com",
+      "cart": [
+        {
+          "product": {
+            "id": "4",
+            "name": "Red Lipstick",
+            "price": 12.99,
+            "img": [
+              "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp"
+            ]
+          },
+          "quantity": 1
+        }
+      ],
+      "date": "2026-09-04T08:07:38.787Z",
+      "id": "7jv1mCLlaO0"
     }
   ],
   "campaign": {
