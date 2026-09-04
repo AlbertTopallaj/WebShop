@@ -8,6 +8,8 @@ export default function Cart() {
 
     const [isOpen, setIsOpen] = useState(false)
     const [discountCode, setDiscountCode] = useState([])
+    const [email, setEmail] = useState("");
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
     const {cartItems, CalculateSum, removeFromCart} = getCart()
 
@@ -75,7 +77,8 @@ export default function Cart() {
 
                                     <div className="mail">
                                         <span className="mail-label">Mail</span>
-                                        <input className='mail-input' type="mail" placeholder="your@mail.com"></input>
+                                        <input className='mail-input' type="mail" placeholder="your@mail.com"
+                                             onChange={(e) => setEmail(e.target.value)}></input>
                                     </div>
 
 
@@ -89,7 +92,7 @@ export default function Cart() {
                                         <span> --- </span>
                                     </div>
 
-                                    <button className="order-button">
+                                    <button disabled={!isValidEmail} className="order-button">
                                         Place Order
                                     </button>
                                 </div>
