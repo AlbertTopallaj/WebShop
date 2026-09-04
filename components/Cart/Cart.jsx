@@ -2,6 +2,7 @@ import "./Cart.css"
 import {useState} from "react";
 import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
+import {postOrder} from "../scritpts/OrderData.js";
 
 
 export default function Cart() {
@@ -13,7 +14,7 @@ export default function Cart() {
     const {cartItems, CalculateSum, removeFromCart} = getCart()
 
     async function handlePlaceOrder() {
-        
+        const success = await postOrder(email, cartItems)
     }
 
     return (
@@ -88,7 +89,7 @@ export default function Cart() {
                                         <span> --- </span>
                                     </div>
 
-                                    <button className="order-button">
+                                    <button className="order-button" onClick={handlePlaceOrder}>
                                         Place Order
                                     </button>
                                 </div>
