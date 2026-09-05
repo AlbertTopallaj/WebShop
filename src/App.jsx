@@ -6,10 +6,12 @@ import LoadProductList from "../pages/ProductList/ProductList.jsx";
 import {CartContext} from "../components/CartContext/CartContext.jsx";
 import UserInfo from "../pages/UserInfo/UserInfo.jsx";
 import {Toast} from "../components/Toast/Toast.jsx";
+import {VATProvider} from "../components/VAT/VATContext.jsx";
 
 export default function App() {
 
     return (
+        <VATProvider>
         <>
             <CartContext>
                 <Toast>
@@ -21,8 +23,8 @@ export default function App() {
                     </Routes>
                 </Toast>
             </CartContext>
-
         </>
+        </VATProvider>
     )
 }
 
