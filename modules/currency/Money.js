@@ -7,4 +7,8 @@ export default class Money {
     toString() {
         return `${this.amount.toFixed(2)} ${this.currency}`;
     }
+
+    addTax(rate) {
+        return new Money(this.amount * (1 + rate ), this.currency);
+    }
 }
