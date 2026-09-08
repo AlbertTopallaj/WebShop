@@ -7,10 +7,15 @@ export default class ExchangeRateClient {
         if(this.cache) return this.cache;
         this.cache = {
         USD: 1, // Base currency
-        SEK: 0.92,
-        EUR: 10.45
+        SEK: 10.45,
+        EUR: 0.92
     };
     return this.cache 
- }
+    }
+
+    async convert(amount, toCurrency){
+        const rates = await this.getRates();
+        return amount * rates[toCurrency];
+    }
 }
 
