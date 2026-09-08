@@ -7,12 +7,14 @@ import {CartContext} from "../components/CartContext/CartContext.jsx";
 import UserInfo from "../pages/UserInfo/UserInfo.jsx";
 import {Toast} from "../components/Toast/Toast.jsx";
 import {VATProvider} from "../components/VAT/VATContext.jsx";
+import "../../WebShop/modules/campaign/index.js"
+import "../../WebShop/modules/freights/index.js"
 
 export default function App() {
 
     return (
-        <VATProvider>
         <>
+        <VATProvider>
             <CartContext>
                 <Toast>
                     <Header/>
@@ -23,8 +25,8 @@ export default function App() {
                     </Routes>
                 </Toast>
             </CartContext>
-        </>
         </VATProvider>
+        </>
     )
 }
 

@@ -103,7 +103,6 @@
 }
 
 .cart-sum,
-.cart-freight,
 .cart-subtotal {
     display: flex;
     justify-content: space-between;
@@ -112,8 +111,7 @@
     padding: 8px 0;
 }
 
-.cart-sum,
-.cart-freight {
+.cart-sum {
     font-size: 15px;
 }
 
@@ -151,96 +149,6 @@
 
 .cart-discount-code {
     padding: 12px 0 8px;
-}
-
-.discount-label {
-    display: block;
-
-    margin-bottom: 8px;
-
-    font-size: 14px;
-    font-weight: 500;
-    color: var(--text-h);
-}
-
-.discount-input-row {
-    display: flex;
-    gap: 8px;
-}
-
-.discount-input-row input {
-    flex: 1;
-    min-width: 0;
-
-    padding: 10px 12px;
-    box-sizing: border-box;
-
-    border: 1px solid var(--border);
-    border-radius: 8px;
-
-    background: var(--bg);
-    color: var(--text);
-
-    font-size: 14px;
-
-    outline: none;
-
-    transition:
-            border-color 0.2s ease,
-            box-shadow 0.2s ease;
-}
-
-.discount-input-row input::placeholder {
-    color: var(--text);
-    opacity: 0.5;
-}
-
-.discount-input-row input:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 0 2px var(--accent-bg);
-}
-
-.discount-input-row button {
-    padding: 10px 16px;
-
-    border: 1px solid var(--accent);
-    border-radius: 8px;
-
-    background: var(--accent-bg);
-    color: var(--accent);
-
-    font-size: 14px;
-    font-weight: 600;
-
-    cursor: pointer;
-
-    transition:
-            background 0.2s ease,
-            color 0.2s ease,
-            transform 0.2s ease;
-}
-
-.discount-input-row button:hover {
-    background: var(--accent);
-    color: white;
-    transform: translateY(-1px);
-}
-
-.discount-input-row button:focus-visible {
-    outline: 2px solid var(--accent);
-    outline-offset: 2px;
-}
-
-.discount-value {
-    display: block;
-
-    margin-top: 8px;
-
-    text-align: right;
-
-    font-size: 14px;
-    color: var(--text);
-    opacity: 0.7;
 }
 
 .cart-close {
@@ -281,6 +189,28 @@
 .cart-close:focus-visible {
     outline: 2px solid #dc2626;
     outline-offset: 2px;
+}
+
+.moduleContainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    box-sizing: border-box;
+
+    margin-top: 14px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    gap: 14px;
+}
+
+.moduleContainer > * {
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.moduleContainer > * + * {
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
 }
 
 .mail {

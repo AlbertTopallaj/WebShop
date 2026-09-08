@@ -1,0 +1,123 @@
+/* Layout Modes */
+
+form.single {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 6px;
+}
+
+form.single .module-input,
+form.single .module-option {
+    flex: 1;
+}
+
+form.multi {
+    display: flex;
+    gap: 8px;
+    flex-direction: column;
+}
+form.multi .module-add-button {
+    align-self: center;
+}
+
+/* Inputs & Selects */
+
+.module-input,
+.module-option {
+    width: 100%;
+    min-width: 0;
+}
+
+.module-input input,
+.module-option select {
+    display: block;
+
+    width: 100%;
+    box-sizing: border-box;
+
+    padding: 9px 11px;
+
+    border: 1px solid var(--border);
+    border-radius: 7px;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-size: 13px;
+
+    transition:
+            border-color 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.module-input input::placeholder {
+    color: var(--text);
+    opacity: 0.5;
+}
+
+.module-option {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.module-option label {
+    color: var(--text);
+    font-size: 13px;
+}
+
+.module-input input:hover,
+.module-option select:hover {
+    border-color: var(--accent-border);
+}
+
+.module-input input:focus,
+.module-option select:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent-bg);
+}
+
+/* Add Button */
+
+.module-add-button {
+    width: fit-content;
+
+    padding: 8px 12px;
+
+    border: none;
+    border-radius: 7px;
+
+    background: var(--accent-bg);
+    color: var(--accent);
+
+    font-size: 13px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+            background 0.2s ease,
+            color 0.2s ease;
+}
+
+.module-add-button:hover {
+    background: var(--accent);
+    color: white;
+}
+
+.module-add-button:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.module-add-button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.module-add-button:disabled:hover {
+    background: var(--accent-bg);
+    color: var(--accent);
+}
