@@ -4,13 +4,13 @@ export default class ExchangeRateClient {
     }
 
     async getRates() {
-        if(this.cache) return this.cache;
-        this.cache = {
-        USD: 1, // Base currency
-        SEK: 10.45,
-        EUR: 0.92
-    };
-    return this.cache 
+        if(this.cache) return this.cache
+
+        const res = await fetch("/api/rates");
+        const data = await res.json();
+
+    this.cache = data.rates;
+     return this.cache 
     }
 
     async convert(amount, toCurrency){
