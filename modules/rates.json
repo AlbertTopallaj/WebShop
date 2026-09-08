@@ -1,5 +1,5 @@
 {
-    "base": "SEK",
+    "base": "USD",
     "rates": {
         "SEK": 1,
         "EUR": 0.087,
