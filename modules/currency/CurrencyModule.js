@@ -5,10 +5,13 @@ export default class CurrencyModule {
             {
                 method: "run",
                 input: [
-                    "currency - what type of currency is it, can be USD, EUR and SEK"
+                    "price - the price of the product, the base currency is USD",
+                    "currency - what type of currency is it, can be USD, EUR and SEK",
+                    "tax-category - what type of tax-category is the product in"
                 ],
-                output: "formaterat pris baserat på ursprungsvalutan"
+                output: "formatted price including tax in selected currency"
             }
+        
         ]
     };
 }
