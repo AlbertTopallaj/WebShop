@@ -1,13 +1,16 @@
 import "./UserIcon.css"
 import {useState} from "react";
 import {useNavigate} from "react-router";
-import {UserExists} from "../../scritpts/OrderData.js";
+import {UserExists} from "../../scripts/OrderData.js";
+import {useToast} from "../Toast/Toast.jsx";
 
 export default function UserIcon() {
 
     const [isUserOpen, setIsUserOpen] = useState(false);
     const [email, setEmail] = useState("");
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+    const {toast} = useToast()
 
     const navigate = useNavigate()
 
@@ -18,6 +21,8 @@ export default function UserIcon() {
             navigate(`/user?email=${encodeURIComponent(email)}`)
             setEmail("")
             setIsUserOpen(false)
+        } else {
+            toast(`No orders with ${email} has been found`, 2000)
         }
     }
 

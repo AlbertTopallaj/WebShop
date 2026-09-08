@@ -19,9 +19,29 @@
       "date": "2026-09-02"
     }
   ],
-  "campaign": {
-    "test": "test"
-  },
+  "campaign": [
+    {
+      "id": "percent-20",
+      "code": "PROCENT20",
+      "discountAmount": 0.8,
+      "img": "",
+      "type": "percentage"
+    },
+    {
+      "id": "thresh-100",
+      "code": "SPARA100",
+      "discountAmount": 100,
+      "img": "",
+      "type": "threshold"
+    },
+    {
+      "id": "b3p2",
+      "code": "3FOR2",
+      "discountAmount": 0.6667,
+      "img": "",
+      "type": "buy_x_pay_y"
+    }
+  ],
   "products": [
     {
       "id": 1,

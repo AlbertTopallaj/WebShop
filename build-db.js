@@ -12,7 +12,7 @@ function add(name, jsonFile) {
 
 // Individuella modul .json filer laddas här
 add("orders", "orders.json")
-add("campaign", "campaign.json")
+add("campaign", "./campaign/campaign.json")
 add("products", "products.json")
 
 try {

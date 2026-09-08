@@ -6,8 +6,13 @@ import LoadProductList from "../pages/ProductList/ProductList.jsx";
 import {CartContext} from "../components/CartContext/CartContext.jsx";
 import UserInfo from "../pages/UserInfo/UserInfo.jsx";
 import {Toast} from "../components/Toast/Toast.jsx";
+import "../modules/campaign/index.js"
+import "../modules/freights/index.js"
+import Campaign from "../modules/campaign/index.js";
 
 export default function App() {
+
+    const campaign = new Campaign()
 
     return (
         <>

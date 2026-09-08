@@ -2,14 +2,17 @@ import "./Cart.css"
 import {useState} from "react";
 import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
-
+import {getModules} from "../../scripts/ModuleRegistry.js";
+import ModuleForm from "../ModuleForm/ModuleForm.jsx";
+import Campaign from "../../modules/campaign/index.js";
 
 export default function Cart() {
 
     const [isOpen, setIsOpen] = useState(false)
-    const [discountCode, setDiscountCode] = useState([])
 
     const {cartItems, CalculateSum, removeFromCart} = getCart()
+    const modules = getModules()
+    const context = {cartItems}
 
     return (
         <div className="cart">
@@ -49,33 +52,16 @@ export default function Cart() {
                                         <span>{CalculateSum(cartItems)}</span>
                                     </div>
 
-                                    <div className="cart-discount-code">
-                                        <span className="discount-label">Discount Code</span>
+                                    <div className="moduleContainer">
+                                        {/* Dynamically loaded module forms */
+                                            modules.map(module => {
+                                                return <ModuleForm
+                                                    key={module.descriptor.name}
+                                                    module={module}
+                                                    context={context}/>
+                                            })
+                                        }
 
-                                        <div className="discount-input-row">
-                                            <input
-                                                type="text"
-                                                placeholder="Enter code"
-                                            />
-                                            <button type="button">
-                                                Add
-                                            </button>
-                                        </div>
-
-                                        <span className="discount-value">
-                                            {discountCode.length > 0 ?
-                                                discountCode.map(discount => (
-                                                    <div>
-                                                        Discount: {discount.code} -{discount.discount.toFixed(2)}
-                                                    </div>
-                                                ))
-                                                : ""}
-                                        </span>
-                                    </div>
-
-                                    <div className="cart-freight">
-                                        <span>Freight</span>
-                                        <span> --- </span>
                                     </div>
 
                                     <div className="cart-subtotal">

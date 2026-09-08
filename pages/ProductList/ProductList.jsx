@@ -1,6 +1,6 @@
 import "./ProductList.css"
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
-import Product from "../../components/ProductCard/Product.jsx";
+import Product from "../../components/ProductCard/Product.js";
 import { useEffect, useRef, useState} from "react";
 
 export default function LoadProductList() {
