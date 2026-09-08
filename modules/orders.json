@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "email": "test@test.com",
+    "cart": [],
+    "date": "2026-09-01"
+  },
+  {
+    "id": 2,
+    "email": "test@test.com",
+    "cart": [],
+    "date": "2026-09-02"
+  },
+  {
+    "id": 3,
+    "email": "test1@test.com",
+    "cart": [],
+    "date": "2026-09-02"
+  }
+]

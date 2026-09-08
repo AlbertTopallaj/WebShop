@@ -1,21 +1,30 @@
 import './App.css'
-import Cart from "../components/Cart/Cart.jsx";
-import {addToCart, removeFromCart} from "../components/Cart/CartFunctions.js";
-import {useState} from "react";
-import LoadProductList from "../components/Products/ProductList.jsx";
+import {Header} from "../components/Header/Header.jsx";
+import {Route, Routes} from "react-router";
+import ProductInfo from "../pages/ProductInfo/ProductInfo.jsx";
+import LoadProductList from "../pages/ProductList/ProductList.jsx";
+import {CartContext} from "../components/CartContext/CartContext.jsx";
+import UserInfo from "../pages/UserInfo/UserInfo.jsx";
+import {Toast} from "../components/Toast/Toast.jsx";
+import {VATProvider} from "../components/VAT/VATContext.jsx";
 
 export default function App() {
-    const [products, setProducts] = useState([])
-    const [cartItems, setCartItems] = useState([])
-
 
     return (
+        <VATProvider>
         <>
-            <Cart cartItems={cartItems} remove={(product) => removeFromCart(setCartItems, product)}/>
-
-            <LoadProductList products={products} setProducts={setProducts}
-                             add={(product) => addToCart(setCartItems, product)}/>
+            <CartContext>
+                <Toast>
+                    <Header/>
+                    <Routes>
+                        <Route index={true} path={"/"} element={<LoadProductList/>}/>
+                        <Route path={"/product/"} element={<ProductInfo/>}/>
+                        <Route path={"/user/"} element={<UserInfo/>}/>
+                    </Routes>
+                </Toast>
+            </CartContext>
         </>
+        </VATProvider>
     )
 }
 

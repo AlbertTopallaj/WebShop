@@ -1,13 +1,30 @@
 import "./Cart.css"
 import {useState} from "react";
 import CartItem from "./CartItem.jsx";
-import {CalculateSum} from "./CartFunctions.js";
+import {getCart} from "../CartContext/CartContext.jsx";
+import {postOrder} from "../../scripts/OrderData.js";
+import { Toast, useToast } from "../Toast/Toast.jsx";
 
-export default function Cart({cartItems, remove}) {
+
+export default function Cart() {
 
     const [isOpen, setIsOpen] = useState(false)
     const [discountCode, setDiscountCode] = useState([])
+    const [email, setEmail] = useState("");
+    const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+    const { toast } = useToast()
+    
+    const {cartItems, CalculateSum, removeFromCart} = getCart()
 
+    async function handlePlaceOrder() {
+        const success = await postOrder(email, cartItems)
+        if (success) {
+            toast("Order placed!", 2000);
+            setIsOpen(false);
+        } else {
+                toast("Something went wrong, try again", 2000);
+            }
+        }
 
     return (
         <div className="cart">
@@ -36,7 +53,7 @@ export default function Cart({cartItems, remove}) {
                                         <CartItem
                                             key={item.id}
                                             item={item}
-                                            remove={remove}
+                                            remove={removeFromCart}
                                         />
                                     ))}
                                 </div>
@@ -71,6 +88,13 @@ export default function Cart({cartItems, remove}) {
                                         </span>
                                     </div>
 
+                                    <div className="mail">
+                                        <span className="mail-label">Mail</span>
+                                        <input className='mail-input' type="mail" placeholder="your@mail.com"
+                                             onChange={(e) => setEmail(e.target.value)} value={email}></input>
+                                    </div>
+
+
                                     <div className="cart-freight">
                                         <span>Freight</span>
                                         <span> --- </span>
@@ -81,7 +105,7 @@ export default function Cart({cartItems, remove}) {
                                         <span> --- </span>
                                     </div>
 
-                                    <button className="order-button">
+                                    <button disabled={!isValidEmail} className="order-button" onClick={handlePlaceOrder}>
                                         Place Order
                                     </button>
                                 </div>
