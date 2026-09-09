@@ -5,11 +5,15 @@ export default class CurrencyModule {
             {
                 method: "run",
                 input: [
-                    "price - the price of the product, the base currency is USD",
-                    "currency - what type of currency is it, can be USD, EUR and SEK",
-                    "tax-category - what type of tax-category is the product in"
+                    {
+                        key: "name",
+                        label: "Currency",
+                        type: "select",
+                        options: ["USD", "EUR", "SEK"], 
+
+                    }
                 ],
-                output: "formatted price including tax in selected currency"
+                output: "Prices converted to the chosen currency"
             }
         
         ]
