@@ -6,7 +6,7 @@ export default class CurrencyModule {
                 method: "run",
                 input: [
                     {
-                        key: "name",
+                        name: "currency",
                         label: "Currency",
                         type: "select",
                         options: ["USD", "EUR", "SEK"], 
