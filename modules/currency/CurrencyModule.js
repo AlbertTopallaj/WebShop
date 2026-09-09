@@ -27,7 +27,7 @@ export default class CurrencyModule {
         ]
     };
 
-    async run(cartItems, name) {
+    async run(cartItems, currency) {
         
     }
 }
