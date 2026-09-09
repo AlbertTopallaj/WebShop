@@ -1,9 +1,10 @@
 import "./Cart.css"
-import {useState} from "react";
+import {useState, useEffect} from "react";
 import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
 import {postOrder} from "../../scripts/OrderData.js";
 import { Toast, useToast } from "../Toast/Toast.jsx";
+import ShippingModule from "../../modules/ShippingCalculator/index.js";
 
 
 export default function Cart() {
@@ -16,6 +17,70 @@ export default function Cart() {
     
     const {cartItems, CalculateSum, removeFromCart} = getCart()
 
+    const [shippingModule] = useState(
+        () => new ShippingModule()
+    );
+
+    const [country, setCountry] = useState("Sweden");
+    const [postalCode, setPostalCode] = useState("");
+    const [shippingQuotes, setShippingQuotes] = useState([]);
+    const [selectedShipping, setSelectedShipping] = useState(null);
+    const [shippingLoading, setShippingLoading] = useState(false);
+    const [shippingError, setShippingError] = useState(null);
+
+    useEffect(() => {
+
+        async function calculateShipping() {
+
+            if (!country || !postalCode || cartItems.length === 0) {
+                setShippingQuotes([]);
+                setSelectedShipping(null);
+                return;
+            }
+
+            setShippingLoading(true);
+            setShippingError(null);
+
+            const result = await shippingModule.run(
+                {
+                    country: country,
+                    postal_code: postalCode
+                },
+                {
+                    cartItems: cartItems
+                }
+            );
+
+            if (result.error) {
+                setShippingError(result.message);
+                setShippingQuotes([]);
+                setSelectedShipping(null);
+            } else {
+                setShippingQuotes(result);
+
+                // FRAGTMODUL: Det billigaste alternativet
+                // ligger först eftersom modulen sorterar resultatet.
+                setSelectedShipping(result[0]);
+            }
+
+            setShippingLoading(false);
+        }
+
+        calculateShipping();
+
+    }, [
+        country,
+        postalCode,
+        cartItems,
+        shippingModule
+    ]);
+
+
+    function handleShippingChange(quote) {
+        setSelectedShipping(quote);
+    }
+
+
     async function handlePlaceOrder() {
         const success = await postOrder(email, cartItems)
         if (success) {
@@ -25,6 +90,14 @@ export default function Cart() {
                 toast("Something went wrong, try again", 2000);
             }
         }
+    
+    const itemsTotal = Number(CalculateSum());
+
+    const shippingPrice = selectedShipping
+        ? selectedShipping.price
+        : 0;
+
+    const total = itemsTotal + shippingPrice;
 
     return (
         <div className="cart">
@@ -94,15 +167,126 @@ export default function Cart() {
                                              onChange={(e) => setEmail(e.target.value)} value={email}></input>
                                     </div>
 
+                                    <div className="cart-country">
+
+                                        <label>
+                                            Country
+                                        </label>
+
+                                        <select
+                                            value={country}
+                                            onChange={(e) =>
+                                                setCountry(e.target.value)
+                                            }
+                                        >
+
+                                            <option value="Sweden">
+                                                Sweden
+                                            </option>
+
+                                            <option value="Norway">
+                                                Norway
+                                            </option>
+
+                                            <option value="Finland">
+                                                Finland
+                                            </option>
+
+                                            <option value="Denmark">
+                                                Denmark
+                                            </option>
+
+                                            <option value="Germany">
+                                                Germany
+                                            </option>
+
+                                            <option value="USA">
+                                                USA
+                                            </option>
+
+                                        </select>
+
+                                    </div>
+                                    
+                                    <div className="cart-postal-code">
+
+                                        <label>
+                                            Postal code
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            value={postalCode}
+                                            onChange={(e) =>
+                                                setPostalCode(e.target.value)
+                                            }
+                                            placeholder="111 22"
+                                        />
+
+                                    </div>
+
+                                    {!shippingLoading &&
+    shippingQuotes.length > 0 && (
+
+        <div className="shipping-options">
+
+            {shippingQuotes.map(quote => (
+
+                <label
+                    key={quote.carrierId}
+                    className="shipping-option"
+                >
+
+                    <input
+                        type="radio"
+                        name="shipping"
+                        value={quote.carrierId}
+                        checked={
+                            selectedShipping?.carrierId ===
+                            quote.carrierId
+                        }
+                        onChange={() =>
+                            handleShippingChange(quote)
+                        }
+                    />
+
+                    <span>
+                        {quote.carrierName}
+                    </span>
+
+                    <span>
+                        {quote.price.toFixed(2)} kr
+                    </span>
+
+                </label>
+
+            ))}
+
+        </div>
+    )}
+
 
                                     <div className="cart-freight">
                                         <span>Freight</span>
                                         <span> --- </span>
                                     </div>
 
+                                    {shippingLoading && (
+                                        <p>
+                                            Calculating shipping...
+                                        </p>
+                                    )}
+
+                                    {shippingError && (
+                                        <p>
+                                            {shippingError}
+                                        </p>
+                                    )}
+
+
                                     <div className="cart-subtotal">
                                         <span>Subtotal</span>
-                                        <span> --- </span>
+                                        <span> {total.toFixed(2)} kr </span>
                                     </div>
 
                                     <button disabled={!isValidEmail} className="order-button" onClick={handlePlaceOrder}>

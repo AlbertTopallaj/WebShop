@@ -16,7 +16,7 @@ export default function ProductInfo() {
     const {addToCart} = getCart()
 
     function getProduct() {
-        return new Product(product.id, product.title, product.price, product.image)
+        return new Product(product.id, product.title, product.price, product.image, product.weight, product.dimensions)
     }
 
     useEffect(() => {

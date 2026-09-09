@@ -309,3 +309,73 @@
             border-color 0.2s ease,
             box-shadow 0.2s ease;
 }
+
+.cart-freight button {
+    padding: 8px 14px;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+
+    background: var(--accent-bg);
+    color: var(--accent);
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.cart-freight button:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-1px);
+}
+
+.shipping-options {
+    margin-top: 12px;
+    padding: 12px;
+
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.shipping-options h3 {
+    margin: 0 0 10px 0;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--text-h);
+}
+
+.shipping-option-btn {
+    width: 100%;
+    text-align: left;
+
+    padding: 10px 14px;
+    margin-bottom: 8px;
+
+    border: 1px solid var(--border);
+    border-radius: 8px;
+
+    background: var(--bg);
+    color: var(--text);
+
+    font-size: 14px;
+    cursor: pointer;
+
+    transition:
+        background 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.shipping-option-btn:hover {
+    background: var(--accent-bg);
+    border-color: var(--accent-border);
+    transform: translateY(-1px);
+}
+
