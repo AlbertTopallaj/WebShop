@@ -1,4 +1,4 @@
-import fs from "node:fs"
+/*import fs from "node:fs"
 
 const db = {}
 
@@ -14,10 +14,54 @@ function add(name, jsonFile) {
 add("orders", "orders.json")
 add("campaign", "campaign.json")
 add("products", "products.json")
+add(
+    "carriers",
+    "ShippingCalculator/api/carriers.json"
+)
 
 try {
     fs.writeFileSync("db.json", JSON.stringify(db, null, 2))
     console.log("db.json created successfully")
 } catch (e) {
     console.log(e.message)
+}*/
+
+import fs from "node:fs"
+
+const db = {}
+
+function add(name, jsonFile) {
+    try {
+        const path = `./modules/${jsonFile}`
+
+        console.log(`Loading ${name} from ${path}`)
+
+        db[name] = JSON.parse(
+            fs.readFileSync(path, "utf8")
+        )
+    } catch (error) {
+        console.error(
+            `Failed to load ${name}:`,
+            error.message
+        )
+    }
+}
+
+add("orders", "orders.json")
+add("campaign", "campaign.json")
+add("products", "products.json")
+add(
+    "carriers",
+    "ShippingCalculator/api/carriers.json"
+)
+
+try {
+    fs.writeFileSync(
+        "db.json",
+        JSON.stringify(db, null, 2)
+    )
+
+    console.log("db.json created successfully")
+} catch (error) {
+    console.error(error.message)
 }

@@ -15,7 +15,20 @@ export default function Cart() {
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const { toast } = useToast()
     
-    const {cartItems, CalculateSum, removeFromCart} = getCart()
+    const {
+    cartItems,
+    CalculateSum,
+    removeFromCart,
+    setShipping,
+    removeShipping
+} = getCart();
+
+console.log("Cart context:", {
+    cartItems,
+    setShipping,
+    removeShipping
+});
+    
 
     const [shippingModule] = useState(
         () => new ShippingModule()
@@ -28,26 +41,40 @@ export default function Cart() {
     const [shippingLoading, setShippingLoading] = useState(false);
     const [shippingError, setShippingError] = useState(null);
 
+    const productCartItems = cartItems.filter(
+        item => !item.isShipping
+    );
+
+    const productCartKey =
+        JSON.stringify(productCartItems);
+
     useEffect(() => {
 
-        async function calculateShipping() {
+    async function calculateShipping() {
 
-            if (!country || !postalCode || cartItems.length === 0) {
-                setShippingQuotes([]);
-                setSelectedShipping(null);
-                return;
-            }
+        if (
+            !country ||
+            !postalCode ||
+            productCartItems.length === 0
+        ) {
+            setShippingQuotes([]);
+            setSelectedShipping(null);
+            removeShipping();
+            setShippingLoading(false);
+            return;
+        }
 
-            setShippingLoading(true);
-            setShippingError(null);
+        setShippingLoading(true);
+        setShippingError(null);
 
+        try {
             const result = await shippingModule.run(
                 {
-                    country: country,
+                    country,
                     postal_code: postalCode
                 },
                 {
-                    cartItems: cartItems
+                    cartItems: productCartItems
                 }
             );
 
@@ -55,29 +82,49 @@ export default function Cart() {
                 setShippingError(result.message);
                 setShippingQuotes([]);
                 setSelectedShipping(null);
-            } else {
-                setShippingQuotes(result);
-
-                // FRAGTMODUL: Det billigaste alternativet
-                // ligger först eftersom modulen sorterar resultatet.
-                setSelectedShipping(result[0]);
+                removeShipping();
+                return;
             }
 
+            setShippingQuotes(result);
+
+            const cheapest = result[0];
+
+            setSelectedShipping(cheapest);
+            setShipping(cheapest);
+
+        } catch (error) {
+            console.error("Shipping calculation failed:", error);
+
+            setShippingError(
+                error instanceof Error
+                    ? error.message
+                    : "Kunde inte beräkna frakt."
+            );
+
+            setShippingQuotes([]);
+            setSelectedShipping(null);
+            removeShipping();
+
+        } finally {
             setShippingLoading(false);
         }
+    }
 
-        calculateShipping();
+    calculateShipping();
 
-    }, [
-        country,
-        postalCode,
-        cartItems,
-        shippingModule
-    ]);
+}, [
+    country,
+    postalCode,
+    productCartKey
+]);
 
 
     function handleShippingChange(quote) {
+
         setSelectedShipping(quote);
+
+        setShipping(quote);
     }
 
 
@@ -90,14 +137,8 @@ export default function Cart() {
                 toast("Something went wrong, try again", 2000);
             }
         }
-    
-    const itemsTotal = Number(CalculateSum());
 
-    const shippingPrice = selectedShipping
-        ? selectedShipping.price
-        : 0;
-
-    const total = itemsTotal + shippingPrice;
+    const total = Number(CalculateSum());
 
     return (
         <div className="cart">
@@ -105,7 +146,15 @@ export default function Cart() {
                 🛒
                 {cartItems.length > 0 && (
                     <span className="cart-count">
-                        {cartItems.reduce((total, item) => total + item.quantity, 0)}
+                        {cartItems
+                            .filter(
+                                item => !item.isShipping
+                            )
+                            .reduce(
+                                (total, item) =>
+                                    total + item.quantity,
+                                0
+                            )}
                     </span>
                 )}
             </button>
@@ -124,9 +173,15 @@ export default function Cart() {
                                 <div className="cart-items">
                                     {cartItems.map(item => (
                                         <CartItem
-                                            key={item.id}
+                                            key={
+                                                item.product.id
+                                            }
+
                                             item={item}
-                                            remove={removeFromCart}
+
+                                            remove={
+                                                removeFromCart
+                                            }
                                         />
                                     ))}
                                 </div>
@@ -226,49 +281,71 @@ export default function Cart() {
                                     </div>
 
                                     {!shippingLoading &&
-    shippingQuotes.length > 0 && (
+                                        shippingQuotes.length > 0 && (
 
-        <div className="shipping-options">
+                                            <div className="shipping-options">
 
-            {shippingQuotes.map(quote => (
+                                                {shippingQuotes.map(
+                                                    quote => (
 
-                <label
-                    key={quote.carrierId}
-                    className="shipping-option"
-                >
+                                                        <label
+                                                            key={
+                                                                quote.carrierId
+                                                            }
+                                                            className="shipping-option"
+                                                        >
 
-                    <input
-                        type="radio"
-                        name="shipping"
-                        value={quote.carrierId}
-                        checked={
-                            selectedShipping?.carrierId ===
-                            quote.carrierId
-                        }
-                        onChange={() =>
-                            handleShippingChange(quote)
-                        }
-                    />
+                                                            <input
+                                                                type="radio"
+                                                                name="shipping"
+                                                                value={
+                                                                    quote.carrierId
+                                                                }
+                                                                checked={
+                                                                    selectedShipping?.carrierId ===
+                                                                    quote.carrierId
+                                                                }
+                                                                onChange={() =>
+                                                                    handleShippingChange(
+                                                                        quote
+                                                                    )
+                                                                }
+                                                            />
 
-                    <span>
-                        {quote.carrierName}
-                    </span>
 
-                    <span>
-                        {quote.price.toFixed(2)} kr
-                    </span>
+                                                            <span>
+                                                                {
+                                                                    quote.carrierName
+                                                                }
+                                                            </span>
 
-                </label>
 
-            ))}
+                                                            <span>
+                                                                {
+                                                                    quote.price.toFixed(
+                                                                        2
+                                                                    )
+                                                                }
+                                                                {" "}
+                                                                kr
+                                                            </span>
 
-        </div>
-    )}
+                                                        </label>
+
+                                                    )
+                                                )}
+
+                                            </div>
+                                        )
+                                    }
 
 
                                     <div className="cart-freight">
                                         <span>Freight</span>
-                                        <span> --- </span>
+                                        <span> {selectedShipping
+                                                ? `${selectedShipping.price.toFixed(2)} kr`
+                                                : "---"
+                                            } </span>
                                     </div>
 
                                     {shippingLoading && (

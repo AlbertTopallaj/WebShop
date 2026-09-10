@@ -1,7 +1,9 @@
 class Parcel {
     constructor(weight, length, width, height) {
         if (!Number.isFinite(weight) || weight <= 0) {
-            throw new Error("Produktens vikt måste vara större än 0 kg.");
+            throw new Error(
+                "Produktens vikt måste vara större än 0 kg."
+            );
         }
 
         if (
@@ -68,7 +70,44 @@ class Carrier {
         return zone;
     }
 
-    async createQuote(parcels, country) {
+    // ==================================================
+    // Postnummer påverkar priset.
+    // Detta är en simulerad/deterministisk prisvariation.
+    // Samma postnummer ger alltid samma tillägg.
+    // ==================================================
+
+    getPostalCodeSurcharge(country, postalCode) {
+        const normalizedPostalCode =
+            postalCode.replace(/\s/g, "");
+
+        const digits =
+            normalizedPostalCode.replace(/\D/g, "");
+
+        if (!digits) {
+            throw new Error(
+                "Postnumret måste innehålla siffror."
+            );
+        }
+
+        const postalNumber = Number(digits);
+
+        // Simulerad variation baserad på postnumret.
+        const variation = postalNumber % 5;
+
+        // Olika transportörer får olika justering.
+        const carrierAdjustment = {
+            postnord: 0,
+            dhl: 10,
+            bring: 5
+        };
+
+        const adjustment =
+            carrierAdjustment[this.id] ?? 0;
+
+        return variation * 5 + adjustment;
+    }
+
+    createQuote(parcels, country, postalCode) {
         const zone = this.getZone(country);
 
         if (this.pricingModel !== "weight_or_volumetric") {
@@ -91,16 +130,24 @@ class Carrier {
 
         const billableWeight = parcels.reduce(
             (total, parcel) => {
-                return total + parcel.getBillableWeight(
-                    this.volumetricDivisor
-                );
+                return total +
+                    parcel.getBillableWeight(
+                        this.volumetricDivisor
+                    );
             },
             0
         );
 
+        const postalCodeSurcharge =
+            this.getPostalCodeSurcharge(
+                country,
+                postalCode
+            );
+
         const price =
             baseRate +
-            billableWeight * perKgRate;
+            billableWeight * perKgRate +
+            postalCodeSurcharge;
 
         return {
             name: "Frakt",
@@ -110,7 +157,11 @@ class Carrier {
             currency: "SEK",
             zone: zone,
             billableWeight:
-                Math.round(billableWeight * 100) / 100
+                Math.round(
+                    billableWeight * 100
+                ) / 100,
+            postalCodeSurcharge:
+                postalCodeSurcharge
         };
     }
 }
@@ -133,44 +184,67 @@ class ShippingQuoteService {
     }
 
     async fetchCarriers() {
-        if (this.carrierCache) {
-            return this.carrierCache;
-        }
-
-        const response = await fetch("/api/carriers");
-
-        if (!response.ok) {
-            throw new Error(
-                "Kunde inte hämta transportörer."
-            );
-        }
-
-        const data = await response.json();
-
-        if (!Array.isArray(data)) {
-            throw new Error(
-                "Transportörs-API:t returnerade ogiltig data."
-            );
-        }
-
-        this.carrierCache = data.map(
-            carrier => new Carrier(carrier)
-        );
-
+    if (this.carrierCache) {
         return this.carrierCache;
     }
+
+    const response = await fetch("/api/carriers");
+
+    if (!response.ok) {
+        throw new Error(
+            `Kunde inte hämta transportörer. HTTP ${response.status}.`
+        );
+    }
+
+    const contentType =
+        response.headers.get("content-type") || "";
+
+    if (!contentType.includes("application/json")) {
+        throw new Error(
+            "API:t /api/carriers returnerade inte JSON."
+        );
+    }
+
+    const data = await response.json();
+
+    if (!Array.isArray(data)) {
+        throw new Error(
+            "Transportörs-API:t returnerade ogiltig data."
+        );
+    }
+
+    this.carrierCache = data.map(
+        carrier => new Carrier(carrier)
+    );
+
+    return this.carrierCache;
+}
 
     createParcels(cartItems) {
         if (
             !Array.isArray(cartItems) ||
             cartItems.length === 0
         ) {
-            throw new Error("Varukorgen är tom.");
+            throw new Error(
+                "Varukorgen är tom."
+            );
+        }
+
+        // Fraktartikeln ska inte räknas som ett paket.
+        const productItems =
+            cartItems.filter(
+                item => !item.isShipping
+            );
+
+        if (productItems.length === 0) {
+            throw new Error(
+                "Varukorgen innehåller inga produkter."
+            );
         }
 
         const parcels = [];
 
-        for (const item of cartItems) {
+        for (const item of productItems) {
             const product = item.product;
             const quantity = item.quantity;
 
@@ -194,7 +268,10 @@ class ShippingQuoteService {
             const weightInKg =
                 Number(product.weight) / 1000;
 
-            if (!Number.isFinite(weightInKg) || weightInKg <= 0) {
+            if (
+                !Number.isFinite(weightInKg) ||
+                weightInKg <= 0
+            ) {
                 throw new Error(
                     `Produkten "${product.name}" saknar giltig vikt.`
                 );
@@ -227,21 +304,30 @@ class ShippingQuoteService {
         return parcels;
     }
 
-    async getQuotes(cartItems, country) {
-        const parcels = this.createParcels(cartItems);
+    async getQuotes(
+        cartItems,
+        country,
+        postalCode
+    ) {
+        const parcels =
+            this.createParcels(cartItems);
 
-        const carriers = await this.fetchCarriers();
+        const carriers =
+            await this.fetchCarriers();
 
         const quotes = [];
 
         for (const carrier of carriers) {
             try {
-                const quote = await carrier.createQuote(
-                    parcels,
-                    country
-                );
+                const quote =
+                    carrier.createQuote(
+                        parcels,
+                        country,
+                        postalCode
+                    );
 
                 quotes.push(quote);
+
             } catch (error) {
                 console.warn(
                     `Kunde inte beräkna ${carrier.name}:`,
@@ -264,8 +350,10 @@ class ShippingQuoteService {
         // Spara historik.
         this.quoteHistory.push({
             country,
+            postalCode,
             quotes,
-            createdAt: new Date().toISOString()
+            createdAt:
+                new Date().toISOString()
         });
 
         return quotes;
@@ -279,6 +367,7 @@ class ShippingQuoteService {
 // ======================================================
 
 export default class ShippingModule {
+
     static descriptor = {
         name: "ShippingCalculator"
     };
@@ -290,8 +379,13 @@ export default class ShippingModule {
 
     async run(values, context) {
         try {
-            if (!values || typeof values !== "object") {
-                throw new Error("Ogiltiga indata.");
+            if (
+                !values ||
+                typeof values !== "object"
+            ) {
+                throw new Error(
+                    "Ogiltiga indata."
+                );
             }
 
             const {
@@ -308,7 +402,11 @@ export default class ShippingModule {
                 "USA"
             ];
 
-            if (!allowedCountries.includes(country)) {
+            if (
+                !allowedCountries.includes(
+                    country
+                )
+            ) {
                 throw new Error(
                     "Ett giltigt land måste väljas."
                 );
@@ -319,7 +417,9 @@ export default class ShippingModule {
 
             if (
                 typeof postal_code !== "string" ||
-                !postalCodePattern.test(postal_code)
+                !postalCodePattern.test(
+                    postal_code
+                )
             ) {
                 throw new Error(
                     "Postnumret har ett ogiltigt format."
@@ -328,7 +428,9 @@ export default class ShippingModule {
 
             if (
                 !context ||
-                !Array.isArray(context.cartItems)
+                !Array.isArray(
+                    context.cartItems
+                )
             ) {
                 throw new Error(
                     "Kundvagnen saknas."
@@ -338,7 +440,8 @@ export default class ShippingModule {
             const quotes =
                 await this.shippingService.getQuotes(
                     context.cartItems,
-                    country
+                    country,
+                    postal_code
                 );
 
             return quotes;

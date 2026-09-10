@@ -1,0 +1,84 @@
+[
+  {
+    "id": "postnord",
+    "name": "PostNord",
+    "pricingModel": "weight_or_volumetric",
+    "zones": {
+      "Sweden": 1,
+      "Norway": 2,
+      "Denmark": 2,
+      "Finland": 3,
+      "Germany": 4,
+      "USA": 5
+    },
+    "baseRates": {
+      "1": 45,
+      "2": 70,
+      "3": 100,
+      "4": 150,
+      "5": 250
+    },
+    "perKgRate": {
+      "1": 8,
+      "2": 12,
+      "3": 15,
+      "4": 20,
+      "5": 35
+    },
+    "volumetricDivisor": 5000
+  },
+  {
+    "id": "dhl",
+    "name": "DHL Express",
+    "pricingModel": "weight_or_volumetric",
+    "zones": {
+      "Sweden": 1,
+      "Norway": 2,
+      "Denmark": 2,
+      "Finland": 3,
+      "Germany": 4,
+      "USA": 5
+    },
+    "baseRates": {
+      "1": 60,
+      "2": 90,
+      "3": 130,
+      "4": 180,
+      "5": 300
+    },
+    "perKgRate": {
+      "1": 10,
+      "2": 14,
+      "3": 18,
+      "4": 25,
+      "5": 40
+    },
+    "volumetricDivisor": 4000
+  },
+  {
+    "id": "bring",
+    "name": "Bring",
+    "pricingModel": "weight_or_volumetric",
+    "zones": {
+      "Sweden": 1,
+      "Norway": 1,
+      "Denmark": 2,
+      "Finland": 2,
+      "Germany": 3,
+      "USA": 4
+    },
+    "baseRates": {
+      "1": 55,
+      "2": 85,
+      "3": 120,
+      "4": 200
+    },
+    "perKgRate": {
+      "1": 7,
+      "2": 11,
+      "3": 17,
+      "4": 30
+    },
+    "volumetricDivisor": 6000
+  }
+]
