@@ -14,6 +14,7 @@ function add(name, jsonFile) {
 add("orders", "orders.json")
 add("campaign", "campaign.json")
 add("products", "products.json")
+add("rates", "rates.json")
 
 try {
     fs.writeFileSync("db.json", JSON.stringify(db, null, 2))
