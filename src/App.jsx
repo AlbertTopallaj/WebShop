@@ -17,18 +17,18 @@ export default function App() {
 
     return (
         <>
-        <VATProvider>
-            <CartContext>
+            <VATProvider>
                 <Toast>
-                    <Header/>
-                    <Routes>
-                        <Route index={true} path={"/"} element={<LoadProductList/>}/>
-                        <Route path={"/product/"} element={<ProductInfo/>}/>
-                        <Route path={"/user/"} element={<UserInfo/>}/>
-                    </Routes>
+                    <CartContext>
+                        <Header/>
+                        <Routes>
+                            <Route index={true} path={"/"} element={<LoadProductList/>}/>
+                            <Route path={"/product/"} element={<ProductInfo/>}/>
+                            <Route path={"/user/"} element={<UserInfo/>}/>
+                        </Routes>
+                    </CartContext>
                 </Toast>
-            </CartContext>
-        </VATProvider>
+            </VATProvider>
         </>
 
     )

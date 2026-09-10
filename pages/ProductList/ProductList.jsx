@@ -2,6 +2,7 @@ import "./ProductList.css"
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import Product from "../../components/ProductCard/Product.js";
 import { useEffect, useRef, useState} from "react";
+import {getInstances} from "../../scripts/ModuleRegistry.js";
 
 export default function LoadProductList() {
     const [products, setProducts] = useState([])
@@ -10,6 +11,7 @@ export default function LoadProductList() {
     const [loading, setLoading] = useState(false);
     const sentinelRef = useRef(null);
 
+    const campaignInstance = getInstances().find(instance => instance.constructor.descriptor.name === "campaign")
 
 
     useEffect(() => {
@@ -17,9 +19,19 @@ export default function LoadProductList() {
             setLoading(true);
             const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=10`)
             const data = await response.json()
-
+            if (campaignInstance) await campaignInstance.run(data.data)
             const newProducts = data.data.map(
-                product => new Product(product.id, product.title, product.price, product.images)
+                product => new Product(
+                    product.id,
+                    product.title,
+                    product.price,
+                    product.images,
+                    product.weight,
+                    product.dimensions,
+                    product.stock,
+                    product.category,
+                    product.discountPercentage
+                )
             );
 
             setProducts(prev => [...prev, ...newProducts]);

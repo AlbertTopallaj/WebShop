@@ -1,6 +1,8 @@
 import {useState} from "react";
 import "./ModuleForm.css"
 import {getInstances} from "../../scripts/ModuleRegistry.js";
+import {useToast} from "../Toast/Toast.jsx";
+import {getCart} from "../CartContext/CartContext.jsx";
 
 export default function ModuleForm({module, context}) {
     const descriptor = module.descriptor
@@ -8,11 +10,14 @@ export default function ModuleForm({module, context}) {
 
     const [values, setValues] = useState({})
     const [validInputs, setValidInputs] = useState(false)
+    const {toast} = useToast()
 
     const methodInputs = methods.inputs.map(input => {
         if (input.type === "reference") return context[input.name]
         return values[input.name]
     })
+
+    const {refreshCart} = getCart()
 
     const visibleInputCount = methods.inputs.filter(input => input.type !== "reference").length;
 
@@ -20,6 +25,7 @@ export default function ModuleForm({module, context}) {
 
     return (
         <form className={`${descriptor.name} ${visibleInputCount === 1 ? "single" : "multi"}`}
+              onSubmit={(e) =>  e.preventDefault()}
               onChange={(e) => {
                   setValues(
                       {
@@ -32,7 +38,7 @@ export default function ModuleForm({module, context}) {
 
             {methods.inputs.map(input => {
 
-                if (input.type === "text") {
+                if (input.type === "text" || input.type === "number") {
                     return (
                         <div className={"module-input"} id={input.name}>
                             <input
@@ -65,11 +71,13 @@ export default function ModuleForm({module, context}) {
             <button className="module-add-button"
                     type="button"
                     disabled={!validInputs || !instance}
-                    onClick={() => {
-                        if (instance) {
-                            instance.run(...methodInputs)
-                        } else {
-                            console.info("Module is not instantiated yet");
+                    onClick={async () => {
+                        if (!instance) return;
+                        try {
+                            await instance.run(...methodInputs);
+                            refreshCart()
+                        } catch (err) {
+                            toast(err.message, 2000);
                         }
                     }}>
                 Add

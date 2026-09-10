@@ -19,7 +19,15 @@ export default function ProductCard({product}) {
                 <Link to={`/product?id=${product.id}`}>
                     <img src={product.img[0]} alt={product.name}/>
                     <div className="product-info">
-                        <h2>{product.name}</h2> <p>{product.price}</p>
+                        <h2>{product.name}</h2>
+                        {typeof product?.discountPercentage === 'string' && (
+                            <p>
+                                {
+                                    `${product.discountPercentage.valueOf() * 100}% off`
+                                }
+                            </p>
+                        )}
+                        <p>{product.price.toFixed(2)}</p>
                     </div>
                 </Link>
                 <button className="buyBtn" onClick={() => {

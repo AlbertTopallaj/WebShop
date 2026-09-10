@@ -2,22 +2,29 @@
   {
     "id": "percent-20",
     "code": "PROCENT20",
-    "discountAmount": 0.80,
-    "img": "",
+    "discountCondition": null,
+    "discountAmount": 0.20,
+    "type": "percentage"
+  },
+  {
+    "id": "percent-40",
+    "code": "PROCENT40",
+    "discountCondition": 1000,
+    "discountAmount": 0.40,
     "type": "percentage"
   },
   {
     "id": "thresh-100",
     "code": "SPARA100",
+    "discountCondition": 500,
     "discountAmount": 100,
-    "img": "",
     "type": "threshold"
   },
   {
     "id": "b3p2",
     "code": "3FOR2",
+    "discountCondition": "3for2",
     "discountAmount": 0.6667,
-    "img": "",
     "type": "buy_x_pay_y"
   }
 ]
