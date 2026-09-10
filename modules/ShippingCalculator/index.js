@@ -41,12 +41,6 @@ class Parcel {
     }
 }
 
-
-// ======================================================
-// Carrier
-// Ansvarar för ett specifikt fraktbolags prismodell.
-// ======================================================
-
 class Carrier {
     constructor(data) {
         this.id = data.id;
@@ -70,12 +64,6 @@ class Carrier {
         return zone;
     }
 
-    // ==================================================
-    // Postnummer påverkar priset.
-    // Detta är en simulerad/deterministisk prisvariation.
-    // Samma postnummer ger alltid samma tillägg.
-    // ==================================================
-
     getPostalCodeSurcharge(country, postalCode) {
         const normalizedPostalCode =
             postalCode.replace(/\s/g, "");
@@ -91,10 +79,8 @@ class Carrier {
 
         const postalNumber = Number(digits);
 
-        // Simulerad variation baserad på postnumret.
         const variation = postalNumber % 5;
 
-        // Olika transportörer får olika justering.
         const carrierAdjustment = {
             postnord: 0,
             dhl: 10,
@@ -166,20 +152,11 @@ class Carrier {
     }
 }
 
-
-// ======================================================
-// ShippingQuoteService
-// Hämtar transportörer från /api/carriers,
-// skapar offerter och sorterar dem.
-// ======================================================
-
 class ShippingQuoteService {
     constructor() {
-        // Cache gör att transportörerna finns kvar
-        // mellan flera anrop till samma modulinstans.
+
         this.carrierCache = null;
 
-        // Historik över tidigare beräkningar.
         this.quoteHistory = [];
     }
 
@@ -230,7 +207,6 @@ class ShippingQuoteService {
             );
         }
 
-        // Fraktartikeln ska inte räknas som ett paket.
         const productItems =
             cartItems.filter(
                 item => !item.isShipping
@@ -263,8 +239,6 @@ class ShippingQuoteService {
                 );
             }
 
-            // Vikt från DummyJSON är gram.
-            // Fraktmodulen använder kg.
             const weightInKg =
                 Number(product.weight) / 1000;
 
@@ -342,12 +316,10 @@ class ShippingQuoteService {
             );
         }
 
-        // Billigaste fraktalternativet först.
         quotes.sort(
             (a, b) => a.price - b.price
         );
 
-        // Spara historik.
         this.quoteHistory.push({
             country,
             postalCode,
@@ -359,12 +331,6 @@ class ShippingQuoteService {
         return quotes;
     }
 }
-
-
-// ======================================================
-// ShippingModule
-// Den enda publika klassen.
-// ======================================================
 
 export default class ShippingModule {
 
