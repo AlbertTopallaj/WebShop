@@ -16,7 +16,7 @@ export default function ProductCard({product}) {
         async function convert() {
             const result = await convertCart([product]);
             console.log(result);
-            setConvertedPrice(result[0].price);
+            if(result) setConvertedPrice(result[0].price);
         } convert();
     }, [currency]);
 

@@ -8,7 +8,7 @@ export class ExchangeRateClient {
     async getRates() {
         if(this.cache) return this.cache
 
-        const res = await fetch("/api/rates");
+        const res = await fetch("http://localhost:5050/rates");
         if(!res.ok) {
             throw new RateFetchError();
         }
