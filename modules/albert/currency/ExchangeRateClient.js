@@ -14,6 +14,7 @@ export class ExchangeRateClient {
         }
 
         const data = await res.json();
+        this.baseCurrency = data.base;
         this.cache = data.rates;
         return this.cache 
     }
