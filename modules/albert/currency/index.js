@@ -1,11 +1,13 @@
-import { ExchangeRateClient } from "./currency/ExchangeRateClient";
-import { TaxTable } from "./currency/TaxTable";
+import { ExchangeRateClient } from "./ExchangeRateClient";
+import { TaxTable } from "./TaxTable";
+import { Money } from "./Money"
 
 export default class CurrencyModule {
     constructor(){
         this.rateClient = new ExchangeRateClient();
         this.taxTable = new TaxTable();
     }
+
     static descriptor = {
         name: "Currency",
         methodsAndInputs: [
@@ -35,6 +37,20 @@ export default class CurrencyModule {
     };
 
     async run(cartItems, currency) {
+        const rates = await this.rateClient.getRates();
+
+        return cartItems.map(item => {
+            const rate = rates[currency];
+            const money = new Money(item.price, "USD");
+            const converted = money.convert(currency, rate);
+            const taxRate = this.taxTable.getRate(item.category);
+            const withTax = converted.addTax(taxRate - 1);
+
+            return {
+                name: item.title,
+                price: withTax.toString()
+            };
+        });
         
     }
 }
