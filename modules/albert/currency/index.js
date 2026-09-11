@@ -43,10 +43,11 @@ export default class CurrencyModule {
         if(!["USD", "EUR", "SEK"].includes(currency)) throw new UnknownCurrencyError(currency);
 
         const rates = await this.rateClient.getRates();
+        const base = this.rateClient.baseCurrency; 
 
         return cartItems.map(item => {
             const rate = rates[currency];
-            const money = new Money(item.price, "USD");
+            const money = new Money(item.price, base);
             const converted = money.convert(currency, rate);
             const taxRate = this.taxTable.getRate(item.category);
             const withTax = converted.addTax(taxRate - 1);
