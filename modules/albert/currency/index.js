@@ -37,7 +37,9 @@ export default class CurrencyModule {
     };
 
     async run(cartItems, currency) {
-        if(!cartItems | cartItems.length === 0) throw new Error("Kundvagnen är tom")
+        if(!cartItems | cartItems.length === 0) throw new Error("Kundvagnen är tom");
+        if(!["USD", "EUR", "SEK"].includes(currecy)) throw new Error(`Okänd valuta: ${currency}`);
+
         const rates = await this.rateClient.getRates();
 
         return cartItems.map(item => {
