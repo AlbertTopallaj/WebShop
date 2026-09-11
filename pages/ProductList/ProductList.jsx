@@ -19,7 +19,7 @@ export default function LoadProductList() {
             const data = await response.json()
 
             const newProducts = data.data.map(
-                product => new Product(product.id, product.title, product.price, product.images, product.stock)
+                product => new Product(product.id, product.title, product.price, product.images, product.stock, product.category)
             );
 
             setProducts(prev => [...prev, ...newProducts]);
