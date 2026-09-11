@@ -53,7 +53,7 @@ export default class CurrencyModule {
             const withTax = converted.addTax(taxRate - 1);
 
             return {
-                name: item.title,
+                name: item.name,
                 price: withTax.toString()
             };
         });
