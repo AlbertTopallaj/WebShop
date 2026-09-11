@@ -10,4 +10,10 @@ export class CurrencyError extends Error {
             this.name = "UnknownCurrencyError";
         }
     }
+
+export class EmptyCartError extends CurrencyError {
+    constructor() {
+        super("Kundvagnen är tom - inga priser att konvertera");
+        this.name = "EmptyCartError";
+    }
 }
