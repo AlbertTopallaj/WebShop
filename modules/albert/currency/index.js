@@ -27,7 +27,8 @@ export default class CurrencyModule {
                         label: "Currency",
                         type: "select",
                         options: ["USD", "EUR", "SEK"],
-                        required: true
+                        required: true,
+                        default: "USD"
 
                     }
                 ],
