@@ -15,8 +15,7 @@ export default function ProductCard({product}) {
     useEffect(() => {
         async function convert() {
             const result = await convertCart([product]);
-            console.log(result);
-            if(result) setConvertedPrice(result[0].price);
+            if(result) setConvertedPrice(result.items[0].price);
         } convert();
     }, [currency]);
 
