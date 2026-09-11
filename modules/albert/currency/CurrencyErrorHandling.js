@@ -17,3 +17,10 @@ export class EmptyCartError extends CurrencyError {
         this.name = "EmptyCartError";
     }
 }
+
+export class RateFetchError extends CurrencyError {
+    constructor() {
+        super("Kunde inte hämta valutakurser från API:t");
+        this.name = "RateFetchError";
+    }
+}
