@@ -39,11 +39,11 @@ export default class CurrencyModule {
     };
 
     async run(cartItems, currency) {
-        if(!cartItems || cartItems.length === 0) throw new EmptyCartError();
-        if(!rates[currency]) throw new UnknownCurrencyError(currency);
-
         const rates = await this.rateClient.getRates();
         const base = this.rateClient.baseCurrency; 
+
+        if(!cartItems || cartItems.length === 0) throw new EmptyCartError();
+        if(!rates[currency]) throw new UnknownCurrencyError(currency);
 
         return cartItems.map(item => {
             const rate = rates[currency];
