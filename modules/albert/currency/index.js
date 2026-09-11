@@ -1,6 +1,7 @@
 import { ExchangeRateClient } from "./ExchangeRateClient";
 import { TaxTable } from "./TaxTable";
 import { Money } from "./Money"
+import { EmptyCartError, UnknownCurrencyError } from "./CurrencyErrorHandling";
 
 export default class CurrencyModule {
     constructor(){
@@ -37,8 +38,8 @@ export default class CurrencyModule {
     };
 
     async run(cartItems, currency) {
-        if(!cartItems | cartItems.length === 0) throw new Error("Kundvagnen är tom");
-        if(!["USD", "EUR", "SEK"].includes(currecy)) throw new Error(`Okänd valuta: ${currency}`);
+        if(!cartItems | cartItems.length === 0) throw new EmptyCartError();
+        if(!["USD", "EUR", "SEK"].includes(currecy)) throw new UnknownCurrencyError(currency);
 
         const rates = await this.rateClient.getRates();
 
