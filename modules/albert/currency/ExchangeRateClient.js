@@ -9,10 +9,10 @@ export class ExchangeRateClient {
         if(this.cache) return this.cache
 
         const res = await fetch("/api/rates");
-        const data = await res.json();
 
-    this.cache = data.rates;
-     return this.cache 
+        const data = await res.json();
+        this.cache = data.rates;
+        return this.cache 
     }
 
     async convert(amount, toCurrency){
