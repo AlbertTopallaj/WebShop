@@ -1,3 +1,5 @@
+import { RateFetchError } from "./CurrencyErrorHandling";
+
 export class ExchangeRateClient {
     constructor() {
         this.cache = null;
