@@ -45,7 +45,7 @@ export default class CurrencyModule {
         if(!cartItems || cartItems.length === 0) throw new EmptyCartError();
         if(!rates[currency]) throw new UnknownCurrencyError(currency);
 
-        return cartItems.map(item => {
+        const items = cartItems.map(item => {
             const rate = rates[currency];
             const money = new Money(item.price, base);
             const converted = money.convert(currency, rate);
@@ -54,9 +54,17 @@ export default class CurrencyModule {
 
             return {
                 name: item.name,
-                price: withTax.toString()
+                price: withTax.toString(),
+                amount: withTax.amount
             };
         });
+        
+        const total = items.reduce((sum, item) => sum + item.amount, 0);
+
+        return {
+            items,
+            total: `${total.toFixed(2)} ${currency}`
+        }
         
     }
 }
