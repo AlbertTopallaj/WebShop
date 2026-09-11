@@ -1,4 +1,4 @@
-export default class ExchangeRateClient {
+export class ExchangeRateClient {
     constructor() {
         this.cache = null;
     }
