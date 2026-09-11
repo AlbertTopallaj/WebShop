@@ -1,4 +1,5 @@
-import { createContext, useState } from "react";
+import { createContext, useState, useContext } from "react";
+import CurrencyModule from "./index.js"
 
 const currencyModule = new CurrencyModule();
 const CurrencyContext = createContext(null);
