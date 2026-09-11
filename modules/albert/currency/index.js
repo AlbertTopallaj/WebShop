@@ -40,7 +40,7 @@ export default class CurrencyModule {
 
     async run(cartItems, currency) {
         if(!cartItems || cartItems.length === 0) throw new EmptyCartError();
-        if(!["USD", "EUR", "SEK"].includes(currency)) throw new UnknownCurrencyError(currency);
+        if(!rates[currency]) throw new UnknownCurrencyError(currency);
 
         const rates = await this.rateClient.getRates();
         const base = this.rateClient.baseCurrency; 
