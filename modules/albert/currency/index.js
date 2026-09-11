@@ -37,6 +37,7 @@ export default class CurrencyModule {
     };
 
     async run(cartItems, currency) {
+        if(!cartItems | cartItems.length === 0) throw new Error("Kundvagnen är tom")
         const rates = await this.rateClient.getRates();
 
         return cartItems.map(item => {
