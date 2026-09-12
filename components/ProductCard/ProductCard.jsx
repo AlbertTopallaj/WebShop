@@ -11,12 +11,17 @@ export default function ProductCard({product}) {
     const {toast} = useToast()
     const {currency, convertCart} = useCurrency();
     const [convertedPrice, setConvertedPrice] = useState(product.price);
+    const [priceExTax, setPriceExTax] = useState(null);
 
     useEffect(() => {
         async function convert() {
             const result = await convertCart([product]);
-            if(result) setConvertedPrice(result.items[0].price);
-        } convert();
+            if(result) {
+                setConvertedPrice(result.items[0].price);
+                setPriceExTax(result.items[0].priceExTax);
+            }
+        } 
+        convert();
     }, [currency]);
 
     function add(product) {
