@@ -16,6 +16,15 @@ export default function Cart() {
     const { toast } = useToast()
     const { currency, convertCart } = useCurrency();
     const [ convertedTotal, setConvertedTotal ] = useState(null);
+
+    useEffect(() => {
+        async function convert() {
+            if(cartItems.length === 0) return;
+            const result = await convertCart(cartItems.map(i => i.product));
+            if(result) setConvertedTotal(result.total);
+        }
+        convert();
+    }, [currency, cartItems]);
     
     const {cartItems, CalculateSum, removeFromCart} = getCart()
 
