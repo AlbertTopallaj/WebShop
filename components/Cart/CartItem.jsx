@@ -9,7 +9,7 @@ export default function CartItem({item, remove}) {
     useEffect(() => {
         async function convert() {
             const result = await convertCart([item.product]);
-            if (result) setConvertedPrice(result[0].price);
+            if (result) setConvertedPrice(result.items[0].price);
          }
          convert();
     }, [currency]);
