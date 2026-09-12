@@ -7,7 +7,7 @@ import {CartContext} from "../components/CartContext/CartContext.jsx";
 import UserInfo from "../pages/UserInfo/UserInfo.jsx";
 import {Toast} from "../components/Toast/Toast.jsx";
 import {VATProvider} from "../components/VAT/VATContext.jsx";
-import { CurrencyProvider } from '../modules/albert/currency/CurrencyContext.jsx';
+import { CurrencyProvider } from "./modules/albert/currency/CurrencyContext.jsx";
 
 export default function App() {
 

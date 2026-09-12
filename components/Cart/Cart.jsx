@@ -4,7 +4,7 @@ import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
 import {postOrder} from "../../scripts/OrderData.js";
 import { Toast, useToast } from "../Toast/Toast.jsx";
-import { useCurrency } from "../../modules/albert/currency/CurrencyContext.jsx";
+import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext.jsx";
 
 
 export default function Cart() {

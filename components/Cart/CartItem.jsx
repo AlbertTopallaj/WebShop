@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useCurrency } from "../../modules/albert/currency/CurrencyContext";
+import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext";
 import "./CartItem.css"
 
 export default function CartItem({item, remove}) {

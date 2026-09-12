@@ -3,7 +3,7 @@ import {Link} from "react-router";
 import {getCart} from "../CartContext/CartContext.jsx";
 import {useToast} from "../Toast/Toast.jsx";
 import { useEffect, useState } from "react";
-import { useCurrency } from "../../modules/albert/currency/CurrencyContext.jsx" 
+import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext.jsx" 
 
 export default function ProductCard({product}) {
 
