@@ -36,7 +36,8 @@ export default function ProductCard({product}) {
                     <img src={product.img[0]} alt={product.name}/>
                     <div className="product-info">
                         <h2>{product.name}</h2>
-                        <p>{convertedPrice}</p>
+                        <p>{priceExTax} with NO TAX</p>
+                        <p>{convertedPrice} with TAX</p>
                     </div>
                 </Link>
                 <button className="buyBtn" onClick={() => {
