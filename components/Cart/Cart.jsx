@@ -16,6 +16,7 @@ export default function Cart() {
     const { toast } = useToast()
     const { currency, convertCart } = useCurrency();
     const [ convertedTotal, setConvertedTotal ] = useState(null);
+    const {cartItems, CalculateSum, removeFromCart} = getCart()
 
     useEffect(() => {
         async function convert() {
@@ -26,7 +27,7 @@ export default function Cart() {
         convert();
     }, [currency, cartItems]);
     
-    const {cartItems, CalculateSum, removeFromCart} = getCart()
+    
 
     async function handlePlaceOrder() {
         const success = await postOrder(email, cartItems)
