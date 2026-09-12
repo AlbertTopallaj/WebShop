@@ -55,6 +55,7 @@ export default class CurrencyModule {
             return {
                 name: item.name,
                 price: withTax.toString(),
+                priceExTax: converted.toString(),
                 amount: withTax.amount
             };
         });
@@ -62,10 +63,8 @@ export default class CurrencyModule {
         const total = items.reduce((sum, item) => sum + item.amount, 0);
 
         return {
-            name: item.name,
-            price: withTax.toString(),
-            priceExTax: converted.toString(),
-            amount: withTax.amount
+            items,
+            total: `${total.toFixed(2)} ${currency}`
         };
         
     }
