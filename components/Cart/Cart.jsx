@@ -73,7 +73,7 @@ export default function Cart() {
                                 <div className="cart-summary">
                                     <div className="cart-sum">
                                         <span>Items</span>
-                                        <span>{CalculateSum(cartItems)}</span>
+                                        <span>{convertedTotal ?? CalculateSum()}</span>
                                     </div>
 
                                     <div className="cart-discount-code">
@@ -114,7 +114,7 @@ export default function Cart() {
 
                                     <div className="cart-subtotal">
                                         <span>Subtotal</span>
-                                        <span> --- </span>
+                                        <span>{convertedTotal ?? CalculateSum()}</span>
                                     </div>
 
                                     <button disabled={!isValidEmail} className="order-button" onClick={handlePlaceOrder}>
