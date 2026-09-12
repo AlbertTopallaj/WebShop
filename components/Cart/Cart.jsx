@@ -1,9 +1,10 @@
 import "./Cart.css"
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
 import {postOrder} from "../../scripts/OrderData.js";
 import { Toast, useToast } from "../Toast/Toast.jsx";
+import { useCurrency } from "../../modules/albert/currency/CurrencyContext.jsx";
 
 
 export default function Cart() {
@@ -13,6 +14,8 @@ export default function Cart() {
     const [email, setEmail] = useState("");
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
     const { toast } = useToast()
+    const { currency, convertCart } = useCurrency();
+    const [ convertedTotal, setConvertedTotal ] = useState(null);
     
     const {cartItems, CalculateSum, removeFromCart} = getCart()
 
