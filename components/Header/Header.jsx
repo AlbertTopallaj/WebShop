@@ -19,7 +19,6 @@ export function Header() {
         <div className="header">
             <HomeBtn/>
             <div className="header-right">
-                <CurrencySelector/>
                 <VATToggle/>
                 <CurrencySelector/>
                 <UserIcon/>
