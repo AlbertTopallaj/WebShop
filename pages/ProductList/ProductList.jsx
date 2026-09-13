@@ -18,8 +18,15 @@ export default function LoadProductList() {
         async function fetchProducts() {
             setLoading(true);
             const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=10`)
-            const data = await response.json()
-            if (campaignInstance) await campaignInstance.run(data.data)
+            let data = await response.json()
+            if (campaignInstance) {
+                try {
+                    const {context} = await campaignInstance.run(data.data)
+                    if (context) data.data = context
+                } catch (_) {
+                    // If campaign cannot be applied properly, skip
+                }
+            }
             const newProducts = data.data.map(
                 product => new Product(
                     product.id,

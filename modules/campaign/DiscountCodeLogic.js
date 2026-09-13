@@ -1,4 +1,4 @@
-import {CampaignMessage, InvalidCampaignCode} from "./ErrorClasses.js";
+import {InvalidCampaignCode} from "./ErrorClasses.js";
 import Discount from "./Discount.js";
 import {DiscountType} from "./DiscountType.js";
 
@@ -20,6 +20,8 @@ export default class DiscountCodeLogic {
 
     getDiscount(cartItems, campaignCode, cachedCampaigns) {
         const campaign = this.#findCampaign(campaignCode, cachedCampaigns)
+
+        // malformation check
 
         let discountValue
 
@@ -99,19 +101,14 @@ export default class DiscountCodeLogic {
                         .filter(item => item.product.name === itemReference.name)
                         .filter(item => item.quantity >= conditions[0])
 
-                    console.log("cartItems:", cartItems);
-                    console.log("validArray:", isValid);
-                    console.log("isValid", isValid.length === 0);
-
                     if (isValid.length === 0) {
                         const item = cartItems.find(entry => entry.product instanceof Discount &&
                             entry.product.type === DiscountType.BUY_X_PAY_Y);
                         if (item) cartItems.splice(cartItems.indexOf(item), 1);
                         this.activeCampaigns.splice(i, 1);
-                        throw new CampaignMessage(`${campaign.code} is no longer valid`)
+                        return `${campaign.code} is no longer valid`
                     }
-
-                    break;
+                    break
 
                 }
                 case DiscountType.THRESHOLD: {
@@ -126,29 +123,33 @@ export default class DiscountCodeLogic {
                             entry.product.type === DiscountType.THRESHOLD);
                         if (item) cartItems.splice(cartItems.indexOf(item), 1);
                         this.activeCampaigns.splice(i, 1);
-                        throw new CampaignMessage(`${campaign.code} is no longer valid`)
+                        return `${campaign.code} is no longer valid`
                     }
                     break
                 }
                 case DiscountType.PERCENTAGE: {
                     const discountObject = cartItems.filter(entry => entry.product instanceof Discount &&
                         entry.product.type === DiscountType.PERCENTAGE)[0]?.product
+
                     if (discountObject) {
                         const cartSum = cartItems
                             .filter(entry => !(entry.product instanceof Discount && entry.product.type === DiscountType.PERCENTAGE))
                             .reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+
                         const conditions = discountObject.discountCondition
-                        if ((conditions === null && cartSum > 0) || (conditions != null && cartSum >= conditions)) {
+
+                        if ((conditions === null && cartSum > 0) || (conditions !== null && cartSum >= conditions)) {
                             discountObject.price = -Math.round(cartSum * discountObject.discountAmount * 100) / 100
                         } else {
                             const item = cartItems.find(entry => entry.product instanceof Discount &&
                                 entry.product.type === DiscountType.PERCENTAGE);
                             if (item) cartItems.splice(cartItems.indexOf(item), 1);
                             this.activeCampaigns.splice(i, 1);
-                            throw new CampaignMessage(`${campaign.code} is no longer valid`)
+                            return `${campaign.code} is no longer valid`
+
                         }
 
-                    } // throw
+                    }
                 }
             }
         }

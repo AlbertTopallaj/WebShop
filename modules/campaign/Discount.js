@@ -7,6 +7,6 @@ export default class Discount extends Product {
         this.type = type
         this.discountAmount = discountAmount
         this.discountCondition = discountCondition
-        this.persist = false
+        this.isDiscount = true
     }
 }

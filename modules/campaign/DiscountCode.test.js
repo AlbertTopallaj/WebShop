@@ -1,6 +1,6 @@
 import DiscountCodeLogic from "./DiscountCodeLogic.js";
 import Discount from "./Discount.js";
-import {CampaignMessage, InvalidCampaignCode} from "./ErrorClasses.js";
+import {InvalidCampaignCode} from "./ErrorClasses.js";
 import {describe, expect, test} from 'vitest';
 
 describe("Unit tests for happy and unhappy path", () => {
@@ -145,11 +145,10 @@ describe("Unit tests for happy and unhappy path", () => {
 
             cart.splice(0, 1); // Remove book
 
-            expect(() => {
-                logic.checkCurrentValidity(cart);
-            }).toThrow(CampaignMessage);
+            const message = logic.checkCurrentValidity(cart);
 
             // both the discount item and the activeCampaign record must be cleared
+            expect(message).toBe("3FOR2 is no longer valid");
             expect(cart.some(item => item.product instanceof Discount)).toBe(false);
             expect(logic.activeCampaigns).toHaveLength(0);
         })
@@ -166,10 +165,9 @@ describe("Unit tests for happy and unhappy path", () => {
 
             cart.splice(1, 1) // remove laptop
 
-            expect(() => {
-                logic.checkCurrentValidity(cart);
-            }).toThrow(CampaignMessage);
+            const message = logic.checkCurrentValidity(cart);
 
+            expect(message).toBe("SPARA100 is no longer valid");
             expect(cart.some(item => item.product instanceof Discount)).toBe(false);
             expect(logic.activeCampaigns).toHaveLength(0);
         })
@@ -186,10 +184,9 @@ describe("Unit tests for happy and unhappy path", () => {
 
             cart.splice(1, 1) // drop laptop again
 
-            expect(() => {
-                logic.checkCurrentValidity(cart);
-            }).toThrow(CampaignMessage);
+            const message = logic.checkCurrentValidity(cart);
 
+            expect(message).toBe("PROCENT40 is no longer valid");
             expect(cart.some(item => item.product.name === "PROCENT40")).toBe(false)
             expect(logic.activeCampaigns).toHaveLength(0)
         })

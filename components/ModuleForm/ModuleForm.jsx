@@ -47,6 +47,7 @@ export default function ModuleForm({module, context}) {
                                 placeholder={input.label}
                                 required={input.required}
                                 pattern={input.pattern}
+                                style={input.transform === "uppercase" ? { textTransform: "uppercase" } : undefined}
                             />
                         </div>
                     )
@@ -74,8 +75,9 @@ export default function ModuleForm({module, context}) {
                     onClick={async () => {
                         if (!instance) return;
                         try {
-                            await instance.run(...methodInputs);
-                            refreshCart()
+                            const {context, message} = await instance.run(...methodInputs);
+                            if (context) refreshCart(context)
+                            if (message) toast(message, 2000)
                         } catch (err) {
                             toast(err.message, 2000);
                         }

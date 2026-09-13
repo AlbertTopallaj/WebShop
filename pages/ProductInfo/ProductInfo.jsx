@@ -41,15 +41,20 @@ export default function ProductInfo() {
                 const res = await fetch(`http://localhost:5050/products/${id}`);
                 if (!res.ok) {
                     toast("Server error, try again later")
-                    navigate("/");
+                    navigate("/")
+                    return
                 }
                 const data = await res.json();
                 const wrapped = [data]
-                if (campaignInstance) await campaignInstance.run(wrapped)
-                setProduct(wrapped[0]);
+                let modifiedData
+                if (campaignInstance) {
+                    const {context} = await campaignInstance.run(wrapped)
+                    modifiedData = context
+                }
+                setProduct(modifiedData? modifiedData[0] : wrapped[0]);
             } catch (e) {
                 toast("Server error, try again later")
-                navigate("/");
+                navigate("/")
             }
         }
 

@@ -52,7 +52,7 @@ export default function Cart() {
                                 <div className="cart-items">
                                     {cartItems.map(item => (
                                         <CartItem
-                                            key={item.id}
+                                            key={item.product.id}
                                             item={item}
                                             remove={removeFromCart}
                                         />

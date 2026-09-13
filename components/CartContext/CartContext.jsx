@@ -1,14 +1,37 @@
 import {createContext, useContext, useEffect, useState} from "react";
 import {getInstances} from "../../scripts/ModuleRegistry.js";
 import {useToast} from "../Toast/Toast.jsx";
+import Product from "../ProductCard/Product.js";
 
 const Context = createContext(null);
 
 export function CartContext({children}) {
 
     const [cartItems, setCartItems] = useState(() => {
-        const saved = localStorage.getItem("cartItems");
-        return saved ? JSON.parse(saved) : [];
+        const saved = localStorage.getItem("cartItems")
+        if (!saved) return []
+
+        const parsed = JSON.parse(saved)
+        try {
+            return parsed.map(entry => ({
+                ...entry,
+                product: new Product(
+                    entry.product.id,
+                    entry.product.name,
+                    entry.product.price,
+                    entry.product.img,
+                    entry.product.weight,
+                    entry.product.dimensions,
+                    entry.product.stock,
+                    entry.product.category,
+                    entry.product.discountPercentage
+                )
+            }))
+        } catch (_) {
+            // Local data malformed, skip
+            localStorage.removeItem("cartItems");
+            return []
+        }
     });
 
     const {toast} = useToast()
@@ -16,28 +39,34 @@ export function CartContext({children}) {
     const campaignInstance = getInstances().find(instance => instance.constructor.descriptor.name === "campaign")
 
     useEffect(() => {
-        const storedCart = cartItems.filter(entry => (entry.product?.persist !== false))
-        localStorage.setItem("cartItems", JSON.stringify(storedCart));
         if (campaignInstance) {
-            const itemsBefore = cartItems.reduce((sum, entry) =>
-                sum + entry.quantity, 0
-            )
             const validateCart = async () => {
                 try {
-                    await campaignInstance.run(cartItems)
+                    const discountBefore = cartItems
+                        .filter(entry => (entry.product?.isDiscount === true))
+                        .reduce((sum, entry) => sum + entry.product.price, 0)
+
+                    const {context, message} = await campaignInstance.run(cartItems)
+
+                    if (!context || !Array.isArray(context)) return
+
+                    const discountAfter = context
+                        .filter(entry => (entry.product?.isDiscount === true))
+                        .reduce((sum, entry) => sum + entry.product.price, 0)
+
+                    if (discountBefore !== discountAfter) {
+                        if (message) toast(message, 2000)
+                        refreshCart(context)
+                    }
                 } catch (e) {
                     toast(e.message, 2000)
                 }
             }
             validateCart()
-            const itemsAfter = cartItems.reduce((sum, entry) =>
-                sum + entry.quantity, 0
-            )
-            if (itemsBefore !== itemsAfter) {
-                refreshCart()
-            }
         }
-    }, [cartItems]);
+        const storedCart = cartItems.filter(entry => !(entry.product?.isDiscount === true))
+        localStorage.setItem("cartItems", JSON.stringify(storedCart));
+    }, [cartItems])
 
     function addToCart(product) {
 
@@ -68,8 +97,9 @@ export function CartContext({children}) {
         )
     }
 
-    function refreshCart() {
-        setCartItems([...cartItems])
+    function refreshCart(newCart) {
+        if (newCart) setCartItems([...newCart])
+        else setCartItems([...cartItems])
     }
 
     function CalculateSum() {

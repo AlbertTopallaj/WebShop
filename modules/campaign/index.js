@@ -1,7 +1,9 @@
-import {CampaignErrors, CampaignMessage, EndpointNotReachable} from "./ErrorClasses.js";
+import {CampaignErrors, EndpointNotReachable} from "./ErrorClasses.js";
 import {registerInstance, registerModule} from "../../scripts/ModuleRegistry.js";
 import DiscountCodeLogic from "./DiscountCodeLogic.js";
 import CampaignLogic from "./CampaignLogic.js";
+import DTO from "./DTO.js";
+import Product from "../../components/ProductCard/Product.js";
 
 export default class Campaign {
     static descriptor = {
@@ -22,12 +24,13 @@ export default class Campaign {
                         name: "campaignCode",
                         type: "text",
                         label: "Discount Code",
-                        pattern: undefined,
+                        pattern: "^[a-zA-Z0-9]{4,10}$",
+                        transform: "uppercase",
                         required: true
 
                     }
                 ],
-                output: 'reference mutation'
+                output: 'returns a DTO {context, message} containing a mutated collection and a message'
             }
         ]
     }
@@ -50,7 +53,6 @@ export default class Campaign {
         }
         this.errorLog.push(log)
         if (error instanceof CampaignErrors) throw error
-        if (e.isMessage) throw e
         throw new CampaignErrors("Something went wrong, try again later")
     }
 
@@ -61,9 +63,12 @@ export default class Campaign {
 
             const data = await response.json()
 
-            this.cachedCampaigns = Array.isArray(data) ? data : [data];
+            this.cachedCampaigns = {
+                campaignCodes: data?.campaignCodes ?? [],
+                campaigns: data?.campaigns ?? []
+            }
             this.cacheTimestamp = Date.now()
-            return this.cachedCampaigns;
+            return this.cachedCampaigns
 
         } catch (e) {
             new this.#logAndThrow(new EndpointNotReachable(e.message))
@@ -74,18 +79,29 @@ export default class Campaign {
         return (Date.now() - this.cacheTimestamp) > 30 * 60 * 1000
     }
 
+    #copy(original) {
+        return original.map(item => ({
+            ...item,
+            product: Object.assign(
+                Object.create(Object.getPrototypeOf(item.product)),
+                item.product
+            ),
+        }));
+    }
+
 
     async run(context, campaignCode) {
         if (!Array.isArray(context)) this.#logAndThrow(Error("Incorrect module input type"))
 
-        if (context.length === 0) return // noop
+        if (context.length === 0) return new DTO() // noop
 
-        const isCart = 'product' in context[0]
+        const isCart = context[0]?.product instanceof Product
 
         if (!campaignCode && isCart) {
             try {
-                this.discountLogic.checkCurrentValidity(context)
-                return
+                const cartItems = this.#copy(context)
+                const message = this.discountLogic.checkCurrentValidity(cartItems)
+                return new DTO(cartItems, message)
             } catch (e) {
                 this.#logAndThrow(e)
             }
@@ -98,16 +114,20 @@ export default class Campaign {
         if (isCart) {
             // Discount code pipe
             try {
-                const discount = this.discountLogic.getDiscount(context, campaignCode, this.cachedCampaigns)
-                context.push({product: discount, quantity: 1})
-                this.#logAndThrow(new CampaignMessage(`${discount.name} successfully added`))
+                const cartItems = this.#copy(context)
+                campaignCode = campaignCode ? campaignCode.toUpperCase() : undefined
+                const discount = this.discountLogic.getDiscount(cartItems, campaignCode, this.cachedCampaigns.campaignCodes)
+                cartItems.push({product: discount, quantity: 1})
+                return new DTO(cartItems, `${discount.name} successfully added`)
             } catch (e) {
                 this.#logAndThrow(e)
             }
         } else if (!isCart && !campaignCode){
             // Campaign pipe
             try {
-                this.campaignLogic.applyDiscount(context)
+                const rawData = structuredClone(context)
+                this.campaignLogic.applyDiscount(rawData, this.cachedCampaigns.campaigns)
+                return new DTO(rawData, "")
             } catch (e) {
                 this.#logAndThrow(e)
             }

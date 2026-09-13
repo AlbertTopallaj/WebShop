@@ -14,10 +14,3 @@ export class InvalidCampaignCode extends CampaignErrors {
         super(message)
     }
 }
-
-export class CampaignMessage {
-    constructor(message) {
-        this.message = message
-        this.isMessage = true
-    }
-}
