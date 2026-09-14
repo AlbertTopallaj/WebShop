@@ -17,10 +17,16 @@ export default function LoadProductList() {
             setLoading(true);
             const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=10`)
             const data = await response.json()
+            console.log("API PRODUCT:", data.data[0]);
+            console.log("WEIGHT:", data.data[0]?.weight);
+            console.log("DIMENSIONS:", data.data[0]?.dimensions);
 
             const newProducts = data.data.map(
-                product => new Product(product.id, product.title, product.price, product.images, product.stock)
+                product => new Product(product.id, product.title, product.price, product.images, product.stock, product.weight, product.dimensions)
             );
+            console.log("MAPPED PRODUCT:", newProducts[0]);
+            console.log("MAPPED WEIGHT:", newProducts[0]?.weight);
+            console.log("MAPPED DIMENSIONS:", newProducts[0]?.dimensions);
 
             setProducts(prev => [...prev, ...newProducts]);
             setHasMore(newProducts.length === 10);

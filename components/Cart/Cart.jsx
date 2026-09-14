@@ -4,6 +4,7 @@ import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
 import {postOrder} from "../../scripts/OrderData.js";
 import { Toast, useToast } from "../Toast/Toast.jsx";
+import ShippingOptions from "./ShippingOptions.jsx";
 
 
 export default function Cart() {
@@ -15,6 +16,8 @@ export default function Cart() {
     const { toast } = useToast()
     
     const {cartItems, CalculateSum, removeFromCart} = getCart()
+    const freightItem = cartItems.find(item => item.product.id === "shipping");
+    const freightCost = freightItem ? freightItem.product.price.toFixed(2) : null;
 
     async function handlePlaceOrder() {
         const success = await postOrder(email, cartItems)
@@ -51,7 +54,7 @@ export default function Cart() {
                                 <div className="cart-items">
                                     {cartItems.map(item => (
                                         <CartItem
-                                            key={item.id}
+                                            key={item.product.id}
                                             item={item}
                                             remove={removeFromCart}
                                         />
@@ -95,14 +98,18 @@ export default function Cart() {
                                     </div>
 
 
-                                    <div className="cart-freight">
-                                        <span>Freight</span>
-                                        <span> --- </span>
-                                    </div>
+                                    <ShippingOptions />
+
+                                    {freightCost && (
+                                        <div className="cart-freight">
+                                            <span>Freight</span>
+                                            <span>{freightCost}</span>
+                                        </div>
+                                    )}
 
                                     <div className="cart-subtotal">
                                         <span>Subtotal</span>
-                                        <span> --- </span>
+                                        <span> {CalculateSum(cartItems)} </span>
                                     </div>
 
                                     <button disabled={!isValidEmail} className="order-button" onClick={handlePlaceOrder}>
