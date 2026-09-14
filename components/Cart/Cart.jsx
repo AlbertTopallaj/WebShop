@@ -3,18 +3,20 @@ import {useState} from "react";
 import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
 import {postOrder} from "../../scripts/OrderData.js";
-import { Toast, useToast } from "../Toast/Toast.jsx";
-
+import {useToast} from "../Toast/Toast.jsx";
+import {getModules} from "../../scripts/ModuleRegistry.js";
+import ModuleForm from "../ModuleForm/ModuleForm.jsx";
 
 export default function Cart() {
 
     const [isOpen, setIsOpen] = useState(false)
-    const [discountCode, setDiscountCode] = useState([])
     const [email, setEmail] = useState("");
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const { toast } = useToast()
-    
+    const {toast} = useToast()
+
     const {cartItems, CalculateSum, removeFromCart} = getCart()
+    const modules = getModules()
+    const context = {cartItems}
 
     async function handlePlaceOrder() {
         const success = await postOrder(email, cartItems)
@@ -22,10 +24,9 @@ export default function Cart() {
             toast("Order placed!", 2000);
             setIsOpen(false);
         } else {
-                toast("Something went wrong, try again", 2000);
-            }
+            toast("Something went wrong, try again", 2000);
         }
-
+    }
     return (
         <div className="cart">
             <button className="cart-button" onClick={() => setIsOpen(!isOpen)}>
@@ -51,7 +52,7 @@ export default function Cart() {
                                 <div className="cart-items">
                                     {cartItems.map(item => (
                                         <CartItem
-                                            key={item.id}
+                                            key={item.product.id}
                                             item={item}
                                             remove={removeFromCart}
                                         />
@@ -64,40 +65,16 @@ export default function Cart() {
                                         <span>{CalculateSum(cartItems)}</span>
                                     </div>
 
-                                    <div className="cart-discount-code">
-                                        <span className="discount-label">Discount Code</span>
+                                    <div className="moduleContainer">
+                                        {/* Dynamically loaded module forms */
+                                            modules.map(module => {
+                                                return <ModuleForm
+                                                    key={module.descriptor.name}
+                                                    module={module}
+                                                    context={context}/>
+                                            })
+                                        }
 
-                                        <div className="discount-input-row">
-                                            <input
-                                                type="text"
-                                                placeholder="Enter code"
-                                            />
-                                            <button type="button">
-                                                Add
-                                            </button>
-                                        </div>
-
-                                        <span className="discount-value">
-                                            {discountCode.length > 0 ?
-                                                discountCode.map(discount => (
-                                                    <div>
-                                                        Discount: {discount.code} -{discount.discount.toFixed(2)}
-                                                    </div>
-                                                ))
-                                                : ""}
-                                        </span>
-                                    </div>
-
-                                    <div className="mail">
-                                        <span className="mail-label">Mail</span>
-                                        <input className='mail-input' type="mail" placeholder="your@mail.com"
-                                             onChange={(e) => setEmail(e.target.value)} value={email}></input>
-                                    </div>
-
-
-                                    <div className="cart-freight">
-                                        <span>Freight</span>
-                                        <span> --- </span>
                                     </div>
 
                                     <div className="cart-subtotal">
@@ -105,7 +82,14 @@ export default function Cart() {
                                         <span> --- </span>
                                     </div>
 
-                                    <button disabled={!isValidEmail} className="order-button" onClick={handlePlaceOrder}>
+                                    <div className="mail">
+                                        <span className="mail-label">Mail</span>
+                                        <input className='mail-input' type="mail" placeholder="your@mail.com"
+                                               onChange={(e) => setEmail(e.target.value)} value={email}></input>
+                                    </div>
+
+                                    <button className="order-button" disabled={!isValidEmail}
+                                            onClick={() => handlePlaceOrder()}>
                                         Place Order
                                     </button>
                                 </div>

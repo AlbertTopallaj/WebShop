@@ -1,8 +1,11 @@
 import {useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import "./ProductInfo.css"
-import Product from "../../components/ProductCard/Product.jsx";
+import Product from "../../components/ProductCard/Product.js";
 import {getCart} from "../../components/CartContext/CartContext.jsx";
+import {useToast} from "../../components/Toast/Toast.jsx";
+import {getModules} from "../../scripts/ModuleRegistry.js";
+import Campaign from "../../modules/campaign/index.js";
 
 export default function ProductInfo() {
 
@@ -14,24 +17,45 @@ export default function ProductInfo() {
     const [selectedImage, setSelectedImage] = useState(0);
 
     const {addToCart} = getCart()
+    const {toast} = useToast()
+
+    const campaignInstance = getModules().find(module => module === Campaign)?.instance
 
     function getProduct() {
-        return new Product(product.id, product.title, product.price, product.image)
+        return new Product(
+            product.id,
+            product.title,
+            product.price,
+            product.image,
+            product.weight,
+            product.dimensions,
+            product.stock,
+            product.category,
+            product.discountPercentage
+        )
     }
 
     useEffect(() => {
         async function fetchProduct() {
             try {
+                // Returns an object, not an array
                 const res = await fetch(`http://localhost:5050/products/${id}`);
                 if (!res.ok) {
-                    // todo: toast message
-                    navigate("/");
+                    toast("Server error, try again later")
+                    navigate("/")
+                    return
                 }
                 const data = await res.json();
-                setProduct(data);
+                const wrapped = [data]
+                let modifiedData
+                if (campaignInstance) {
+                    const {context} = await campaignInstance.run(wrapped)
+                    modifiedData = context
+                }
+                setProduct(modifiedData? modifiedData[0] : wrapped[0]);
             } catch (e) {
-                // todo: toast message
-                navigate("/");
+                toast("Server error, try again later")
+                navigate("/")
             }
         }
 
@@ -89,9 +113,11 @@ export default function ProductInfo() {
                         ${product.price.toFixed(2)}
                     </div>
 
-                    {product.discountPercentage > 0 && (
+                    {typeof product?.discountPercentage === 'string' && (
                         <p className="product-discount">
-                            {product.discountPercentage.toFixed(0)}% off
+                            {
+                                `${product.discountPercentage.valueOf() * 100}% off`
+                            }
                         </p>
                     )}
 
@@ -104,7 +130,10 @@ export default function ProductInfo() {
                         <span>{product.stock} available</span>
                     </div>
 
-                    <button className="buyBtn" onClick={() => addToCart(getProduct(id))}>
+                    <button className="buyBtn" onClick={() => {
+                        addToCart(getProduct(id))
+                        toast(`${product.title} added to cart`)
+                    }}>
                         Add to cart
                     </button>
 
