@@ -1,5 +1,5 @@
 import {CampaignErrors, EndpointNotReachable} from "./ErrorClasses.js";
-import {registerInstance, registerModule} from "../../scripts/ModuleRegistry.js";
+import {registerModule} from "../../scripts/ModuleRegistry.js";
 import DiscountCodeLogic from "./DiscountCodeLogic.js";
 import CampaignLogic from "./CampaignLogic.js";
 import DTO from "./DTO.js";
@@ -35,12 +35,16 @@ export default class Campaign {
         ]
     }
 
+    static instance
+
     constructor() {
+        if (!Campaign.instance) {
+            Campaign.instance = this
+        } else return // or throw
         this.cachedCampaigns = []
         this.cacheTimestamp = null
         this.api = "http://localhost:5050/campaign"
         this.errorLog = []
-        registerInstance(this)
         this.discountLogic = new DiscountCodeLogic()
         this.campaignLogic = new CampaignLogic()
     }

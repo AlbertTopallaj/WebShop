@@ -2,7 +2,8 @@ import "./ProductList.css"
 import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import Product from "../../components/ProductCard/Product.js";
 import { useEffect, useRef, useState} from "react";
-import {getInstances} from "../../scripts/ModuleRegistry.js";
+import {getModules} from "../../scripts/ModuleRegistry.js";
+import Campaign from "../../modules/campaign/index.js";
 
 export default function LoadProductList() {
     const [products, setProducts] = useState([])
@@ -11,7 +12,7 @@ export default function LoadProductList() {
     const [loading, setLoading] = useState(false);
     const sentinelRef = useRef(null);
 
-    const campaignInstance = getInstances().find(instance => instance.constructor.descriptor.name === "campaign")
+    const campaignInstance = getModules().find(module => module === Campaign)?.instance
 
 
     useEffect(() => {

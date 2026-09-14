@@ -21,8 +21,6 @@ export default class DiscountCodeLogic {
     getDiscount(cartItems, campaignCode, cachedCampaigns) {
         const campaign = this.#findCampaign(campaignCode, cachedCampaigns)
 
-        // malformation check
-
         let discountValue
 
         switch (campaign.type) {
@@ -71,13 +69,16 @@ export default class DiscountCodeLogic {
                     this.activeCampaigns.push({campaign, itemReference: null})
                     discountValue = -Math.round(cartSum * campaign.discountAmount * 100) / 100
                 } else throw new InvalidCampaignCode("Campaign conditions not fulfilled")
+                break
             }
+            default:
+                throw new InvalidCampaignCode("Invalid campaign code") // Campaign type error
         }
 
-        if (discountValue) {
-            return new Discount(campaign.id, campaignCode, discountValue, "",
-                campaign.type, campaign.discountAmount, campaign.discountCondition)
-        }
+        if (discountValue === undefined) throw new Error("Discount pipe logic error")
+        return new Discount(campaign.id, campaignCode, discountValue, "",
+            campaign.type, campaign.discountAmount, campaign.discountCondition)
+
     }
 
     checkCurrentValidity(cartItems) {
@@ -90,7 +91,7 @@ export default class DiscountCodeLogic {
         );
 
         for (let i = this.activeCampaigns.length - 1; i >= 0; i--) {
-            const { campaign, itemReference } = this.activeCampaigns[i];
+            const {campaign, itemReference} = this.activeCampaigns[i];
             switch (campaign.type) {
                 case DiscountType.BUY_X_PAY_Y: {
                     const conditions = campaign.discountCondition

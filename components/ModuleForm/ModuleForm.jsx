@@ -1,6 +1,5 @@
 import {useState} from "react";
 import "./ModuleForm.css"
-import {getInstances} from "../../scripts/ModuleRegistry.js";
 import {useToast} from "../Toast/Toast.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
 
@@ -21,7 +20,7 @@ export default function ModuleForm({module, context}) {
 
     const visibleInputCount = methods.inputs.filter(input => input.type !== "reference").length;
 
-    const instance = getInstances().find(instance => instance.constructor?.descriptor?.name === descriptor.name)
+    const instance = module?.instance
 
     return (
         <form className={`${descriptor.name} ${visibleInputCount === 1 ? "single" : "multi"}`}
