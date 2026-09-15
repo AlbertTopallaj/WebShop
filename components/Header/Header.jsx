@@ -3,6 +3,7 @@ import "./Header.css"
 import {useNavigate} from "react-router";
 import UserIcon from "../UserIcon/UserIcon.jsx";
 import VATToggle from "../VAT/VATToggle.jsx";
+import CurrencySelector from "../Currency/CurrencySelector.jsx";
 
 function HomeBtn() {
     const navigate = useNavigate()
@@ -19,6 +20,7 @@ export function Header() {
             <HomeBtn/>
             <div className="header-right">
                 <VATToggle/>
+                <CurrencySelector/>
                 <UserIcon/>
                 <Cart/>
             </div>

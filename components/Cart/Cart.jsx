@@ -1,8 +1,11 @@
 import "./Cart.css"
-import {useState} from "react";
+import { useState, useEffect } from "react";
 import CartItem from "./CartItem.jsx";
 import {getCart} from "../CartContext/CartContext.jsx";
 import {postOrder} from "../../scripts/OrderData.js";
+import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext.jsx";
+import CurrencySelector from "../Currency/CurrencySelector.jsx";
+
 import {useToast} from "../Toast/Toast.jsx";
 import {getModules} from "../../scripts/ModuleRegistry.js";
 import ModuleForm from "../ModuleForm/ModuleForm.jsx";
@@ -12,11 +15,23 @@ export default function Cart() {
     const [isOpen, setIsOpen] = useState(false)
     const [email, setEmail] = useState("");
     const isValidEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-    const {toast} = useToast()
-
+    const { toast } = useToast()
+    const { currency, convertCart } = useCurrency();
+    const [ convertedTotal, setConvertedTotal ] = useState(null);
     const {cartItems, CalculateSum, removeFromCart} = getCart()
     const modules = getModules()
     const context = {cartItems}
+
+    useEffect(() => {
+        async function convert() {
+            if(cartItems.length === 0) return;
+            const result = await convertCart(cartItems.map(i => i.product));
+            if(result) setConvertedTotal(result.total);
+        }
+        convert();
+    }, [currency, cartItems]);
+    
+    
 
     async function handlePlaceOrder() {
         const success = await postOrder(email, cartItems)
@@ -44,6 +59,7 @@ export default function Cart() {
                         <button className="cart-close" onClick={() => setIsOpen(false)}>
                             ×
                         </button>
+                        <CurrencySelector/>
                         <h2>Your Cart</h2>
 
                         {cartItems.length === 0 ? (
@@ -62,7 +78,7 @@ export default function Cart() {
                                 <div className="cart-summary">
                                     <div className="cart-sum">
                                         <span>Items</span>
-                                        <span>{CalculateSum(cartItems)}</span>
+                                        <span>{convertedTotal ?? CalculateSum()}</span>
                                     </div>
 
                                     <div className="moduleContainer">
@@ -79,7 +95,7 @@ export default function Cart() {
 
                                     <div className="cart-subtotal">
                                         <span>Subtotal</span>
-                                        <span> --- </span>
+                                        <span>{convertedTotal ?? CalculateSum()}</span>
                                     </div>
 
                                     <div className="mail">

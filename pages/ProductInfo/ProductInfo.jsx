@@ -48,16 +48,19 @@ export default function ProductInfo() {
                 const data = await res.json();
                 const wrapped = [data]
                 let modifiedData
+                /*
                 if (campaignInstance) {
                     const {context} = await campaignInstance.run(wrapped)
                     modifiedData = context
                 }
+                    */
                 setProduct(modifiedData? modifiedData[0] : wrapped[0]);
             } catch (e) {
                 toast("Server error, try again later")
                 navigate("/")
-            }
+            } 
         }
+            
 
         fetchProduct();
     }, [id])
