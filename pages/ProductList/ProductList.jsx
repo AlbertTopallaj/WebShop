@@ -20,47 +20,12 @@ export default function LoadProductList() {
     useEffect(() => {
         async function fetchProducts() {
             setLoading(true);
-<<<<<<< HEAD
             const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=10`)
             const data = await response.json()
-            console.log("API PRODUCT:", data.data[0]);
-            console.log("WEIGHT:", data.data[0]?.weight);
-            console.log("DIMENSIONS:", data.data[0]?.dimensions);
 
             const newProducts = data.data.map(
                 product => new Product(product.id, product.title, product.price, product.images, product.stock, product.weight, product.dimensions)
-=======
-            const fetchUrl = category ?
-                `http://localhost:5050/products?category=${category}&_page=${page}&_per_page=10` :
-                `http://localhost:5050/products?_page=${page}&_per_page=10`
-            const response = await fetch(fetchUrl)
-            let data = await response.json()
-            if (campaignInstance) {
-                try {
-                    const {context, message} = await campaignInstance.run(data.data)
-                    if (context) data.data = context
-                    if (message) setDailyDiscount(message)
-                } catch (_) {
-                    // If campaign cannot be applied properly, skip
-                }
-            }
-            const newProducts = data.data.map(
-                product => new Product(
-                    product.id,
-                    product.title,
-                    product.price,
-                    product.images,
-                    product.weight,
-                    product.dimensions,
-                    product.stock,
-                    product.category,
-                    product.discountPercentage
-                )
->>>>>>> a9c526b707da1c71044a3f4f706265a5e38e0370
             );
-            console.log("MAPPED PRODUCT:", newProducts[0]);
-            console.log("MAPPED WEIGHT:", newProducts[0]?.weight);
-            console.log("MAPPED DIMENSIONS:", newProducts[0]?.dimensions);
 
             setProducts(prev => [...prev, ...newProducts]);
             setHasMore(newProducts.length === 10);
@@ -150,20 +115,20 @@ export default function LoadProductList() {
                 </select>
             </div>
 
-            <div className="product-list-wrapper">
-                <div className="product-list">
-                    {products.map(product => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                        />
-                    ))}
-                </div>
+        <div className="product-list-wrapper">
+            <div className="product-list">
+                {products.map(product => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                    />
+                ))}
+            </div>
 
                 <div ref={sentinelRef} style={{height: "10px"}}/>
                 {loading && <p style={{textAlign: "center"}}>Loading more products...</p>}
                 {!hasMore && <p style={{textAlign: "center"}}>No more products found.</p>}
-            </div>
+        </div>
         </>
     )
 }
