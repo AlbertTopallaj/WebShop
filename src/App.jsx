@@ -9,7 +9,7 @@ import {Toast} from "../components/Toast/Toast.jsx";
 import {VATProvider} from "../components/VAT/VATContext.jsx";
 import { CurrencyProvider } from "./modules/albert/currency/CurrencyContext.jsx";
 import "./modules/campaign/index.js"
-import "../modules/freights/index.js"
+//import "./modules/ShippingCalculator/index.js"
 import Campaign from "./modules/campaign/index.js";
 
 export default function App() {

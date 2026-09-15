@@ -12,9 +12,10 @@ function add(name, jsonFile) {
 
 // Individuella modul .json filer laddas här
 add("orders", "orders.json")
-add("campaign", "./campaign/campaign.json")
+add("campaign", "campaign.json")
 add("products", "products.json")
 add("rates", "rates.json")
+add("carriers", "carriers.json")
 
 try {
     fs.writeFileSync("db.json", JSON.stringify(db, null, 2))

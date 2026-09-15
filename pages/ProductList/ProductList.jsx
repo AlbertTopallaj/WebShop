@@ -20,32 +20,11 @@ export default function LoadProductList() {
     useEffect(() => {
         async function fetchProducts() {
             setLoading(true);
-            const fetchUrl = category ?
-                `http://localhost:5050/products?category=${category}&_page=${page}&_per_page=10` :
-                `http://localhost:5050/products?_page=${page}&_per_page=10`
-            const response = await fetch(fetchUrl)
-            let data = await response.json()
-            if (campaignInstance) {
-                try {
-                    const {context, message} = await campaignInstance.run(data.data)
-                    if (context) data.data = context
-                    if (message) setDailyDiscount(message)
-                } catch (_) {
-                    // If campaign cannot be applied properly, skip
-                }
-            }
+            const response = await fetch(`http://localhost:5050/products?_page=${page}&_per_page=10`)
+            const data = await response.json()
+
             const newProducts = data.data.map(
-                product => new Product(
-                    product.id,
-                    product.title,
-                    product.price,
-                    product.images,
-                    product.weight,
-                    product.dimensions,
-                    product.stock,
-                    product.category,
-                    product.discountPercentage
-                )
+                product => new Product(product.id, product.title, product.price, product.images, product.stock, product.weight, product.dimensions)
             );
 
             setProducts(prev => [...prev, ...newProducts]);
@@ -136,20 +115,20 @@ export default function LoadProductList() {
                 </select>
             </div>
 
-            <div className="product-list-wrapper">
-                <div className="product-list">
-                    {products.map(product => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                        />
-                    ))}
-                </div>
+        <div className="product-list-wrapper">
+            <div className="product-list">
+                {products.map(product => (
+                    <ProductCard
+                        key={product.id}
+                        product={product}
+                    />
+                ))}
+            </div>
 
                 <div ref={sentinelRef} style={{height: "10px"}}/>
                 {loading && <p style={{textAlign: "center"}}>Loading more products...</p>}
                 {!hasMore && <p style={{textAlign: "center"}}>No more products found.</p>}
-            </div>
+        </div>
         </>
     )
 }

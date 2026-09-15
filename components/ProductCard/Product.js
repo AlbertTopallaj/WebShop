@@ -1,5 +1,5 @@
 export default class Product {
-    constructor(id, name, price, img, weight, dimensions, stock, category, discountPercentage) {
+    constructor(id, name, price, img, stock, weight, dimensions, category, discountPercentage) {
         this.id = id
         this.name = name
         this.price = price

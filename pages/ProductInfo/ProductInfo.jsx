@@ -27,9 +27,9 @@ export default function ProductInfo() {
             product.title,
             product.price,
             product.image,
+            product.stock,
             product.weight,
             product.dimensions,
-            product.stock,
             product.category,
             product.discountPercentage
         )
