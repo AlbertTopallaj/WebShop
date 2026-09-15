@@ -12,6 +12,24 @@
     gap: 20px;
 }
 
+.category-selector {
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 16px 32px 0;
+    box-sizing: border-box;
+}
+
+.category-selector select {
+    padding: 6px 30px 6px 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    color: var(--text-h);
+    cursor: pointer;
+}
+
+
 @media (max-width: 1100px) {
     .product-list {
         grid-template-columns: repeat(4, minmax(0, 1fr));
