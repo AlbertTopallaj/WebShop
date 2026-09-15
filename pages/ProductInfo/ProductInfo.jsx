@@ -49,8 +49,12 @@ export default function ProductInfo() {
                 const wrapped = [data]
                 let modifiedData
                 if (campaignInstance) {
-                    const {context} = await campaignInstance.run(wrapped)
-                    modifiedData = context
+                    try {
+                        const {context} = await campaignInstance.run(wrapped)
+                        modifiedData = context
+                    } catch (_) {
+                        // If campaign cannot be applied properly, skip
+                    }
                 }
                 setProduct(modifiedData? modifiedData[0] : wrapped[0]);
             } catch (e) {
