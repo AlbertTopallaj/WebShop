@@ -1,4 +1,4 @@
-import Product from "../../components/ProductCard/Product.js";
+import Product from "../../../components/ProductCard/Product.js";
 
 
 export default class Discount extends Product {
