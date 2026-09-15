@@ -19,9 +19,6 @@
       "date": "2026-09-02"
     }
   ],
-  "campaign": {
-    "test": "test"
-  },
   "products": [
     {
       "id": 1,
@@ -34,7 +31,7 @@
       "stock": 99,
       "tags": [
         "beauty",
-        "mascara" 
+        "mascara"
       ],
       "brand": "Essence",
       "sku": "BEA-ESS-ESS-001",

@@ -38,6 +38,13 @@ export default function ProductCard({product}) {
                         <h2>{product.name}</h2>
                         <p>{priceExTax} with NO TAX</p>
                         <p>{convertedPrice} with TAX</p>
+                        {typeof product?.discountPercentage === 'string' && (
+                            <p>
+                                {
+                                    `${product.discountPercentage.valueOf() * 100}% off`
+                                }
+                            </p>
+                        )}
                     </div>
                 </Link>
                 <button className="buyBtn" onClick={() => {
