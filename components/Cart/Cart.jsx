@@ -59,7 +59,9 @@ export default function Cart() {
                         <button className="cart-close" onClick={() => setIsOpen(false)}>
                             ×
                         </button>
+                        <div className="currency-selector">
                         <CurrencySelector/>
+                        </div>
                         <h2>Your Cart</h2>
 
                         {cartItems.length === 0 ? (
