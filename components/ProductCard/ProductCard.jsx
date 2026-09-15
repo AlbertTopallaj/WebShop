@@ -2,11 +2,27 @@ import "./ProductCard.css"
 import {Link} from "react-router";
 import {getCart} from "../CartContext/CartContext.jsx";
 import {useToast} from "../Toast/Toast.jsx";
+import { useEffect, useState } from "react";
+import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext.jsx" 
 
 export default function ProductCard({product}) {
 
     const {addToCart} = getCart()
     const {toast} = useToast()
+    const {currency, convertCart} = useCurrency();
+    const [convertedPrice, setConvertedPrice] = useState(product.price);
+    const [priceExTax, setPriceExTax] = useState(null);
+
+    useEffect(() => {
+        async function convert() {
+            const result = await convertCart([product]);
+            if(result) {
+                setConvertedPrice(result.items[0].price);
+                setPriceExTax(result.items[0].priceExTax);
+            }
+        } 
+        convert();
+    }, [currency]);
 
     function add(product) {
         addToCart(product);
@@ -19,7 +35,16 @@ export default function ProductCard({product}) {
                 <Link to={`/product?id=${product.id}`}>
                     <img src={product.img[0]} alt={product.name}/>
                     <div className="product-info">
-                        <h2>{product.name}</h2> <p>{product.price}</p>
+                        <h2>{product.name}</h2>
+                        <p>{priceExTax} with NO TAX</p>
+                        <p>{convertedPrice} with TAX</p>
+                        {typeof product?.discountPercentage === 'string' && (
+                            <p className="discount-label">
+                                {
+                                    `${product.discountPercentage.valueOf() * 100}% off`
+                                }
+                            </p>
+                        )}
                     </div>
                 </Link>
                 <button className="buyBtn" onClick={() => {
