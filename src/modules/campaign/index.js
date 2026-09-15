@@ -99,42 +99,38 @@ export default class Campaign {
 
         if (context.length === 0) return new DTO() // noop
 
-        const isCart = context[0]?.product instanceof Product
-
-        if (!campaignCode && isCart) {
-            try {
-                const cartItems = this.#copy(context)
-                const message = this.discountLogic.checkCurrentValidity(cartItems)
-                return new DTO(cartItems, message)
-            } catch (e) {
-                this.#logAndThrow(e)
-            }
-
-        }
         if (this.cachedCampaigns.length === 0 || this.#isExpired()) {
             await this.#getActiveCampaigns()
         }
 
-        if (isCart) {
-            // Discount code pipe
-            try {
+        const isCart = context[0]?.product instanceof Product
+
+        try {
+
+            if (!campaignCode && isCart) {
+                const cartItems = this.#copy(context)
+                const message = this.discountLogic.checkCurrentValidity(cartItems)
+                return new DTO(cartItems, message)
+            }
+
+            if (isCart) {
+                // Discount code pipe
                 const cartItems = this.#copy(context)
                 campaignCode = campaignCode ? campaignCode.toUpperCase() : undefined
                 const discount = this.discountLogic.getDiscount(cartItems, campaignCode, this.cachedCampaigns.campaignCodes)
                 cartItems.push({product: discount, quantity: 1})
                 return new DTO(cartItems, `${discount.name} successfully added`)
-            } catch (e) {
-                this.#logAndThrow(e)
             }
-        } else if (!isCart && !campaignCode){
-            // Campaign pipe
-            try {
+
+            if (!isCart && !campaignCode) {
+                // Campaign pipe
                 const rawData = structuredClone(context)
-                this.campaignLogic.applyDiscount(rawData, this.cachedCampaigns.campaigns)
-                return new DTO(rawData, "")
-            } catch (e) {
-                this.#logAndThrow(e)
+                const message = this.campaignLogic.applyDiscount(rawData, this.cachedCampaigns.campaigns)
+                return new DTO(rawData, message)
             }
+
+        } catch (e) {
+            this.#logAndThrow(e)
         }
     }
 }

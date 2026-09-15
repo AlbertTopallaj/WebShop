@@ -42,6 +42,10 @@
       {
         "category": "furniture",
         "discountAmount": 0.20
+      },
+      {
+        "category": "kitchen-accessories",
+        "discountAmount": 0.20
       }
     ],
     [
@@ -110,9 +114,7 @@
       {
         "category": "womens-bags",
         "discountAmount": 0.20
-      }
-    ],
-    [
+      },
       {
         "category": "womens-jewellery",
         "discountAmount": 0.15
@@ -120,7 +122,9 @@
       {
         "category": "womens-watches",
         "discountAmount": 0.15
-      },
+      }
+    ],
+    [
       {
         "category": "sports-accessories",
         "discountAmount": 0.20
@@ -134,10 +138,6 @@
       {
         "category": "motorcycle",
         "discountAmount": 0.05
-      },
-      {
-        "category": "kitchen-accessories",
-        "discountAmount": 0.20
       }
     ]
   ]

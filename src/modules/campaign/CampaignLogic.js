@@ -1,9 +1,11 @@
 export default class CampaignLogic {
 
+    #discountDayIndex = ["Home", "Electronics", "Beauty", "Men", "Women", "Sports", "Vehicles"];
+
+
     applyDiscount(rawProductData, campaigns) {
 
-        //const dailyIndex = new Date().getDay()
-        const dailyIndex = 2
+        const dailyIndex = new Date().getDay()
         const dailyDiscounts = campaigns[dailyIndex]
 
         rawProductData.forEach(product => {
@@ -14,5 +16,6 @@ export default class CampaignLogic {
                 }
             })
         })
+        return this.#discountDayIndex[dailyIndex]
     }
 }

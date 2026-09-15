@@ -2,7 +2,7 @@ import {createContext, useContext, useEffect, useState} from "react";
 import {getModules} from "../../scripts/ModuleRegistry.js";
 import {useToast} from "../Toast/Toast.jsx";
 import Product from "../ProductCard/Product.js";
-import Campaign from "../../modules/campaign/index.js";
+import Campaign from "../../src/modules/campaign/index.js";
 
 const Context = createContext(null);
 
