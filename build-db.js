@@ -4,7 +4,7 @@ const db = {}
 
 function add(name, jsonFile) {
     try {
-        db[name] = JSON.parse(fs.readFileSync(`./modules/${jsonFile}`, "utf8"))
+        db[name] = JSON.parse(fs.readFileSync(`./src/modules/${jsonFile}`, "utf8"))
     } catch (error) {
         console.error("Failed to load data:", error.message);
     }

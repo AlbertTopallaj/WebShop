@@ -1,5 +1,5 @@
 import { useState } from "react";
-import modules from "../../modules/moduleMaker.js";
+import modules from "../../src/modules/moduleMaker.js";
 import { getCart } from "../CartContext/CartContext.jsx";
 import "./ShippingOptions.css";
 
