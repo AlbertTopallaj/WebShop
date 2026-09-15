@@ -1,4 +1,5 @@
 import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext";
+import "./currencySelector.css"
 
 export default function CurrencySelector() {
     const { currency, setCurrency} = useCurrency();
