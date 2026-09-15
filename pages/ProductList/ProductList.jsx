@@ -3,11 +3,12 @@ import ProductCard from "../../components/ProductCard/ProductCard.jsx";
 import Product from "../../components/ProductCard/Product.js";
 import {useEffect, useRef, useState} from "react";
 import {getModules} from "../../scripts/ModuleRegistry.js";
-import Campaign from "../../modules/campaign/index.js";
+import Campaign from "../../src/modules/campaign/index.js";
 
 export default function LoadProductList() {
     const [products, setProducts] = useState([])
     const [category, setCategory] = useState("")
+    const [dailyDiscount, setDailyDiscount] = useState(undefined)
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(true);
     const [loading, setLoading] = useState(false);
@@ -26,8 +27,9 @@ export default function LoadProductList() {
             let data = await response.json()
             if (campaignInstance) {
                 try {
-                    const {context} = await campaignInstance.run(data.data)
+                    const {context, message} = await campaignInstance.run(data.data)
                     if (context) data.data = context
+                    if (message) setDailyDiscount(message)
                 } catch (_) {
                     // If campaign cannot be applied properly, skip
                 }
@@ -71,6 +73,11 @@ export default function LoadProductList() {
     return (
         <>
             <div className="category-selector">
+                {dailyDiscount && (
+                    <div className="daily-discount">
+                        Daily discount on: {dailyDiscount}
+                    </div>
+                )}
                 <select
                     value={category}
                     onChange={e => {
