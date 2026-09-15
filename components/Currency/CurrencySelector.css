@@ -9,7 +9,7 @@
     outline: none;
 }
 
-.currencySelector select option {
+.currency-selector select option {
     background: #16171d;
     color: #c084fc;
 }
