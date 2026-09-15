@@ -1,9 +1,9 @@
 import {CampaignErrors, EndpointNotReachable} from "./ErrorClasses.js";
-import {registerModule} from "../../scripts/ModuleRegistry.js";
+import {registerModule} from "../../../scripts/ModuleRegistry.js";
 import DiscountCodeLogic from "./DiscountCodeLogic.js";
 import CampaignLogic from "./CampaignLogic.js";
 import DTO from "./DTO.js";
-import Product from "../../components/ProductCard/Product.js";
+import Product from "../../../components/ProductCard/Product.js";
 
 export default class Campaign {
     static descriptor = {
