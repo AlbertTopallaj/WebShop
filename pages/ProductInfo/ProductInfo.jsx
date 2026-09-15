@@ -5,7 +5,7 @@ import Product from "../../components/ProductCard/Product.js";
 import {getCart} from "../../components/CartContext/CartContext.jsx";
 import {useToast} from "../../components/Toast/Toast.jsx";
 import {getModules} from "../../scripts/ModuleRegistry.js";
-import Campaign from "../../modules/campaign/index.js";
+import Campaign from "../../src/modules/campaign/index.js";
 
 export default function ProductInfo() {
 
@@ -48,19 +48,16 @@ export default function ProductInfo() {
                 const data = await res.json();
                 const wrapped = [data]
                 let modifiedData
-                /*
                 if (campaignInstance) {
                     const {context} = await campaignInstance.run(wrapped)
                     modifiedData = context
                 }
-                    */
                 setProduct(modifiedData? modifiedData[0] : wrapped[0]);
             } catch (e) {
                 toast("Server error, try again later")
                 navigate("/")
-            } 
+            }
         }
-            
 
         fetchProduct();
     }, [id])

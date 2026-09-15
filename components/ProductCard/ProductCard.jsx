@@ -39,7 +39,7 @@ export default function ProductCard({product}) {
                         <p>{priceExTax} with NO TAX</p>
                         <p>{convertedPrice} with TAX</p>
                         {typeof product?.discountPercentage === 'string' && (
-                            <p>
+                            <p className="discount-label">
                                 {
                                     `${product.discountPercentage.valueOf() * 100}% off`
                                 }

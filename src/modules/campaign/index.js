@@ -125,8 +125,8 @@ export default class Campaign {
             if (!isCart && !campaignCode) {
                 // Campaign pipe
                 const rawData = structuredClone(context)
-                this.campaignLogic.applyDiscount(rawData, this.cachedCampaigns.campaigns)
-                return new DTO(rawData, "")
+                const message = this.campaignLogic.applyDiscount(rawData, this.cachedCampaigns.campaigns)
+                return new DTO(rawData, message)
             }
 
         } catch (e) {
