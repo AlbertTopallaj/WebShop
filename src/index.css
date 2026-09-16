@@ -55,8 +55,8 @@ body {
 }
 
 #root {
-  width: calc(100% - 180px);
-  max-width: 100%;
+  width: 100%;
+  max-width: 1440px;
   margin: 0 auto;
   text-align: center;
   border-inline: 1px solid var(--border);
@@ -68,7 +68,7 @@ body {
 
 h1,
 h2 {
-  font-family: var(--heading);
+  font-family: var(--heading), serif;
   font-weight: 500;
   color: var(--text-h);
 }
@@ -97,7 +97,7 @@ p {
 
 code,
 .counter {
-  font-family: var(--mono);
+  font-family: var(--mono), serif;
   display: inline-flex;
   border-radius: 4px;
   color: var(--text-h);
