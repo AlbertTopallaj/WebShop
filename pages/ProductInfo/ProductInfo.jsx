@@ -114,7 +114,8 @@ export default function ProductInfo() {
                     </div>
 
                     <div className="product-price">
-                        ${product.price.toFixed(2)}
+                        <p>{priceExTax} without TAX</p>
+                        {includeVAT && <p>{convertedPrice} with TAX</p>}
                     </div>
 
                     {typeof product?.discountPercentage === 'string' && (
