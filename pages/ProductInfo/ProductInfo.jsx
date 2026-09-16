@@ -7,15 +7,14 @@
     import {getModules} from "../../scripts/ModuleRegistry.js";
     import Campaign from "../../src/modules/campaign/index.js";
     import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext.jsx"
-    import { useEffect, useState } from "react"
     import { useVAT } from "../../components/VAT/VATContext.jsx" 
 
     export default function ProductInfo() {
 
         const { currency, convertCart } = useCurrency();
         const { includeVAT } = useVAT();
-        const { convertedPrice, setConvertedPrice } = useState(null);
-        const { priceExTax, setPriceExTax } = useState(null); 
+        const [ convertedPrice, setConvertedPrice ] = useState(null);
+        const [ priceExTax, setPriceExTax ] = useState(null); 
 
         const [searchParams] = useSearchParams()
         const id = searchParams.get("id")
