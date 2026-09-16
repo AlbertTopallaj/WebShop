@@ -71,7 +71,7 @@ export default function ProductInfo() {
     }
 
     return (
-        <div className="product-info">
+        <div className="product-detail-page">
 
             {/* Main product section */}
             <section className="product-main">

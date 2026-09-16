@@ -34,7 +34,7 @@ export default function ProductCard({product}) {
             <div className="product-card" id={product.id}>
                 <Link to={`/product?id=${product.id}`}>
                     <img src={product.img[0]} alt={product.name}/>
-                    <div className="product-info">
+                    <div className="product-card-content">
                         <h2>{product.name}</h2>
                         <p>{priceExTax} with NO TAX</p>
                         <p>{convertedPrice} with TAX</p>
