@@ -4,6 +4,7 @@ import {getCart} from "../CartContext/CartContext.jsx";
 import {useToast} from "../Toast/Toast.jsx";
 import { useEffect, useState } from "react";
 import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext.jsx" 
+import { useVAT } from "../VAT/VATContext.jsx"
 
 export default function ProductCard({product}) {
 
