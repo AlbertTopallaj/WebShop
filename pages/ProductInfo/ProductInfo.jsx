@@ -36,6 +36,7 @@
                 const result = await convertCart([product]);
                 if(result) {
                     setConvertedPrice(result.items[0].price);
+                    setTaxRate(result.items[0].taxRate);
                     setPriceExTax(result.items[0].priceExTax);
                 }
             }
@@ -136,7 +137,7 @@
 
                         <div className="product-price">
                             <p>{priceExTax} without TAX</p>
-                            {includeVAT && <p>{convertedPrice} with TAX</p>}
+                            <p>{convertedPrice} including {taxRate}% TAX</p>
                         </div>
 
                         {typeof product?.discountPercentage === 'string' && (
