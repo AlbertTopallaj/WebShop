@@ -38,8 +38,7 @@ export default function ProductCard({product}) {
                     <img src={product.img[0]} alt={product.name}/>
                     <div className="product-card-content">
                         <h2>{product.name}</h2>
-                        <p>{priceExTax} with NO TAX</p>
-                        <p>{convertedPrice} with TAX</p>
+                        <p>{includeVAT ? convertedPrice : priceExTax}</p>
                         {typeof product?.discountPercentage === 'string' && (
                             <p className="discount-label">
                                 {
