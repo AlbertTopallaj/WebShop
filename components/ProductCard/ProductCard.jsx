@@ -12,6 +12,7 @@ export default function ProductCard({product}) {
     const {currency, convertCart} = useCurrency();
     const [convertedPrice, setConvertedPrice] = useState(product.price);
     const [priceExTax, setPriceExTax] = useState(null);
+    const { includeVAT } = useVAT();
 
     useEffect(() => {
         async function convert() {
