@@ -15,6 +15,8 @@ add("orders", "orders.json")
 add("campaign", "./campaign/campaign.json")
 add("products", "products.json")
 add("rates", "rates.json")
+add("stockWarnings", "stockWarnings.json")
+add("stockHistory", "stockHistory.json")
 add("carriers", "carriers.json")
 
 try {
