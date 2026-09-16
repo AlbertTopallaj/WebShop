@@ -14,7 +14,8 @@
         const { currency, convertCart } = useCurrency();
         const { includeVAT } = useVAT();
         const [ convertedPrice, setConvertedPrice ] = useState(null);
-        const [ priceExTax, setPriceExTax ] = useState(null); 
+        const [ priceExTax, setPriceExTax ] = useState(null);
+        const [ taxRate, setTaxRate ] = useState(null);
 
         const [searchParams] = useSearchParams()
         const id = searchParams.get("id")
