@@ -80,7 +80,7 @@ export default class Campaign {
     }
 
     #isExpired() {
-        return (Date.now() - this.cacheTimestamp) > 30 * 60 * 1000
+        return !this.cacheTimestamp || (Date.now() - this.cacheTimestamp) > 30 * 60 * 1000
     }
 
     #copy(original) {
@@ -99,9 +99,7 @@ export default class Campaign {
 
         if (context.length === 0) return new DTO() // noop
 
-        if (this.cachedCampaigns.length === 0 || this.#isExpired()) {
-            await this.#getActiveCampaigns()
-        }
+        if (this.#isExpired()) await this.#getActiveCampaigns()
 
         const isCart = context[0]?.product instanceof Product
 

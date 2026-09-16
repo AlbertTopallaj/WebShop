@@ -75,7 +75,7 @@ export default function UserInfo() {
                                             <div className="product-image">
                                                 {item.product?.img ? (
                                                     <img
-                                                        src={item.product.img}
+                                                        src={item.product.img[0]}
                                                         alt={item.product.name}
                                                     />
                                                 ) : (

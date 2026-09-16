@@ -33,6 +33,7 @@ export default class DiscountCodeLogic {
                     .split("for")
 
                 const validItems = cartItems
+                    .filter(item => item.product?.id !== "shipping")
                     .filter(item => item.quantity >= conditions[0].valueOf())
                     .sort((a, b) => b.product.price - a.product.price)
 
@@ -52,7 +53,9 @@ export default class DiscountCodeLogic {
 
                 const conditions = campaign.discountCondition
 
-                const totalPrice = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+                const totalPrice = cartItems
+                    .filter(item => item.product?.id !== "shipping")
+                    .reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
                 if (totalPrice < conditions.valueOf()) throw new InvalidCampaignCode("Campaign conditions not fulfilled")
                 this.activeCampaigns.push({campaign, itemReference: null})
                 discountValue = -campaign.discountAmount
@@ -63,7 +66,9 @@ export default class DiscountCodeLogic {
                 if (this.activeCampaigns.some(entry => entry.campaign.type === campaign.type)) {
                     throw new InvalidCampaignCode("Code with the same type already exists")
                 }
-                const cartSum = cartItems.reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
+                const cartSum = cartItems
+                    .filter(item => item.product?.id !== "shipping")
+                    .reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
                 const conditions = campaign.discountCondition
                 if (conditions === null || cartSum >= conditions) {
                     this.activeCampaigns.push({campaign, itemReference: null})
@@ -99,6 +104,7 @@ export default class DiscountCodeLogic {
                         .split("for")
 
                     const isValid = cartItems
+                        .filter(item => item.product?.id !== "shipping")
                         .filter(item => item.product.name === itemReference.name)
                         .filter(item => item.quantity >= conditions[0])
 
@@ -116,6 +122,7 @@ export default class DiscountCodeLogic {
                     const conditions = campaign.discountCondition
 
                     const totalPrice = cartItems
+                        .filter(item => item.product?.id !== "shipping")
                         .filter(entry => !(entry.product instanceof Discount && entry.product.type === DiscountType.THRESHOLD))
                         .reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
 
@@ -134,6 +141,7 @@ export default class DiscountCodeLogic {
 
                     if (discountObject) {
                         const cartSum = cartItems
+                            .filter(item => item.product?.id !== "shipping")
                             .filter(entry => !(entry.product instanceof Discount && entry.product.type === DiscountType.PERCENTAGE))
                             .reduce((sum, item) => sum + (item.product.price * item.quantity), 0);
 
