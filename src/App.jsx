@@ -11,6 +11,7 @@ import { CurrencyProvider } from "./modules/albert/currency/CurrencyContext.jsx"
 import "./modules/campaign/index.js"
 import "../modules/freights/index.js"
 import Campaign from "./modules/campaign/index.js";
+import "./modules/ShippingCalculator/index.js"
 
 export default function App() {
 
