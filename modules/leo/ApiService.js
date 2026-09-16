@@ -3,8 +3,9 @@ export default class ApiService{
         this.path = path
     }
     
-    async get() {
-        const fun = await fetch(this.path, 
+    async get(index) {
+        if (index === undefined) index = ""
+        const fun = await fetch(this.path+index, 
             {
             method: "GET"
             }

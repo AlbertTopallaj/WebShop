@@ -2,8 +2,8 @@
 export default class StockItem {
 	constructor(product, amount) {
 		this.productId = product.id
-		this.stock = product.stock - amount
+		this.stock = product.stock + amount
 		this.amount = amount
-		this.time = new Date()
+		this.date = new Date()
 	}
 }

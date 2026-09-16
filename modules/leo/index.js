@@ -1,9 +1,11 @@
 import StockHistory from "./StockHistory"
+import StockHistoryService from "./StockHistoryService"
 import StockItem from "./StockItem"
-import { setStockOf } from "./StockService"
+import StockService from "./StockService"
 import StockWarning from "./StockWarning"
+import StockWarningsService from "./StockWarningsService"
 
-export default class Storage {
+export default class StockModule {
     static descriptor = {
         name: "Storage",
         methodsAndInputs:  [
@@ -59,39 +61,41 @@ export default class Storage {
     }
 
     constructor() {
-        this.productsPath = "http://localhost:5050/products/"
-        this.stockHistory = new StockHistory()
-        this.stockWarnings = []
+        this.stockService = new StockService()
+        this.stockHistory = new StockHistoryService()
+        this.stockWarnings = new StockWarningsService()
     }
 
-    changeStockOf(product, mod) {
+    async changeStockOf(product, mod) {
         try {
-            const apiResponse = setStockOf(product, mod)
-            if (!apiResponse.ok) {
+            const apiResponse = this.stockService.setStockOf(product, mod)
+            if (apiResponse === undefined) {
                 throw new Error(apiResponse.status)
             }
-            this.stockHistory.add(new StockItem(product, mod - product.stock))
-            const response = this.checkLastWeekStockChangeOf(product)
-            if (response != undefined) this.stockWarnings.add(new StockWarning(response))
+            await this.stockHistory.post("", new StockItem(product, mod - product.stock))
+            const response = await this.checkLastWeekStockChangeOf(product)
+            if (response != undefined) this.stockWarnings.post("", new StockWarning(response))
         } catch(e) {
             console.error(e.message)
         }
     }
 
-    checkLastWeekStockChangeOf(product) {
+    async checkLastWeekStockChangeOf(product) {
         try {
+            // Todo: change get
+            product = await this.stockService.get(product.id)
             const date = new Date()
             date.setDate(date.getDate() - 7)
-            const sum  = this.saleAmountOfSince(product, date)
-            if (sum > product.stock) return `Stock for ${product.name} is lower than predicted week by ${product.stock-sum}`
+            const sum  = await this.saleAmountOfSince(product, date)
+            if ((-1 * sum) > product.stock) return `Stock for ${product.name} is lower than predicted week by ${product.stock-sum}`
         } catch(e) {
             console.error(e.message)
         }
     }
 
-    saleAmountOfSince(product, date) {
-        const period = StockHistory.getFromOf(product, date)
-        if (period.isEmpty()) {
+    async saleAmountOfSince(product, date) {
+        const period = await this.stockHistory.getFromOf(product, date)
+        if (period.length == 0) {
             return undefined
         }
         const sum = period.reduce((sum, e) => sum + e.amount, 0)
