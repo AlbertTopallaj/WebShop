@@ -24,14 +24,32 @@ export default function Cart() {
     const modules = getModules()
     const context = {cartItems}
 
-    useEffect(() => {
+    /*useEffect(() => {
         async function convert() {
             if(cartItems.length === 0) return;
-            const result = await convertCart(cartItems.map(i => i.product));
+            const result = await convertCart(cartItems);
             if(result) setConvertedTotal(result.total);
         }
         convert();
-    }, [currency, cartItems]);
+    }, [currency, cartItems]);*/
+
+    useEffect(() => {
+    async function convert() {
+        if (cartItems.length === 0) return;
+
+        const productsWithQuantity = cartItems.flatMap(item =>
+            Array(item.quantity).fill(item.product)
+        );
+
+        const result = await convertCart(productsWithQuantity);
+
+        if (result) {
+            setConvertedTotal(result.total);
+        }
+    }
+
+    convert();
+}, [currency, cartItems]);
     
     
 
@@ -95,10 +113,6 @@ export default function Cart() {
 
                                     </div>
 
-                                    <div className="cart-subtotal">
-                                        <span>Subtotal</span>
-                                        <span>{convertedTotal ?? CalculateSum()}</span>
-                                    </div>
 
                                     <div className="mail">
                                         <span className="mail-label">Mail</span>
@@ -117,10 +131,10 @@ export default function Cart() {
 
                                     <div className="cart-subtotal">
                                         <span>Subtotal</span>
-                                        <span> {CalculateSum(cartItems)} </span>
+                                        <span>{convertedTotal ?? `${CalculateSum()} SEK`}</span>
                                     </div>
 
-                                    <button className="order-button" disabled={!isValidEmail}
+                                    <button className="order-button" disabled={!isValidEmail || !freightItem}
                                             onClick={() => handlePlaceOrder()}>
                                         Place Order
                                     </button>

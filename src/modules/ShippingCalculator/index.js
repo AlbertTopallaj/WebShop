@@ -74,7 +74,9 @@ export default class ShippingCalculator {
       throw new Error("context.cartItems saknas – modulen kräver en varukorg.");
     }
 
-    const cart = context.cartItems;
+    const cart = context.cartItems.filter(
+    item => item.product?.isDiscount !== true
+);
 
     let totalWeight = 0;
     let totalVolume = 0;
