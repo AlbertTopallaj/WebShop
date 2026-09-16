@@ -1,4 +1,4 @@
-export default class Money {
+export class Money {
     #amount
     #currency
 

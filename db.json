@@ -28,71 +28,181 @@
             "price": 12.99,
             "img": [
               "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp"
-            ]
+            ],
+            "weight": 1,
+            "dimensions": {
+              "width": 18.11,
+              "height": 28.38,
+              "depth": 22.17
+            },
+            "stock": 91,
+            "category": "beauty",
+            "discountPercentage": 12.16
+          },
+          "quantity": 2
+        },
+        {
+          "product": {
+            "id": "shipping",
+            "name": "Frakt (PostNord)",
+            "price": 81.46,
+            "weight": 0,
+            "dimensions": {
+              "width": 0,
+              "height": 0,
+              "depth": 0
+            }
           },
           "quantity": 1
         }
       ],
-      "date": "2026-09-04T07:57:41.883Z",
-      "id": "mcnq10wisTk"
-    },
-    {
-      "email": "test@test.com",
-      "cart": [
-        {
-          "product": {
-            "id": "5",
-            "name": "Red Nail Polish",
-            "price": 8.99,
-            "img": [
-              "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/1.webp"
-            ]
-          },
-          "quantity": 11
-        }
-      ],
-      "date": "2026-09-04T07:58:29.224Z",
-      "id": "P7viIPdKiIw"
-    },
-    {
-      "email": "test@test.com",
-      "cart": [
-        {
-          "product": {
-            "id": "4",
-            "name": "Red Lipstick",
-            "price": 12.99,
-            "img": [
-              "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp"
-            ]
-          },
-          "quantity": 1
-        }
-      ],
-      "date": "2026-09-04T08:07:30.398Z",
-      "id": "ExI8EC2N9xY"
-    },
-    {
-      "email": "test@test.com",
-      "cart": [
-        {
-          "product": {
-            "id": "4",
-            "name": "Red Lipstick",
-            "price": 12.99,
-            "img": [
-              "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp"
-            ]
-          },
-          "quantity": 1
-        }
-      ],
-      "date": "2026-09-04T08:07:38.787Z",
-      "id": "7jv1mCLlaO0"
+      "date": "2026-09-16T10:52:44.021Z",
+      "id": "pO4G2XHDSfA"
     }
   ],
   "campaign": {
-    "test": "test"
+    "campaignCodes": [
+      {
+        "id": "percent-20",
+        "code": "PROCENT20",
+        "discountCondition": null,
+        "discountAmount": 0.2,
+        "type": "percentage"
+      },
+      {
+        "id": "percent-40",
+        "code": "PROCENT40",
+        "discountCondition": 1000,
+        "discountAmount": 0.4,
+        "type": "percentage"
+      },
+      {
+        "id": "thresh-100",
+        "code": "SPARA100",
+        "discountCondition": 500,
+        "discountAmount": 100,
+        "type": "threshold"
+      },
+      {
+        "id": "b3p2",
+        "code": "3FOR2",
+        "discountCondition": "3for2",
+        "discountAmount": 0.6667,
+        "type": "buy_x_pay_y"
+      }
+    ],
+    "campaigns": [
+      [
+        {
+          "category": "groceries",
+          "discountAmount": 0.1
+        },
+        {
+          "category": "home-decoration",
+          "discountAmount": 0.25
+        },
+        {
+          "category": "furniture",
+          "discountAmount": 0.2
+        },
+        {
+          "category": "kitchen-accessories",
+          "discountAmount": 0.2
+        }
+      ],
+      [
+        {
+          "category": "laptops",
+          "discountAmount": 0.1
+        },
+        {
+          "category": "smartphones",
+          "discountAmount": 0.1
+        },
+        {
+          "category": "tablets",
+          "discountAmount": 0.15
+        },
+        {
+          "category": "mobile-accessories",
+          "discountAmount": 0.3
+        }
+      ],
+      [
+        {
+          "category": "beauty",
+          "discountAmount": 0.2
+        },
+        {
+          "category": "skin-care",
+          "discountAmount": 0.2
+        },
+        {
+          "category": "fragrances",
+          "discountAmount": 0.15
+        }
+      ],
+      [
+        {
+          "category": "mens-shirts",
+          "discountAmount": 0.25
+        },
+        {
+          "category": "mens-shoes",
+          "discountAmount": 0.2
+        },
+        {
+          "category": "mens-watches",
+          "discountAmount": 0.15
+        },
+        {
+          "category": "sunglasses",
+          "discountAmount": 0.25
+        }
+      ],
+      [
+        {
+          "category": "womens-dresses",
+          "discountAmount": 0.25
+        },
+        {
+          "category": "tops",
+          "discountAmount": 0.25
+        },
+        {
+          "category": "womens-shoes",
+          "discountAmount": 0.2
+        },
+        {
+          "category": "womens-bags",
+          "discountAmount": 0.2
+        },
+        {
+          "category": "womens-jewellery",
+          "discountAmount": 0.15
+        },
+        {
+          "category": "womens-watches",
+          "discountAmount": 0.15
+        }
+      ],
+      [
+        {
+          "category": "sports-accessories",
+          "discountAmount": 0.2
+        }
+      ],
+      [
+        {
+          "category": "vehicle",
+          "discountAmount": 0.05
+        },
+        {
+          "category": "motorcycle",
+          "discountAmount": 0.05
+        }
+      ]
+    ]
   },
   "products": [
     {
@@ -11898,6 +12008,97 @@
         "https://cdn.dummyjson.com/product-images/womens-watches/women's-wrist-watch/3.webp"
       ],
       "thumbnail": "https://cdn.dummyjson.com/product-images/womens-watches/women's-wrist-watch/thumbnail.webp"
+    }
+  ],
+  "rates": {
+    "base": "USD",
+    "rates": {
+      "SEK": 10.5,
+      "EUR": 0.92,
+      "USD": 1
+    }
+  },
+  "carriers": [
+    {
+      "id": "postnord",
+      "name": "PostNord",
+      "pricingModel": "weight_or_volumetric",
+      "zones": {
+        "Sweden": 1,
+        "Norway": 2,
+        "Denmark": 2,
+        "Finland": 3,
+        "Germany": 4,
+        "USA": 5
+      },
+      "baseRates": {
+        "1": 45,
+        "2": 70,
+        "3": 100,
+        "4": 150,
+        "5": 250
+      },
+      "perKgRate": {
+        "1": 8,
+        "2": 12,
+        "3": 15,
+        "4": 20,
+        "5": 35
+      },
+      "volumetricDivisor": 5000
+    },
+    {
+      "id": "dhl",
+      "name": "DHL Express",
+      "pricingModel": "weight_or_volumetric",
+      "zones": {
+        "Sweden": 1,
+        "Norway": 2,
+        "Denmark": 2,
+        "Finland": 3,
+        "Germany": 4,
+        "USA": 5
+      },
+      "baseRates": {
+        "1": 60,
+        "2": 90,
+        "3": 130,
+        "4": 180,
+        "5": 300
+      },
+      "perKgRate": {
+        "1": 10,
+        "2": 14,
+        "3": 18,
+        "4": 25
+      },
+      "volumetricDivisor": 4000
+    },
+    {
+      "id": "bring",
+      "name": "Bring",
+      "pricingModel": "weight_or_volumetric",
+      "zones": {
+        "Sweden": 1,
+        "Norway": 1,
+        "Denmark": 2,
+        "Finland": 2,
+        "Germany": 3,
+        "USA": 4
+      },
+      "baseRates": {
+        "1": 55,
+        "2": 85,
+        "3": 120,
+        "4": 200
+      },
+      "perKgRate": {
+        "1": 7,
+        "2": 11,
+        "3": 17,
+        "4": 30
+      },
+      "volumetricDivisor": 6000
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

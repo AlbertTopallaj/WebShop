@@ -1,0 +1,71 @@
+import { ExchangeRateClient } from "./ExchangeRateClient";
+import { TaxTable } from "./TaxTable";
+import { Money } from "./Money"
+import { EmptyCartError, UnknownCurrencyError } from "./CurrencyErrorHandling";
+
+export default class CurrencyModule {
+    constructor(){
+        this.rateClient = new ExchangeRateClient();
+        this.taxTable = new TaxTable();
+    }
+
+    static descriptor = {
+        name: "Currency",
+        methodsAndInputs: [
+            {
+                method: "run",
+                input: [
+                    {
+                        name: "cartItems",
+                        type: "reference",
+                        label: "Array of items in the cart",
+                        required: true
+
+                    },
+                    {
+                        name: "currency",
+                        label: "Currency",
+                        type: "select",
+                        options: ["USD", "EUR", "SEK"],
+                        required: true,
+                        default: "USD"
+
+                    }
+                ],
+                output: "Prices converted to the chosen currency"
+            }
+        
+        ]
+    };
+
+    async run(cartItems, currency) {
+        const rates = await this.rateClient.getRates();
+        const base = this.rateClient.baseCurrency; 
+
+        if(!cartItems || cartItems.length === 0) throw new EmptyCartError();
+        if(!rates[currency]) throw new UnknownCurrencyError(currency);
+
+        const items = cartItems.map(item => {
+            const rate = rates[currency];
+            const money = new Money(item.price, base);
+            const converted = money.convert(currency, rate);
+            const taxRate = this.taxTable.getRate(item.category);
+            const withTax = converted.addTax(taxRate - 1);
+
+            return {
+                name: item.name,
+                price: withTax.toString(),
+                priceExTax: converted.toString(),
+                amount: withTax.amount
+            };
+        });
+        
+        const total = items.reduce((sum, item) => sum + item.amount, 0);
+
+        return {
+            items,
+            total: `${total.toFixed(2)} ${currency}`
+        };
+        
+    }
+}

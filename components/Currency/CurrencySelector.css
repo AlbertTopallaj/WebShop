@@ -1,0 +1,15 @@
+.currency-selector select {
+    background: transparent;
+    color: #c084fc;
+    border: 1px solid;
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+}
+
+.currency-selector select option {
+    background: #16171d;
+    color: #c084fc;
+}

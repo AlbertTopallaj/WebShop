@@ -7,24 +7,32 @@ import {CartContext} from "../components/CartContext/CartContext.jsx";
 import UserInfo from "../pages/UserInfo/UserInfo.jsx";
 import {Toast} from "../components/Toast/Toast.jsx";
 import {VATProvider} from "../components/VAT/VATContext.jsx";
+import { CurrencyProvider } from "./modules/albert/currency/CurrencyContext.jsx";
+import "./modules/campaign/index.js"
+import Campaign from "./modules/campaign/index.js";
+import "./modules/ShippingCalculator/index.js"
 
 export default function App() {
 
+    const campaign = new Campaign()
+
     return (
-        <VATProvider>
         <>
-            <CartContext>
-                <Toast>
-                    <Header/>
-                    <Routes>
-                        <Route index={true} path={"/"} element={<LoadProductList/>}/>
-                        <Route path={"/product/"} element={<ProductInfo/>}/>
-                        <Route path={"/user/"} element={<UserInfo/>}/>
-                    </Routes>
-                </Toast>
-            </CartContext>
+            <CurrencyProvider>
+                <VATProvider>
+                    <Toast>
+                        <CartContext>
+                            <Header/>
+                            <Routes>
+                                <Route index={true} path={"/"} element={<LoadProductList/>}/>
+                                <Route path={"/product/"} element={<ProductInfo/>}/>
+                                <Route path={"/user/"} element={<UserInfo/>}/>
+                            </Routes>
+                        </CartContext>
+                    </Toast>
+                </VATProvider>
+            </CurrencyProvider>
         </>
-        </VATProvider>
     )
 }
 

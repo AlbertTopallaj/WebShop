@@ -4,7 +4,7 @@ const db = {}
 
 function add(name, jsonFile) {
     try {
-        db[name] = JSON.parse(fs.readFileSync(`./modules/${jsonFile}`, "utf8"))
+        db[name] = JSON.parse(fs.readFileSync(`./src/modules/${jsonFile}`, "utf8"))
     } catch (error) {
         console.error("Failed to load data:", error.message);
     }
@@ -12,11 +12,12 @@ function add(name, jsonFile) {
 
 // Individuella modul .json filer laddas här
 add("orders", "orders.json")
-add("campaign", "campaign.json")
+add("campaign", "./campaign/campaign.json")
 add("products", "products.json")
 add("rates", "rates.json")
 add("stockWarnings", "stockWarnings.json")
 add("stockHistory", "stockHistory.json")
+add("carriers", "carriers.json")
 
 try {
     fs.writeFileSync("db.json", JSON.stringify(db, null, 2))

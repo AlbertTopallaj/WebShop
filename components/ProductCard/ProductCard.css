@@ -19,6 +19,23 @@
     box-shadow: var(--shadow);
 }
 
+.discount-label {
+    display: inline-block;
+    align-self: flex-start;
+
+    margin: 8px 0 0;
+    padding: 3px 8px;
+
+    border-radius: 5px;
+
+    background: #332c38;
+    color: #c9a9c9;
+
+    font-size: 12px !important;
+    font-weight: 600;
+    line-height: 1.2 !important;
+}
+
 /* Product image */
 
 .product-card img {
@@ -76,6 +93,8 @@
 
     color: var(--text-h);
 }
+
+
 
 /* Smaller images on smaller screens */
 

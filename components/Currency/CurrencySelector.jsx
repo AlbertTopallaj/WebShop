@@ -1,0 +1,19 @@
+import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext";
+import "./CurrencySelector.css"
+
+export default function CurrencySelector() {
+    const { currency, setCurrency} = useCurrency();
+
+    return <>
+    <div className="currency-selector">
+        <select value={currency} onChange={(e) => {
+            setCurrency(e.target.value)
+        }}>
+            <option value="USD">USD</option>
+            <option value="SEK">SEK</option>
+            <option value="EUR">EUR</option>
+        </select>
+    </div>
+    </>
+
+}
