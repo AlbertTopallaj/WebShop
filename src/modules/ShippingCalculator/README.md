@@ -1,23 +1,13 @@
-ShippingCalculator
-Syfte
-ShippingCalculator är en modul för att beräkna fraktofferter för en varukorg baserat på produkternas vikt, volym och destination. Modulen hämtar transportörsdata asynkront från /api/carriers, beräknar ett pris för varje tillgänglig transportör och returnerar en sorterad lista med de billigaste offerterna först. Modulen är fristående från React och kan därför användas av andra delar av applikationen via dess publika index.js.
+ShippingCalculator‑modulen är tänkt att vara den del av applikationen som tar hand om allt som har med fraktberäkning att göra. Istället för att sprida logik över flera komponenter eller låta React hantera sådant som egentligen är affärsregler, samlar modulen allt i ett eget, tydligt avgränsat system. Syftet är enkelt: när användaren ska få fram fraktalternativ för sin varukorg ska modulen kunna räkna ut detta på ett konsekvent, förutsägbart och robust sätt, oavsett vilka produkter som ligger i korgen eller vilken transportör som används.
 
-Klassernas roller och relationer
-Modulen består av flera samverkande klasser som har olika ansvarsområden:
+För att uppnå det här är modulen uppbyggd av flera klasser som samarbetar, där varje klass har ett tydligt och avgränsat ansvar. ShippingCalculator fungerar som den publika ingången — det är den som React anropar, och det är den som håller ihop hela flödet. Den tar emot indata från användaren, ser till att allt är korrekt formaterat, skapar ett Parcel‑objekt baserat på varukorgens innehåll och skickar sedan vidare arbetet till ShippingQuoteService. Den här klassen innehåller också en cache och en historik, vilket gör att modulen faktiskt har ett meningsfullt tillstånd mellan anrop. Det är alltså inte bara en samling funktioner, utan en riktig instans som kan minnas tidigare beräkningar och undvika onödiga API‑anrop.
 
-ShippingCalculator är modulens publika ingång och koordinerar hela beräkningen. Den validerar indata, skapar ett Parcel-objekt från varukorgen och använder ShippingQuoteService för att hämta offerter. Klassen innehåller även en cache och historik, vilket gör att modulen har ett meningsfullt instanstillstånd mellan anrop.
+Parcel‑klassen representerar själva försändelsen. Den räknar ut vikt, volym, volymvikt och den debiterbara vikten — alltså den vikt transportören faktiskt tar betalt för. Det här är en viktig del av fraktlogiken, eftersom olika transportörer använder olika prismodeller och ofta baserar priset på det största värdet av faktisk vikt och volymetrisk vikt.
 
-Parcel representerar själva försändelsen och ansvarar för vikt, mått, volym och beräkning av volymvikt samt debiterbar vikt.
+ShippingQuoteService är den del av modulen som gör det tunga jobbet. Den hämtar transportörsdata asynkront från /api/carriers, skapar Carrier‑instanser och ber dem räkna ut sina respektive priser. När alla offerter är insamlade sorterar den dem så att de billigaste alternativen hamnar först. På så sätt får användaren en tydlig och rättvisande lista över möjliga fraktalternativ.
 
-ShippingQuoteService ansvarar för det asynkrona arbetet. Den hämtar transportörerna från /api/carriers, skapar Carrier-objekt och samlar in samt sorterar deras offerter.
+Carrier‑klassen representerar en transportör och använder PricingModels för att räkna ut priset. Prismodellerna är separerade i en egen fil för att hålla logiken ren och lätt att förändra. Det gör det enkelt att lägga till nya prismodeller eller justera befintliga utan att behöva röra resten av modulen.
 
-Carrier representerar en transportör och ansvarar för att använda transportörens konfigurerade prismodell för att beräkna priset.
+En viktig designprincip är att klasserna använder komposition istället för arv. ShippingCalculator använder Parcel och ShippingQuoteService, ShippingQuoteService använder Carrier, och Carrier använder PricingModels. Det här gör varje klass mer fokuserad och lättare att testa, samtidigt som det blir enklare att byta ut eller uppdatera delar av modulen utan att påverka allt annat.
 
-PricingModels innehåller själva prismodellen och beräknar exempelvis debiterbar vikt som det största värdet av faktisk vikt och volymetrisk vikt.
-
-Klasserna använder komposition snarare än arv. ShippingCalculator använder Parcel och ShippingQuoteService, medan ShippingQuoteService använder Carrier, som i sin tur använder PricingModels. Detta gör varje klass mer fokuserad och enklare att testa och förändra separat.
-
-Designval
-index.js är modulens enda publika ingång och exporterar en default-klass enligt modulkontraktet. Klassen har en no-arg-konstruktor och metoden run(values, context) är asynkron. Instansen innehåller en cache för transportörsdata och en historik över tidigare beräkningar, vilket motiverar varför modulen behöver vara en instans och inte en samling statiska funktioner.
-
-Felaktig indata och fel från API:t hanteras genom begriplig felhantering istället för att låta modulen krascha. React-komponenten ansvarar endast för användargränssnittet och anropar modulen via moduleMaker, medan all affärslogik för fraktberäkningen ligger i modulen.
+Slutligen är index.js modulens enda publika ingång. Den exporterar en default‑klass enligt modulkontraktet, har en no‑arg‑konstruktor och en asynkron run‑metod som tar emot values och context. Felhantering är inbyggd så att modulen inte kraschar vid felaktig indata eller API‑problem, utan istället returnerar begripliga felmeddelanden. Reacts roll är enbart att visa resultatet — all logik för fraktberäkningen ligger i modulen, precis som det ska.

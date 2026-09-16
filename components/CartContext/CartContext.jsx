@@ -72,11 +72,16 @@ export function CartContext({children}) {
     function addToCart(product) {
 
         setCartItems(items => {
+
+            if (product.id === "shipping") {
+            items = items.filter(item => item.product.id !== "shipping");
+        }   
+
             const exists = items.find(item => item.product.id === product.id)
 
             if (exists) {
                 return items.map(item => item.product.id === product.id ?
-                    {...item, quantity: item.quantity + 1} : item)
+                    { ...item, quantity: item.quantity + 1 } : item)
             }
 
             return [

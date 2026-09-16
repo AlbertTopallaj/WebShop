@@ -75,7 +75,6 @@ export default class ShippingCalculator {
     }
 
     const cart = context.cartItems;
-    console.log("CART SOM SKICKAS TILL SHIPPING:", cart);
 
     let totalWeight = 0;
     let totalVolume = 0;
@@ -86,9 +85,6 @@ export default class ShippingCalculator {
       if (!product) throw new Error("Varukorgsobjekt saknar product-fält.");
 
       const { weight, dimensions } = product;
-      console.log("PRODUCT:", product);
-      console.log("WEIGHT:", weight);
-      console.log("DIMENSIONS:", dimensions);
       const qty = quantity || 1;
 
       if (typeof weight !== "number") {
