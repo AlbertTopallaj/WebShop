@@ -9,6 +9,11 @@ import Campaign from "../../src/modules/campaign/index.js";
 
 export default function ProductInfo() {
 
+    const { currency, convertCart } = useCurrency();
+    const { includeVAT } = useVAT();
+    const { convertedPrice, setConvertedPrice } = useState(null);
+    const { priceExTax, setPriceExTax } = useState(null); 
+
     const [searchParams] = useSearchParams()
     const id = searchParams.get("id")
     const navigate = useNavigate()
