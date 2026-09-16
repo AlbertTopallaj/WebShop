@@ -56,7 +56,8 @@ export default class CurrencyModule {
                 name: item.name,
                 price: withTax.toString(),
                 priceExTax: converted.toString(),
-                amount: withTax.amount
+                amount: withTax.amount,
+                taxRate: Math.round((taxRate - 1) * 100)
             };
         });
         
