@@ -1,4 +1,4 @@
-import {useNavigate, useSearchParams} from "react-router";
+import {Form, useNavigate, useSearchParams} from "react-router";
 import {useEffect, useState} from "react";
 import "./ProductInfo.css"
 import Product from "../../components/ProductCard/Product.js";
@@ -6,6 +6,9 @@ import {getCart} from "../../components/CartContext/CartContext.jsx";
 import {useToast} from "../../components/Toast/Toast.jsx";
 import {getModules} from "../../scripts/ModuleRegistry.js";
 import Campaign from "../../src/modules/campaign/index.js";
+import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext.jsx"
+import { useEffect, useState } from "react"
+import { useVAT } from "../../components/VAT/VATContext.jsx" 
 
 export default function ProductInfo() {
 
