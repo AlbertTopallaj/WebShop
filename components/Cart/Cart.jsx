@@ -5,7 +5,7 @@ import {getCart} from "../CartContext/CartContext.jsx";
 import {postOrder} from "../../scripts/OrderData.js";
 import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext.jsx";
 import CurrencySelector from "../Currency/CurrencySelector.jsx";
-
+import ShippingOptions from "./ShippingOptions.jsx";
 import {useToast} from "../Toast/Toast.jsx";
 import {getModules} from "../../scripts/ModuleRegistry.js";
 import ModuleForm from "../ModuleForm/ModuleForm.jsx";
@@ -19,6 +19,8 @@ export default function Cart() {
     const { currency, convertCart } = useCurrency();
     const [ convertedTotal, setConvertedTotal ] = useState(null);
     const {cartItems, CalculateSum, removeFromCart} = getCart()
+    const freightItem = cartItems.find(item => item.product.id === "shipping");
+    const freightCost = freightItem ? freightItem.product.price.toFixed(2) : null;
     const modules = getModules()
     const context = {cartItems}
 
@@ -102,6 +104,20 @@ export default function Cart() {
                                         <span className="mail-label">Mail</span>
                                         <input className='mail-input' type="mail" placeholder="your@mail.com"
                                                onChange={(e) => setEmail(e.target.value)} value={email}></input>
+                                    </div>
+
+                                     <ShippingOptions />
+
+                                    {freightCost && (
+                                        <div className="cart-freight">
+                                            <span>Freight</span>
+                                            <span>{freightCost}</span>
+                                        </div>
+                                    )}
+
+                                    <div className="cart-subtotal">
+                                        <span>Subtotal</span>
+                                        <span> {CalculateSum(cartItems)} </span>
                                     </div>
 
                                     <button className="order-button" disabled={!isValidEmail}
