@@ -55,11 +55,11 @@ function chooseCarrier(quote) {
 
 return (
 <div className="shipping-options">
-<h3>Frakt</h3>
+<h3>Shipping</h3>
 
   <div className="shipping-inputs">
     <label>
-      Land:
+      Country:
       <select
         value={country}
         onChange={(e) => setCountry(e.target.value)}
@@ -74,7 +74,7 @@ return (
     </label>
 
     <label>
-      Postnummer:
+      Postal number:
       <input
         type="text"
         value={postalCode}
@@ -84,7 +84,7 @@ return (
     </label>
 
     <button onClick={handleCalculate} disabled={loading || !postalCode}>
-      {loading ? "Beräknar..." : "Beräkna frakt"}
+      {loading ? "Calculating..." : "Order shipping"}
     </button>
   </div>
 
@@ -92,7 +92,7 @@ return (
 
   {quotes.length > 0 && (
     <div className="shipping-results">
-      <h4>Välj fraktbolag</h4>
+      <h4>Choose shipping company</h4>
 
       {quotes.map((quote) => (
         <button
