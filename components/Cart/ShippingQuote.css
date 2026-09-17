@@ -1,0 +1,23 @@
+.shipping-option-btn {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    padding: 10px 16px;
+    border: 1px solid var(--accent);
+    border-radius: 8px;
+    background: var(--accent-bg);
+    color: var(--accent);
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition:
+        background 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+}
+
+.shipping-option-btn:hover {
+    background: var(--accent);
+    color: white;
+    transform: translateY(-1px);
+}
