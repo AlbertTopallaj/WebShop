@@ -42,9 +42,11 @@
 }
 
 .vat-currency-container {
+    width: 120px;
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 10px;
+    align-self: center;
 }
 
 .homeBtn:hover {
