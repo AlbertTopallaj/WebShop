@@ -1,4 +1,4 @@
-import StockHistory from "./StockHistory"
+import { registerModule } from "../../../scripts/ModuleRegistry"
 import StockHistoryService from "./StockHistoryService"
 import StockItem from "./StockItem"
 import StockService from "./StockService"
@@ -60,10 +60,19 @@ export default class StockModule {
         ]
     }
 
+    static instance
+
     constructor() {
+        if (!StockModule.instance) {
+            StockModule.instance = this
+        } else return
         this.stockService = new StockService()
         this.stockHistory = new StockHistoryService()
         this.stockWarnings = new StockWarningsService()
+    }
+
+    removeFromStock(product, amount) {
+        this.changeStockOf(product, product.stock-amount)
     }
 
     async changeStockOf(product, mod) {
@@ -102,3 +111,5 @@ export default class StockModule {
         return sum
     }
 }
+
+registerModule(StockModule)

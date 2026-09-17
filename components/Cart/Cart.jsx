@@ -9,6 +9,8 @@ import ShippingOptions from "./ShippingOptions.jsx";
 import {useToast} from "../Toast/Toast.jsx";
 import {getModules} from "../../scripts/ModuleRegistry.js";
 import ModuleForm from "../ModuleForm/ModuleForm.jsx";
+import StockModule from "../../src/modules/leo/index.js";
+import Product from "../ProductCard/Product.js";
 
 export default function Cart() {
 
@@ -56,6 +58,16 @@ export default function Cart() {
     async function handlePlaceOrder() {
         const success = await postOrder(email, cartItems)
         if (success) {
+            const stockModule = modules.find(m => m === StockModule)?.instance
+            if (stockModule) {
+                try {
+                    cartItems.forEach(item => {
+                        if (item instanceof Product) stockModule.removeFromStock(item.product, item.quantity)                
+                    });
+                } catch(e) {
+                    throw new Error(e)
+                }
+            }
             toast("Order placed!", 2000);
             setIsOpen(false);
         } else {
