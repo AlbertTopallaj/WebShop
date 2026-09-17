@@ -2,6 +2,7 @@ import "./UserInfo.css"
 import {useEffect, useState} from "react"
 import {getUserData} from "../../scripts/OrderData.js";
 import {useSearchParams} from "react-router";
+import OrderItem from "./OrderItem.jsx";
 
 export default function UserInfo() {
 
@@ -68,40 +69,7 @@ export default function UserInfo() {
 
                                 <div className="order-products">
                                     {order.cart.map((item, productIndex) => (
-                                        <div
-                                            className="order-product"
-                                            key={item.product?.id ?? productIndex}
-                                        >
-                                            <div className="product-image">
-                                                {item.product?.img ? (
-                                                    <img
-                                                        src={item.product.img[0]}
-                                                        alt={item.product.name}
-                                                    />
-                                                ) : (
-                                                    "🛍️"
-                                                )}
-                                            </div>
-
-                                            <div className="product-info">
-                                                <span className="product-name">
-                                                    {item.product?.name}
-                                                </span>
-
-                                                <span className="product-quantity">
-                                                    Quantity: {item.quantity}
-                                                </span>
-                                            </div>
-
-                                            <span className="product-price">
-                                                {item.product?.price != null
-                                                    ? `${(
-                                                        item.product.price *
-                                                        item.quantity
-                                                    ).toFixed(2)}`
-                                                    : "---"}
-                                            </span>
-                                        </div>
+                                        <OrderItem key={item.product?.id ?? productIndex} item={item} />
                                     ))}
                                 </div>
 
