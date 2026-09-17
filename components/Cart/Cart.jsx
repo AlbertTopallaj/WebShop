@@ -124,13 +124,6 @@ export default function Cart() {
 
                                      <ShippingOptions />
 
-                                    {freightCost && (
-                                        <div className="cart-freight">
-                                            <span>Freight</span>
-                                            <span>{freightCost}</span>
-                                        </div>
-                                    )}
-
                                     <div className="cart-subtotal">
                                         <span>Subtotal</span>
                                         <span>{convertedTotal ?? `${CalculateSum()} SEK`}</span>
