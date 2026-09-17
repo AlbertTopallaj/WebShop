@@ -36,6 +36,10 @@ export default function ProductInfo() {
     }
 
     useEffect(() => {
+        if (product) document.title = product.title + " | WebShop";
+    }, [product]);
+
+    useEffect(() => {
         async function fetchProduct() {
             try {
                 // Returns an object, not an array
