@@ -9,6 +9,7 @@ import ShippingOptions from "./ShippingOptions.jsx";
 import {useToast} from "../Toast/Toast.jsx";
 import {getModules} from "../../scripts/ModuleRegistry.js";
 import ModuleForm from "../ModuleForm/ModuleForm.jsx";
+import VATToggle from "../VAT/VATToggle.jsx";
 
 export default function Cart() {
 
@@ -81,6 +82,7 @@ export default function Cart() {
                         <div className="currency-selector">
                         <CurrencySelector/>
                         </div>
+                        <VATToggle/>   
                         <h2>Your Cart</h2>
 
                         {cartItems.length === 0 ? (
