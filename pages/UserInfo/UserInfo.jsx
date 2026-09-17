@@ -13,9 +13,13 @@
         const [orders, setOrders] = useState([])
         const [loading, setLoading] = useState(true)
 
-        useEffect(() => {
-            async function fetchOrders() {
-                const data = await getUserData(email)
+    useEffect(() => {
+        document.title = `Your orders - ${email} | WebShop`;
+    }, [email]);
+
+    useEffect(() => {
+        async function fetchOrders() {
+            const data = await getUserData(email)
 
                 if (data === false) {
                     setOrders([])
@@ -27,13 +31,13 @@
             fetchOrders()
         }, [email])
 
-        return (
-            <div className="user-info">
-                <div className="user-info-header">
-                    <div>
-                        <h1>{email}</h1>
-                    </div>
+    return (
+        <div className="user-info">
+            <div className="user-info-header">
+                <div>
+                    <h1>Your orders - {email}</h1>
                 </div>
+            </div>
 
                 <div className="orders-section">
                     <h2>Order History</h2>

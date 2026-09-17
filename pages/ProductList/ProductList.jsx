@@ -16,6 +16,10 @@ export default function LoadProductList() {
 
     const campaignInstance = getModules().find(module => module === Campaign)?.instance
 
+    useEffect(() => {
+        document.title = "WebShop"
+    }, []);
+
 
     useEffect(() => {
         async function fetchProducts() {
