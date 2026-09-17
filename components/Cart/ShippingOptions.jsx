@@ -96,13 +96,11 @@ return (
       <h4>Choose shipping company</h4>
 
       {quotes.map((quote) => (
-        <button>
           <ShippingQuote
             key={quote.carrierId}
             quote={quote}
             onClick={() => chooseCarrier(quote)}
            />
-        </button>
       ))}
     </div>
   )}
