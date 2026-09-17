@@ -19,8 +19,12 @@ export function Header() {
         <div className="header">
             <HomeBtn/>
             <div className="header-right">
+
+                <div className="vat-currency">
                 <VATToggle/>
                 <CurrencySelector/>
+                </div>
+
                 <UserIcon/>
                 <Cart/>
             </div>
