@@ -51,6 +51,7 @@ export default class CurrencyModule {
             const converted = money.convert(currency, rate);
             const taxRate = this.taxTable.getRate(item.category);
             const withTax = converted.addTax(taxRate - 1);
+            console.log(item.category)
 
             return {
                 name: item.name,
