@@ -18,8 +18,8 @@ export default function ShippingQuote({ quote, onClick }) {
     }, [currency]);
 
     return (
-        <div className="shipping-option-btn" onClick={onClick}>
+        <button className="shipping-option-btn" onClick={onClick}>
             {quote.carrierName} -  {convertedPrice ?? quote.price.toFixed(2)} 
-        </div>
+        </button>
     );
 }
