@@ -29,12 +29,16 @@
         return (
             <div className="cart-item">
                 <span className="cart-item-name">{item.product.name}</span>
+
+                <div className="cart-item-price-container">
                 {includeVAT ? (
                     <span className="cart-item-price">{convertedPrice}</span>
                 ) : ( 
                     <span className="cart-item-price">{priceExTax}</span>
                 )}
                 <span className="cart-item-tax">TAX{taxRate}%</span>
+                </div>
+                
                 <span className="cart-item-qty">Quantity: {item.quantity}</span>
 
                 <button className="cart-item-remove" onClick={() => remove(item.product)}>

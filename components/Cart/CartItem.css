@@ -33,3 +33,9 @@
 
     padding: 2px 6px;
 }
+
+.cart-item-tax {
+    font-size: 12px;
+    color: #888;
+    margin-top: -1px;
+}
