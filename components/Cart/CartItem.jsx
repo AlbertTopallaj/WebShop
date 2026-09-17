@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext";
 import "./CartItem.css"
+import { useVAT } from "../VAT/VATContext.jsx";
 
 export default function CartItem({item, remove}) {
     const { currency, convertCart } = useCurrency();
     const [convertedPrice, setConvertedPrice] = useState(item.product.price);
+    const { includeVAT } = useVAT();
+    const { taxRate, setTaxRate } = useState(null);
+    const [ priceExTax, setPriceExTax ] = useState(null);
 
     useEffect(() => {
         async function convert() {
@@ -17,7 +21,7 @@ export default function CartItem({item, remove}) {
     return (
         <div className="cart-item">
             <span className="cart-item-name">{item.product.name}</span>
-            <span className="cart-item-price">{item.product.price.toFixed(2)}</span>
+            <span className="cart-item-price">{convertedPrice}</span>
             <span className="cart-item-qty">Quantity: {item.quantity}</span>
 
             <button className="cart-item-remove" onClick={() => remove(item.product)}>
