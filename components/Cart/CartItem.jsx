@@ -15,11 +15,13 @@
         useEffect(() => {
             async function convert() {
                 const result = await convertCart([item.product]);
-                if (result) {
-                    setConvertedPrice(result.items[0].price);
-                    setPriceExTax(result.items[0].priceExTax);
-                    setTaxRate(result.items[0].taxRate);
-                }
+                if(result) {
+                        const totalWithTax = result.items[0].amount * item.quantity;
+                        const totalExTax = result.items[0].amountExTax * item.quantity;
+                        setConvertedPrice(`${totalWithTax.toFixed(2)} ${currency}`);
+                        setPriceExTax(`${totalExTax.toFixed(2)} ${currency}`);
+                        setTaxRate(result.items[0].taxRate);
+                    }
             }
             convert();
         }, [currency, cartItems]);
