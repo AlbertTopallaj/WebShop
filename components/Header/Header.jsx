@@ -20,7 +20,7 @@ export function Header() {
             <HomeBtn/>
             <div className="header-right">
 
-                <div className="vat-currency">
+                <div className="vat-currency-container">
                 <VATToggle/>
                 <CurrencySelector/>
                 </div>
