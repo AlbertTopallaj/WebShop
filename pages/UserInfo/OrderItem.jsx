@@ -19,8 +19,9 @@
                     const result = await convertCart([item.product]);
 
                     if(result) {
-                        setConvertedPrice(result.items[0].price);
-                        setPriceExTax(result.items[0].priceExTax);
+                        const price = result.items[0].amount * item.quantity;
+                        setConvertedPrice(`${price.toFixed(2)} ${currency}`);
+                        setPriceExTax(`${price.toFixed(2)} ${currency}`);
                         setTaxRate(result.items[0].taxRate);
                     }
 
