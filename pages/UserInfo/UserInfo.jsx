@@ -3,6 +3,7 @@ import {useEffect, useState} from "react"
 import {getUserData} from "../../scripts/OrderData.js";
 import {useSearchParams} from "react-router";
 import OrderItem from "./OrderItem.jsx";
+import OrderTotal from "./OrderTotal.jsx";
 
 export default function UserInfo() {
 
