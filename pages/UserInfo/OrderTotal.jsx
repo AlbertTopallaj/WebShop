@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCurrency} from "../../src/modules/albert/currency/CurrencyContext";
 
-    export function OrderTotal({cart}) {
+    export default function OrderTotal({cart}) {
         const { currency, convertCart } = useCurrency();
         const [total, setTotal] = useState(null);
 
