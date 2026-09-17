@@ -47,3 +47,8 @@
 .vat-switch input:checked + .vat-slider::before {
     transform: translateX(16px);
 }
+
+.vat-toggle-label {
+    width: 60px;
+    display: inline-block;
+}
