@@ -2,6 +2,7 @@
     import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext";
     import "./CartItem.css"
     import { useVAT } from "../VAT/VATContext.jsx";
+    import {getCart} from "../CartContext/CartContext.jsx";
 
     export default function CartItem({item, remove}) {
         const { currency, convertCart } = useCurrency();
@@ -9,6 +10,7 @@
         const { includeVAT } = useVAT();
         const [ taxRate, setTaxRate ] = useState(null);
         const [ priceExTax, setPriceExTax ] = useState(null);
+        const {cartItems} = getCart()
 
         useEffect(() => {
             async function convert() {
@@ -20,7 +22,7 @@
                 }
             }
             convert();
-        }, [currency]);
+        }, [currency, cartItems]);
 
         return (
             <div className="cart-item">

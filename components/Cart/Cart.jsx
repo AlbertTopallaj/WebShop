@@ -20,7 +20,6 @@ export default function Cart() {
     const [ convertedTotal, setConvertedTotal ] = useState(null);
     const {cartItems, CalculateSum, removeFromCart} = getCart()
     const freightItem = cartItems.find(item => item.product.id === "shipping");
-    const freightCost = freightItem ? freightItem.product.price.toFixed(2) : null;
     const modules = getModules()
     const context = {cartItems}
 
