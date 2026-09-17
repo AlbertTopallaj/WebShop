@@ -92,7 +92,9 @@
     margin-bottom: 4px;
 }
 
-div.shipping-option-btn {
+.shipping-option-btn {
+    appearance: none;
+    -webkit-appearance: none;
     width: 100%;
     padding: 10px 16px;
     border: 1px solid var(--accent);
