@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext";
+import { useCurrency} from "../../src/modules/albert/currency/CurrencyContext";
 
     export function OrderTotal({cart}) {
         const { currency, convertCart } = useCurrency();
