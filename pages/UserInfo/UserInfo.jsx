@@ -79,8 +79,7 @@ export default function UserInfo() {
                                             (total, item) => total + item.quantity, 0)}{" "}
                                         items
                                     </span>
-
-                                    
+                                    <OrderTotal cart={order.cart} />
                                 </div>
                             </div>
                         ))}
