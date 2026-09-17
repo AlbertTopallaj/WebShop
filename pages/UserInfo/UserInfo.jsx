@@ -12,6 +12,10 @@ export default function UserInfo() {
     const [loading, setLoading] = useState(true)
 
     useEffect(() => {
+        document.title = `Your orders - ${email} | WebShop`;
+    }, [email]);
+
+    useEffect(() => {
         async function fetchOrders() {
             const data = await getUserData(email)
 
@@ -29,7 +33,7 @@ export default function UserInfo() {
         <div className="user-info">
             <div className="user-info-header">
                 <div>
-                    <h1>{email}</h1>
+                    <h1>Your orders - {email}</h1>
                 </div>
             </div>
 
