@@ -2,6 +2,7 @@ import { useState } from "react";
 import modules from "../../src/modules/moduleMaker.js";
 import { getCart } from "../CartContext/CartContext.jsx";
 import "./ShippingOptions.css";
+import ShippingQuote from "./ShippingQuote.jsx";
 
 function ShippingOptions() {
 const { cartItems, addToCart } = getCart();
@@ -95,12 +96,12 @@ return (
       <h4>Choose shipping company</h4>
 
       {quotes.map((quote) => (
-        <button
-          key={quote.carrierId}
-          className="shipping-option-btn"
-          onClick={() => chooseCarrier(quote)}
-        >
-          {quote.carrierName} – {quote.price.toFixed(2)} kr
+        <button>
+          <ShippingQuote
+            key={quote.carrierId}
+            quote={quote}
+            onClick={() => chooseCarrier(quote)}
+           />
         </button>
       ))}
     </div>
