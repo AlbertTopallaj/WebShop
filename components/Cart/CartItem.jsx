@@ -36,9 +36,9 @@
                 ) : ( 
                     <span className="cart-item-price">{priceExTax}</span>
                 )}
-                <span className="cart-item-tax">TAX{taxRate}%</span>
+                <span className="cart-item-tax">TAX {taxRate}%</span>
                 </div>
-                
+
                 <span className="cart-item-qty">Quantity: {item.quantity}</span>
 
                 <button className="cart-item-remove" onClick={() => remove(item.product)}>
