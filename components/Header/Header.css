@@ -41,7 +41,7 @@
             transform 0.2s ease;
 }
 
-.vat-currency {
+.vat-currency-container {
     display: flex;
     flex-direction: column;
     gap: 4px;
