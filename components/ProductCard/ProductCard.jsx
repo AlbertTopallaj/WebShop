@@ -4,6 +4,7 @@ import {getCart} from "../CartContext/CartContext.jsx";
 import {useToast} from "../Toast/Toast.jsx";
 import { useEffect, useState } from "react";
 import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext.jsx" 
+import { useVAT } from "../VAT/VATContext.jsx"
 
 export default function ProductCard({product}) {
 
@@ -12,6 +13,7 @@ export default function ProductCard({product}) {
     const {currency, convertCart} = useCurrency();
     const [convertedPrice, setConvertedPrice] = useState(product.price);
     const [priceExTax, setPriceExTax] = useState(null);
+    const { includeVAT } = useVAT();
 
     useEffect(() => {
         async function convert() {
@@ -36,8 +38,8 @@ export default function ProductCard({product}) {
                     <img src={product.img[0]} alt={product.name}/>
                     <div className="product-card-content">
                         <h2>{product.name}</h2>
-                        <p>{priceExTax} with NO TAX</p>
-                        <p>{convertedPrice} with TAX</p>
+                        <p>{priceExTax} ex. moms</p>
+                        <p>{includeVAT ? convertedPrice : ""}</p>
                         {typeof product?.discountPercentage === 'string' && (
                             <p className="discount-label">
                                 {
