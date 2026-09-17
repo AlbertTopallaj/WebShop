@@ -80,11 +80,7 @@ export default function UserInfo() {
                                         items
                                     </span>
 
-                                    <strong>
-                                        {order.cart.reduce(
-                                                (total, item) => total + (item.product?.price ?? 0) * item.quantity, 0)
-                                            .toFixed(2)}
-                                    </strong>
+                                    
                                 </div>
                             </div>
                         ))}
