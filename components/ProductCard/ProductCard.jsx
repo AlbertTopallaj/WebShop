@@ -21,6 +21,7 @@ export default function ProductCard({product}) {
             const result = await convertCart([product]);
             if(result) {
                 setConvertedPrice(result.items[0].price);
+                setTaxRate(result.items[0].taxRate);
                 setPriceExTax(result.items[0].priceExTax);
             }
         } 
