@@ -8,4 +8,22 @@ export default function OrderItem({ item }) {
     const { convertedPrice, setConvertedPrice } = useState(null);
     const { priceExTax, setPriceExTax } = useState(null);
     const [ taxRate, setTaxRate ] = useState(null);
+
+    useEffect(() => {
+        async function convert() {
+            if(!item.product) 
+                return;
+
+            const result = await convertCart([item.product]);
+
+            if(result) {
+                setConvertedPrice(result.items[0].price);
+                setPriceExTax(result.items[0].priceExTax);
+                setTaxRate(result.items[0].taxRate);
+            }
+
+        }
+        convert();
+    }, [currency]);
+
 }
