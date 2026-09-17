@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext";
+import "./ShippingOptions.css"
 
 export default function ShippingQuote({ quote, onClick }) {
     const { currency, convertCart } = useCurrency();
