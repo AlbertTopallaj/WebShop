@@ -8,6 +8,8 @@ import { useVAT } from "../VAT/VATContext.jsx"
 
 export default function ProductCard({product}) {
 
+    const { includeVAT } = useVAT();
+    const [ taxRate, setTaxRate ] = useState(null);
     const {addToCart} = getCart()
     const {toast} = useToast()
     const {currency, convertCart} = useCurrency();
@@ -20,6 +22,7 @@ export default function ProductCard({product}) {
             const result = await convertCart([product]);
             if(result) {
                 setConvertedPrice(result.items[0].price);
+                setTaxRate(result.items[0].taxRate);
                 setPriceExTax(result.items[0].priceExTax);
             }
         } 
@@ -38,8 +41,8 @@ export default function ProductCard({product}) {
                     <img src={product.img[0]} alt={product.name}/>
                     <div className="product-card-content">
                         <h2>{product.name}</h2>
-                        <p>{priceExTax} ex. moms</p>
-                        <p>{includeVAT ? convertedPrice : ""}</p>
+                         <p>{priceExTax} without TAX</p>
+                        {includeVAT && <p>{convertedPrice} including {taxRate}% TAX</p>}
                         {typeof product?.discountPercentage === 'string' && (
                             <p className="discount-label">
                                 {
