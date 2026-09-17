@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext";
 
-export default function({ quote, onClick }) {
+export default function ShippingQuote({ quote, onClick }) {
     const { currency, convertCart } = useCurrency();
     const [ convertedPrice, setConvertedPrice ] = useState(null);
 

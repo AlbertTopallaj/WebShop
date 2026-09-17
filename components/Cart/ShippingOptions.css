@@ -92,7 +92,7 @@
     margin-bottom: 4px;
 }
 
-.shipping-option-btn {
+div.shipping-option-btn {
     width: 100%;
     padding: 10px 16px;
     border: 1px solid var(--accent);
