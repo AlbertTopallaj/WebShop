@@ -137,7 +137,7 @@
 
                         <div className="product-price">
                             <p>{priceExTax} without TAX</p>
-                            <p>{convertedPrice} including {taxRate}% TAX</p>
+                            {includeVAT && <p>{convertedPrice} including {taxRate}% TAX</p>}
                         </div>
 
                         {typeof product?.discountPercentage === 'string' && (
