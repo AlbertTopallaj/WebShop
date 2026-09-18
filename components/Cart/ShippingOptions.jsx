@@ -2,6 +2,7 @@ import { useState } from "react";
 import modules from "../../src/modules/moduleMaker.js";
 import { getCart } from "../CartContext/CartContext.jsx";
 import "./ShippingOptions.css";
+import ShippingQuote from "./ShippingQuote.jsx";
 
 function ShippingOptions() {
 const { cartItems, addToCart } = getCart();
@@ -55,11 +56,11 @@ function chooseCarrier(quote) {
 
 return (
 <div className="shipping-options">
-<h3>Frakt</h3>
+<h3>Shipping</h3>
 
   <div className="shipping-inputs">
     <label>
-      Land:
+      Country:
       <select
         value={country}
         onChange={(e) => setCountry(e.target.value)}
@@ -74,7 +75,7 @@ return (
     </label>
 
     <label>
-      Postnummer:
+      Postal number:
       <input
         type="text"
         value={postalCode}
@@ -84,7 +85,7 @@ return (
     </label>
 
     <button onClick={handleCalculate} disabled={loading || !postalCode}>
-      {loading ? "Beräknar..." : "Beräkna frakt"}
+      {loading ? "Calculating..." : "Order shipping"}
     </button>
   </div>
 
@@ -92,16 +93,14 @@ return (
 
   {quotes.length > 0 && (
     <div className="shipping-results">
-      <h4>Välj fraktbolag</h4>
+      <h4>Choose shipping company</h4>
 
       {quotes.map((quote) => (
-        <button
-          key={quote.carrierId}
-          className="shipping-option-btn"
-          onClick={() => chooseCarrier(quote)}
-        >
-          {quote.carrierName} – {quote.price.toFixed(2)} kr
-        </button>
+          <ShippingQuote
+            key={quote.carrierId}
+            quote={quote}
+            onClick={() => chooseCarrier(quote)}
+           />
       ))}
     </div>
   )}

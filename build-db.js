@@ -1,27 +1,27 @@
-import fs from "node:fs"
+import fs from "node:fs";
 
-const db = {}
+const db = {};
 
 function add(name, jsonFile) {
-    try {
-        db[name] = JSON.parse(fs.readFileSync(`./src/modules/${jsonFile}`, "utf8"))
-    } catch (error) {
-        console.error("Failed to load data:", error.message);
-    }
+  try {
+    db[name] = JSON.parse(fs.readFileSync(`./src/modules/${jsonFile}`, "utf8"));
+  } catch (error) {
+    console.error("Failed to load data:", error.message);
+  }
 }
 
 // Individuella modul .json filer laddas här
-add("orders", "orders.json")
-add("campaign", "./campaign/campaign.json")
-add("products", "products.json")
-add("rates", "rates.json")
-add("stockWarnings", "stockWarnings.json")
-add("stockHistory", "stockHistory.json")
-add("carriers", "carriers.json")
+add("orders", "orders.json");
+add("campaign", "./campaign/campaign.json");
+add("products", "products.json");
+add("rates", "rates.json");
+add("stockWarnings", "stockWarnings.json");
+add("stockHistory", "stockHistory.json");
+add("carriers", "carriers.json");
 
 try {
-    fs.writeFileSync("db.json", JSON.stringify(db, null, 2))
-    console.log("db.json created successfully")
+  fs.writeFileSync("db.json", JSON.stringify(db, null, 2));
+  console.log("db.json created successfully");
 } catch (e) {
-    console.log(e.message)
+  console.log(e.message);
 }

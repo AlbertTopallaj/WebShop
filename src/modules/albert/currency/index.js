@@ -14,7 +14,7 @@ export default class CurrencyModule {
         methodsAndInputs: [
             {
                 method: "run",
-                input: [
+                inputs: [
                     {
                         name: "cartItems",
                         type: "reference",
@@ -57,6 +57,7 @@ export default class CurrencyModule {
                 price: withTax.toString(),
                 priceExTax: converted.toString(),
                 amount: withTax.amount,
+                amountExTax: converted.amount,
                 taxRate: Math.round((taxRate - 1) * 100)
             };
         });
