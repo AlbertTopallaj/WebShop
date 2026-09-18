@@ -35,7 +35,11 @@
                 <div className="product-image">
                     {item.product?.img ? (
                         <img src={item.product.img[0]} alt={item.product.name}/>
-                    ) : item.product?.name}
+                    ) : item.product?.name?.startsWith("Frakt") ? (
+                        <i className="fa-solid fa-truck"></i>
+                    ) : (
+                        <i className="fa-solid fa-tag"></i>
+                    )}
                 </div>
                 <div className="product-info">
                     <span className="product-name">{item.product?.name}</span>
