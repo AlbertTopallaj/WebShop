@@ -10,10 +10,18 @@
                 async function convert(){
                     const products = cart.map(item => item.product);
                     const result = await convertCart(products);
-                    if (result) setTotal(result.total);
+                    if (result) 
+                        setTotal(result.total);
+                        const exTax = result.items.reduce((sum, item) => sum + item.amountExTax, 0);
+                        setTotalExTax(`${exTax.toFixed(2)} ${currency}`);
                 }
                 convert();
             }, [currency]);
             
-            return <strong>{total ?? "..."}</strong>
+            return <div> 
+            <strong>{totalExTax ?? "..."}</strong>
+            <strong>{total ?? "..."}</strong>
+            </div>
+
+            
         }
