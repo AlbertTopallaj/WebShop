@@ -1,5 +1,6 @@
     import { useEffect, useState } from "react";
     import { useCurrency } from "../../src/modules/albert/currency/CurrencyContext";
+    import "./OrderTotal.css"
 
         export default function OrderTotal({cart}) {
             const { currency, convertCart } = useCurrency();
@@ -18,9 +19,9 @@
                 convert();
             }, [currency]);
             
-            return <div> 
-            <strong>{totalExTax ?? "..."}</strong>
-            <strong>{total ?? "..."}</strong>
+            return <div className="order-total"> 
+            <strong>{totalExTax ?? "..."} without TAX</strong>
+            <strong>{total ?? "..."} with TAX</strong>
             </div>
 
             

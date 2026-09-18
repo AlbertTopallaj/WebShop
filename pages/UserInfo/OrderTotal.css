@@ -1,0 +1,11 @@
+.order-total {
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.order-total p {
+    margin: 0;
+    font-weight: 600;
+}
