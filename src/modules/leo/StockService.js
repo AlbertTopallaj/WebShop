@@ -12,12 +12,16 @@ export default class StockService extends ApiService {
 
     addToStockOf(product, amount) {
         if (amount <= 0) return
-        return this.setStockOf(product, product.stock+amount)
+        return this.setStockOf(product, this.getStock(product)+amount)
     }
 
     removeFromStockOf(product, amount) {
         if (amount <= 0) return
-        return this.setStockOf(product.id, product.stock-amount)
+        return this.setStockOf(product.id, this.getStock(product)-amount)
+    }
+
+    async getStock(product) {
+        return (await this.get(product.id)).stock
     }
 }
 

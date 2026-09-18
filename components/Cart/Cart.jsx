@@ -10,7 +10,6 @@ import {useToast} from "../Toast/Toast.jsx";
 import {getModules} from "../../scripts/ModuleRegistry.js";
 import ModuleForm from "../ModuleForm/ModuleForm.jsx";
 import StockModule from "../../src/modules/leo/index.js";
-import Product from "../ProductCard/Product.js";
 
 export default function Cart() {
 
@@ -25,6 +24,7 @@ export default function Cart() {
     const freightCost = freightItem ? freightItem.product.price.toFixed(2) : null;
     const modules = getModules()
     const context = {cartItems}
+    const stockModule = modules.find(m => m === StockModule).instance
 
     /*useEffect(() => {
         async function convert() {
@@ -58,11 +58,10 @@ export default function Cart() {
     async function handlePlaceOrder() {
         const success = await postOrder(email, cartItems)
         if (success) {
-            const stockModule = modules.find(m => m === StockModule)?.instance
             if (stockModule) {
                 try {
                     cartItems.forEach(item => {
-                        if (item instanceof Product) stockModule.removeFromStock(item.product, item.quantity)                
+                        if (item.product.id !== "shipping" && !item.product.isDiscount) stockModule.removeFromStock(item.product, item.quantity)                
                     });
                 } catch(e) {
                     throw new Error(e)

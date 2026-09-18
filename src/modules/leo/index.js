@@ -7,7 +7,7 @@ import StockWarningsService from "./StockWarningsService"
 
 export default class StockModule {
     static descriptor = {
-        name: "Storage",
+        name: "StockModule",
         methodsAndInputs:  [
             {
                 method: 'changeStockOf',
@@ -56,6 +56,16 @@ export default class StockModule {
                     }
                 ],
                 output: "Sum of the amount of said product sold from said date till today"
+            },
+            {
+                method: "getHistory",
+                inputs: [],
+                output: "Json of all StockItems in History"
+            },
+            {
+                method: "getWarnings",
+                inputs: [],
+                output: "Json of all warnings"
             }
         ]
     }
@@ -71,8 +81,8 @@ export default class StockModule {
         this.stockWarnings = new StockWarningsService()
     }
 
-    removeFromStock(product, amount) {
-        this.changeStockOf(product, product.stock-amount)
+    async removeFromStock(product, amount) {
+        this.changeStockOf(product, (await this.stockService.getStock(product))-amount)
     }
 
     async changeStockOf(product, mod) {
@@ -109,6 +119,14 @@ export default class StockModule {
         }
         const sum = period.reduce((sum, e) => sum + e.amount, 0)
         return sum
+    }
+
+    getHistory() {
+        return this.stockHistory.get()
+    }
+
+    getWarnings() {
+        return this.stockWarnings.get()
     }
 }
 

@@ -11,10 +11,12 @@ import { CurrencyProvider } from "./modules/albert/currency/CurrencyContext.jsx"
 import "./modules/campaign/index.js"
 import Campaign from "./modules/campaign/index.js";
 import "./modules/ShippingCalculator/index.js"
+import StockModule from './modules/leo/index.js';
 
 export default function App() {
 
     const campaign = new Campaign()
+    const stockModule = new StockModule()
 
     return (
         <>
