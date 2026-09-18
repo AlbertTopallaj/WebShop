@@ -4,6 +4,7 @@
         export default function OrderTotal({cart}) {
             const { currency, convertCart } = useCurrency();
             const [total, setTotal] = useState(null);
+            const [totalExTax, setTotalExTax] = useState(null);
 
             useEffect(() => {
                 async function convert(){
