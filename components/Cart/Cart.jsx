@@ -37,6 +37,9 @@
 
             if (result) {
                 setConvertedTotal(result.total);
+                const exTax = result.items.reduce((sum, item) => sum + item.amountExTax, 0);
+                setConvertedTotalExTax(`${exTax.toFixed(2)} ${currency}`);
+                
             }
         }
 
@@ -92,7 +95,11 @@
 
                                     <div className="cart-summary">
                                         <div className="cart-sum">
-                                            <span>Items</span>
+                                            <span>Subtotal without TAX</span>
+                                            <span>{convertedTotalExTax ?? CalculateSum()}</span>
+                                        </div>
+                                        <div className="cart-sum">
+                                            <span>Subtotal with TAX</span>
                                             <span>{convertedTotal ?? CalculateSum()}</span>
                                         </div>
 
@@ -118,7 +125,7 @@
                                         <ShippingOptions />
 
                                         <div className="cart-subtotal">
-                                            <span>Subtotal</span>
+                                            <span>Total</span>
                                             <span>{convertedTotal ?? `${CalculateSum()} SEK`}</span>
                                         </div>
 
