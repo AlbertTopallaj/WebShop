@@ -5,5 +5,5 @@ export default {
   ShippingCalculator: new ShippingCalculator(),
   ShippingCalculatorDescriptor: ShippingCalculator.descriptor,
   CurrencyModule: new CurrencyModule(),
-  CurrencyModuleDescriptor: CurrencyModule.descriptor,
+  CurrencyModuleDescriptor: CurrencyModule.descriptor
 }
