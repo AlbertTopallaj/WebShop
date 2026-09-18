@@ -14,7 +14,7 @@ export default class CurrencyModule {
         methodsAndInputs: [
             {
                 method: "run",
-                input: [
+                inputs: [
                     {
                         name: "cartItems",
                         type: "reference",
