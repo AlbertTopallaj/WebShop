@@ -81,13 +81,18 @@ export default class StockModule {
         this.stockWarnings = new StockWarningsService()
     }
 
-    async removeFromStock(product, amount) {
-        this.changeStockOf(product, (await this.stockService.getStock(product))-amount)
+    async removeFromStock(productId, amount) {
+        this.changeStockOf(productId, (await this.stockService.getStock(productId))-amount)
     }
 
-    async changeStockOf(product, mod) {
+    async addToStock(productId, amount) {
+        await this.changeStockOf(productId, (await this.stockService.getStock(productId))+amount)
+    }
+
+    async changeStockOf(productId, mod) {
         try {
-            const apiResponse = this.stockService.setStockOf(product, mod)
+            const product = await this.stockService.get(productId)
+            const apiResponse = this.stockService.setStockOf(productId, mod)
             if (apiResponse === undefined) {
                 throw new Error(apiResponse.status)
             }
@@ -106,7 +111,7 @@ export default class StockModule {
             const date = new Date()
             date.setDate(date.getDate() - 7)
             const sum  = await this.saleAmountOfSince(product, date)
-            if ((-1 * sum) > product.stock) return `Stock for ${product.name} is lower than predicted week by ${product.stock-sum}`
+            if ((-1 * sum) > product.stock) return `Stock for "${product.title}" is lower than predicted week by ${product.stock-sum}`
         } catch(e) {
             console.error(e.message)
         }

@@ -6,8 +6,8 @@ export default class StockService extends ApiService {
         super("http://localhost:5050/products/")
     }
 
-    setStockOf(product, amount) {
-        return this.patch(product.id, "stock", amount)
+    setStockOf(productId, amount) {
+        return this.patch(productId, "stock", amount)
     }
 
     addToStockOf(product, amount) {
@@ -20,8 +20,8 @@ export default class StockService extends ApiService {
         return this.setStockOf(product.id, this.getStock(product)-amount)
     }
 
-    async getStock(product) {
-        return (await this.get(product.id)).stock
+    async getStock(productId) {
+        return (await this.get(productId)).stock
     }
 }
 

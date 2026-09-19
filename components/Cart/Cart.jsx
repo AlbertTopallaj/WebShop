@@ -61,7 +61,7 @@ export default function Cart() {
             if (stockModule) {
                 try {
                     cartItems.forEach(item => {
-                        if (item.product.id !== "shipping" && !item.product.isDiscount) stockModule.removeFromStock(item.product, item.quantity)                
+                        if (item.product.id !== "shipping" && !item.product.isDiscount) stockModule.removeFromStock(item.product.id, item.quantity)                
                     });
                 } catch(e) {
                     throw new Error(e)
