@@ -53,6 +53,7 @@
             if (success) {
                 toast("Order placed!", 2000);
                 setIsOpen(false);
+                cartItems.length === 0;
             } else {
                 toast("Something went wrong, try again", 2000);
             }
