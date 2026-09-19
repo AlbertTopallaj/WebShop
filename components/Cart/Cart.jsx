@@ -20,7 +20,7 @@
         const { currency, convertCart } = useCurrency();
         const [ convertedTotal, setConvertedTotal ] = useState(null);
         const [ convertedTotalExTax, setConvertedTotalExTax ] = useState(null);
-        const {cartItems, CalculateSum, removeFromCart} = getCart()
+        const {cartItems, CalculateSum, removeFromCart, clearCart} = getCart()
         const freightItem = cartItems.find(item => item.product.id === "shipping");
         const modules = getModules()
         const context = {cartItems}
@@ -53,7 +53,7 @@
             if (success) {
                 toast("Order placed!", 2000);
                 setIsOpen(false);
-                cartItems.length === 0;
+                clearCart();
             } else {
                 toast("Something went wrong, try again", 2000);
             }
