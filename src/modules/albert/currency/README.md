@@ -33,3 +33,7 @@ Jag valde **komposition** framför arv eftersom att klasserna har helt olika ans
 **Arv** används i felklasserna eftersom de delar en gemensam bas vilket är just Error vilket passar väldigt bra just när det gäller egengjorda felklasser.
 
 Modulen är en instans eftersom det finns en cache i ExchangeRateClient som bärs mellan anrop.
+
+## Tester
+
+Enhetstester finns i currency/tests/CurrencyModule.test.js och har som uppgift att testa modulens kärnlogik med Vitest. Testerna körs med kommandot `npm test` i terminalen.

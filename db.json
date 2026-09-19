@@ -23,41 +23,61 @@
       "cart": [
         {
           "product": {
-            "id": "5",
-            "name": "Red Nail Polish",
-            "price": 8.99,
+            "id": "1",
+            "name": "Essence Mascara Lash Princess",
+            "price": 9.99,
             "img": [
-              "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/1.webp"
+              "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/1.webp"
             ],
-            "weight": 8,
+            "weight": 4,
             "dimensions": {
-              "width": 21.63,
-              "height": 16.48,
-              "depth": 29.84
+              "width": 15.14,
+              "height": 13.08,
+              "depth": 22.99
             },
-            "stock": 79,
+            "stock": 99,
             "category": "beauty",
-            "discountPercentage": 11.44
+            "discountPercentage": 10.48
           },
           "quantity": 1
         },
         {
           "product": {
-            "id": "4",
-            "name": "Red Lipstick",
-            "price": 12.99,
+            "id": "2",
+            "name": "Eyeshadow Palette with Mirror",
+            "price": 19.99,
             "img": [
-              "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp"
+              "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/1.webp"
             ],
-            "weight": 1,
+            "weight": 9,
             "dimensions": {
-              "width": 18.11,
-              "height": 28.38,
-              "depth": 22.17
+              "width": 9.26,
+              "height": 22.47,
+              "depth": 27.67
             },
-            "stock": 91,
+            "stock": 34,
             "category": "beauty",
-            "discountPercentage": 12.16
+            "discountPercentage": 18.19
+          },
+          "quantity": 1
+        },
+        {
+          "product": {
+            "id": "3",
+            "name": "Powder Canister",
+            "price": 14.99,
+            "img": [
+              "https://cdn.dummyjson.com/product-images/beauty/powder-canister/1.webp"
+            ],
+            "weight": 8,
+            "dimensions": {
+              "width": 29.27,
+              "height": 27.93,
+              "depth": 20.59
+            },
+            "stock": 89,
+            "category": "beauty",
+            "discountPercentage": 9.84
           },
           "quantity": 1
         },
@@ -65,7 +85,7 @@
           "product": {
             "id": "percent-20",
             "name": "PROCENT20",
-            "price": -4.4,
+            "price": -8.99,
             "img": "",
             "type": "percentage",
             "discountAmount": 0.2,
@@ -77,8 +97,8 @@
         {
           "product": {
             "id": "shipping",
-            "name": "Frakt (PostNord)",
-            "price": 11.12,
+            "name": "Frakt (Bring)",
+            "price": 19.19,
             "weight": 0,
             "dimensions": {
               "width": 0,
@@ -89,69 +109,8 @@
           "quantity": 1
         }
       ],
-      "date": "2026-09-19T19:54:57.919Z",
-      "id": "lWzhBkwIPNQ"
-    },
-    {
-      "email": "test@webshop.se",
-      "cart": [
-        {
-          "product": {
-            "id": "5",
-            "name": "Red Nail Polish",
-            "price": 8.99,
-            "img": [
-              "https://cdn.dummyjson.com/product-images/beauty/red-nail-polish/1.webp"
-            ],
-            "weight": 8,
-            "dimensions": {
-              "width": 21.63,
-              "height": 16.48,
-              "depth": 29.84
-            },
-            "stock": 79,
-            "category": "beauty",
-            "discountPercentage": 11.44
-          },
-          "quantity": 1
-        },
-        {
-          "product": {
-            "id": "4",
-            "name": "Red Lipstick",
-            "price": 12.99,
-            "img": [
-              "https://cdn.dummyjson.com/product-images/beauty/red-lipstick/1.webp"
-            ],
-            "weight": 1,
-            "dimensions": {
-              "width": 18.11,
-              "height": 28.38,
-              "depth": 22.17
-            },
-            "stock": 91,
-            "category": "beauty",
-            "discountPercentage": 12.16
-          },
-          "quantity": 1
-        },
-        {
-          "product": {
-            "id": "shipping",
-            "name": "Frakt (PostNord)",
-            "price": 11.12,
-            "weight": 0,
-            "dimensions": {
-              "width": 0,
-              "height": 0,
-              "depth": 0
-            }
-          },
-          "quantity": 1
-        }
-      ],
-      "date": "2026-09-19T19:57:54.771Z",
-      "id": "EkcO6UaJG7Q"
+      "date": "2026-09-19T22:39:41.512Z",
+      "id": "YPHY1e2PbXY"
     }
   ],
   "campaign": {
