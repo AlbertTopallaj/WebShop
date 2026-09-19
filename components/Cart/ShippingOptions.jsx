@@ -28,7 +28,7 @@ try {
   if (result[0]?.error) {
     setError(result[0].message);
   } else {
-    setQuotes(result);
+    setQuotes(result.filter(quote => !quote.error));
   }
 } catch (err) {
   setError(err.message);
