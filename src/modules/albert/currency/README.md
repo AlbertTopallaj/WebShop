@@ -32,8 +32,20 @@ Jag valde **komposition** framför arv eftersom att klasserna har helt olika ans
 
 **Arv** används i felklasserna eftersom de delar en gemensam bas vilket är just Error vilket passar väldigt bra just när det gäller egengjorda felklasser.
 
-Modulen är en instans eftersom det finns en cache i ExchangeRateClient som bärs mellan anrop.
+**Money** är designad som ett värdeobjekt med privata fält (#amount och #currency). convert() samt addTax() returnerar alltid nya Money-objekt istället för ändra det befintliga, syftet är att skydda mot ofrivillig valutablandning.
+
+Modulen är en instans eftersom det finns en cache i ExchangeRateClient (this.cache) som bärs mellan anrop. Kurser hämtas bara en gång per session och inte vid varje konvertering, vilket minskar onödiga API-anrop när användaren byter valuta.
 
 ## Tester
 
 Enhetstester finns i currency/tests/CurrencyModule.test.js och har som uppgift att testa modulens kärnlogik med Vitest. Testerna körs med kommandot `npm test` i terminalen.
+
+Följande händelser testas:
+
+- EmptyCartError kastas vid tom kundvagn
+- UnknownCurrencyError kastas vid okänd valuta
+- Korrekt priskonvertering till SEK
+- Money.toString() formaterar korrekt
+- convert() returnerar ett nytt Money-objekt för att undvika valutablandning.
+- addTax() lägger på korrekt momssats
+- convert() multiplicerar beloppet med rätt kurs
