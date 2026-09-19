@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react"
 import { getModules } from "../../scripts/ModuleRegistry"
-import StockModule from "../../src/modules/leo"
+import StockModule from "../../src/modules/stockmodule"
 
 export default function LoadAdmin() {
     const [warningBlock, setWarningBlock] = useState()
     const [stockHistory, setStockHistory] = useState()
+    const [stockHistoryUpdate, setstockHistoryUpdate] = useState(0)
+    const [warningsUpdate, setWarningsUpdate] = useState(0)
     const [select, setSelect] = useState()
     const [option, setOption] = useState()
     const [amount, setAmount] = useState(0)
@@ -12,7 +14,13 @@ export default function LoadAdmin() {
 
     useEffect(() => {
         fillStockHistory()
+    }, [stockHistoryUpdate])
+    
+    useEffect(() => {
         fillWarningBlock()
+    }, [warningsUpdate])
+    
+    useEffect(() => {
         fillSelector()
     }, [])
 
@@ -67,9 +75,21 @@ export default function LoadAdmin() {
     async function orderRequest() {
         if (!amount || amount <= 0) return
         await stockModule.addToStock(option, Number(amount))
-        
-        fillStockHistory()
-        fillWarningBlock()
+    }
+
+    async function checkStockHistoryUpdate() {
+        const update = (await stockModule.getHistory()).length
+        if(stockHistoryUpdate < update) setstockHistoryUpdate(update)
+    }
+
+    async function checkWarningsUpdate() {
+        const update = (await stockModule.getWarnings()).length
+        if(warningsUpdate < update) setWarningsUpdate(update)
+    }
+
+    function refresh() {
+        checkStockHistoryUpdate()
+        checkWarningsUpdate()
     }
 
     return (
@@ -78,6 +98,7 @@ export default function LoadAdmin() {
                 <h1>Admin Page</h1>
                 <div className="stock-history">{stockHistory}</div>
                 <div className="warning-block">{warningBlock}</div>
+                <button onClick={refresh}>Refresh</button>
                 <div className="add-to-stock">
                     <p>Product</p>
                     <select name="products-list" onChange={(e) => {setOption(e.target.value)}} id="products-list">

@@ -9,7 +9,7 @@ import ShippingOptions from "./ShippingOptions.jsx";
 import {useToast} from "../Toast/Toast.jsx";
 import {getModules} from "../../scripts/ModuleRegistry.js";
 import ModuleForm from "../ModuleForm/ModuleForm.jsx";
-import StockModule from "../../src/modules/leo/index.js";
+import StockModule from "../../src/modules/stockmodule/index.js";
 
 export default function Cart() {
 

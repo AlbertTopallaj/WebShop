@@ -82,7 +82,7 @@ export default class StockModule {
     }
 
     async removeFromStock(productId, amount) {
-        this.changeStockOf(productId, (await this.stockService.getStock(productId))-amount)
+        await this.changeStockOf(productId, (await this.stockService.getStock(productId))-amount)
     }
 
     async addToStock(productId, amount) {
@@ -110,8 +110,8 @@ export default class StockModule {
             product = await this.stockService.get(product.id)
             const date = new Date()
             date.setDate(date.getDate() - 7)
-            const sum  = await this.saleAmountOfSince(product, date)
-            if ((-1 * sum) > product.stock) return `Stock for "${product.title}" is lower than predicted week by ${product.stock-sum}`
+            const sum  = (await this.saleAmountOfSince(product, date)) * -1
+            if (sum > product.stock) return `Stock for "${product.title}" is down by ${sum}, stock left: ${product.stock}`
         } catch(e) {
             console.error(e.message)
         }

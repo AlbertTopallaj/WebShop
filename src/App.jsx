@@ -11,7 +11,7 @@ import { CurrencyProvider } from "./modules/albert/currency/CurrencyContext.jsx"
 import "./modules/campaign/index.js"
 import Campaign from "./modules/campaign/index.js";
 import "./modules/ShippingCalculator/index.js"
-import StockModule from './modules/leo/index.js';
+import StockModule from './modules/stockmodule/index.js';
 import LoadAdmin from '../pages/Admin/Admin.jsx';
 
 export default function App() {
