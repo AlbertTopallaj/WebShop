@@ -1,0 +1,54 @@
+.vat-toggle-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #c084fc;
+    font-size: 15px;
+}
+
+.vat-switch {
+    position: relative;
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+}
+
+.vat-switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.vat-slider {
+    position: absolute;
+    inset: 0;
+    background: #332c38;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.vat-slider::before {
+    content: "";
+    position: absolute;
+    width: 14px;
+    height: 14px;
+    left: 3px;
+    bottom: 3px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.2s;
+}
+
+.vat-switch input:checked + .vat-slider {
+    background: #c084fc;
+}
+
+.vat-switch input:checked + .vat-slider::before {
+    transform: translateX(16px);
+}
+
+.vat-toggle-label {
+    width: 60px;
+    display: inline-block;
+}

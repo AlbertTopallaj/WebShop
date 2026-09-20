@@ -8,7 +8,7 @@ export function Toast({children}) {
     const [message, setMessage] = useState("")
     const [toastQueue, setToastQueue] = useState([])
 
-    function toast(message, durationInMs = 1000) {
+    function toast(message, durationInMs = 2000) {
         const time = Date.now()
 
         setToastQueue(queue => [

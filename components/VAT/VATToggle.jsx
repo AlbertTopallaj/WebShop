@@ -7,7 +7,7 @@ export default function VATToggle() {
     return (
         <div className="vat-toggle-container">
             <label className="vat-toggle-label">
-                Moms {includeVAT ? "på" : "av"}
+                TAX {includeVAT ? "ON" : "OFF"}
             </label>
 
             <label className="vat-switch">

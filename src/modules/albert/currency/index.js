@@ -14,7 +14,7 @@ export default class CurrencyModule {
         methodsAndInputs: [
             {
                 method: "run",
-                input: [
+                inputs: [
                     {
                         name: "cartItems",
                         type: "reference",
@@ -40,10 +40,11 @@ export default class CurrencyModule {
 
     async run(cartItems, currency) {
         const rates = await this.rateClient.getRates();
-        const base = this.rateClient.baseCurrency; 
-
+        
         if(!cartItems || cartItems.length === 0) throw new EmptyCartError();
         if(!rates[currency]) throw new UnknownCurrencyError(currency);
+
+        const base = this.rateClient.baseCurrency; 
 
         const items = cartItems.map(item => {
             const rate = rates[currency];
@@ -56,7 +57,9 @@ export default class CurrencyModule {
                 name: item.name,
                 price: withTax.toString(),
                 priceExTax: converted.toString(),
-                amount: withTax.amount
+                amount: withTax.amount,
+                amountExTax: converted.amount,
+                taxRate: Math.round((taxRate - 1) * 100)
             };
         });
         
