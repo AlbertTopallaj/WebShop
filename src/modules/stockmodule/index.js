@@ -98,7 +98,7 @@ export default class StockModule {
             }
             await this.stockHistory.post("", new StockItem(product, mod - product.stock))
             const response = await this.checkLastWeekStockChangeOf(product)
-            if (response != undefined) this.stockWarnings.post("", new StockWarning(response))
+            if (response != undefined) this.stockWarnings.post("", new StockWarning(productId, response))
         } catch(e) {
             console.error(e.message)
         }
@@ -110,15 +110,15 @@ export default class StockModule {
             product = await this.stockService.get(product.id)
             const date = new Date()
             date.setDate(date.getDate() - 7)
-            const sum  = (await this.saleAmountOfSince(product, date)) * -1
+            const sum = (await this.saleAmountOfSince(product.id, date)) * -1
             if (sum > product.stock) return `Stock for "${product.title}" is down by ${sum}, stock left: ${product.stock}`
         } catch(e) {
             console.error(e.message)
         }
     }
 
-    async saleAmountOfSince(product, date) {
-        const period = await this.stockHistory.getFromOf(product, date)
+    async saleAmountOfSince(productId, date) {
+        const period = await this.stockHistory.getFromOf(productId, date)
         if (period.length == 0) {
             return undefined
         }

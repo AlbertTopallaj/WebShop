@@ -11979,8 +11979,9 @@
   },
   "stockWarnings": [
     {
+      "productId": 1,
       "date": "2026-09-19T05:39:49.674Z",
-      "warning": "Stock for \"Essence Mascara Lash Princess\" is lower than predicted week by 99",
+      "warning": "Stock for \"Essence Mascara Lash Princess\" is down by 102, stock left: 99",
       "id": "EYUzZoakZG0"
     }
   ],

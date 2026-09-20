@@ -5,19 +5,18 @@ export default class ApiService{
     
     async get(index) {
         if (index === undefined) index = ""
-        const fun = await fetch(this.path+index, 
+        const response = await fetch(this.path+index, 
             {
             method: "GET"
             }
         )
-        this.#errorHandling(fun)
 
-        return fun.json()
+        return response.json()
     }
     
     async put(index, value) {
         if (index === undefined) index = ""
-        const fun = await fetch(this.path+index, 
+        const response = await fetch(this.path+index, 
             {
             method: "PUT",
             headers: {
@@ -26,14 +25,13 @@ export default class ApiService{
             body: JSON.stringify(value)
             }
         )
-        this.#errorHandling(fun)
 
-        return fun.json()
+        return response.json()
     }
     
     async post(index, value) {
         if (index === undefined) index = ""
-        const fun = await fetch(this.path+index, 
+        const response = await fetch(this.path+index, 
             {
             method: "POST",
             headers: {
@@ -42,26 +40,25 @@ export default class ApiService{
             body: JSON.stringify(value)
             }
         )
-        this.#errorHandling(fun)
 
-        return fun.json()
+        return response.json()
     }
     
     async delete(index) {
         if (index === undefined) index = ""
-        const fun = await fetch(this.path+index, 
+        const response = await fetch(this.path+index, 
             {
             method: "DELETE"
             }
         )
-        this.#errorHandling(fun)
 
-        return fun.json()
+        return response.json()
     }
     
     async patch(index, parameter, value) {
+        var response
         if (index === undefined) index = ""
-        const fun = await fetch(this.path+index, 
+        response = await fetch(this.path+index, 
             {
             method: "PATCH",
             headers: {
@@ -70,19 +67,7 @@ export default class ApiService{
             body: JSON.stringify( { [parameter]: value } )
             }
         )
-        this.#errorHandling(fun)
-
-        return fun.json()
-    }
-
-    #errorHandling(fun) {
-        try {
-            const response = fun
-            if (!response.ok) {
-                throw new Error(response.status)
-            }
-        } catch(e) {
-            console.error(e.message)
-        }
+        
+        return response.json()
     }
 }
