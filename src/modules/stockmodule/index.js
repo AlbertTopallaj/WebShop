@@ -10,6 +10,42 @@ export default class StockModule {
         name: "StockModule",
         methodsAndInputs:  [
             {
+                method: 'removeFromStock',
+                inputs: [
+                    {
+                        name: "product",
+                        type: "Product",
+                        label: "The product to modify the stock of",
+                        required: "true"
+                    },
+                    {
+                        name: "amount",
+                        type: "Number",
+                        label: "Amount to reduce from stock",
+                        required: "true"
+                    }
+                ],
+                output: ""
+            },
+            {
+                method: 'addToStock',
+                inputs: [
+                    {
+                        name: "product",
+                        type: "Product",
+                        label: "The product to modify the stock of",
+                        required: "true"
+                    },
+                    {
+                        name: "amount",
+                        type: "Number",
+                        label: "Amount to add to stock",
+                        required: "true"
+                    }
+                ],
+                output: ""
+            },
+            {
                 method: 'changeStockOf',
                 inputs: [
                     {
@@ -23,18 +59,6 @@ export default class StockModule {
                         type: "Number",
                         label: "The new value of stock",
                         required: "true"
-                    }
-                ],
-                output: ""
-            },
-            {
-                method: "checkLastWeekStockChangeOf",
-                inputs: [
-                    {
-                        name: "product",
-                        type: "Product",
-                        label: "The product to check for, if undefined then checks for all products in history",
-                        required: "false"
                     }
                 ],
                 output: ""
@@ -97,14 +121,14 @@ export default class StockModule {
                 throw new Error(apiResponse.status)
             }
             await this.stockHistory.post("", new StockItem(product, mod - product.stock))
-            const response = await this.checkLastWeekStockChangeOf(product)
+            const response = await this.#checkLastWeekStockChangeOf(product)
             if (response != undefined) this.stockWarnings.post("", new StockWarning(productId, response))
         } catch(e) {
             console.error(e.message)
         }
     }
 
-    async checkLastWeekStockChangeOf(product) {
+    async #checkLastWeekStockChangeOf(product) {
         try {
             // Todo: change get
             product = await this.stockService.get(product.id)
