@@ -14,8 +14,7 @@ export default class ShippingQuoteService {
       return cached;
     }
 
-    //const response = await fetch("/api/carriers");
-    const response = await fetch("http://localhost:5050/carriers");
+    const response = await fetch("/api/carriers");
 
     if (!response.ok) {
       throw new Error(
