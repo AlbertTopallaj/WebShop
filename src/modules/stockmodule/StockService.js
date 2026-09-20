@@ -6,18 +6,22 @@ export default class StockService extends ApiService {
         super("http://localhost:5050/products/")
     }
 
-    setStockOf(product, amount) {
-        return this.patch(product.id, "stock", amount)
+    setStockOf(productId, amount) {
+        return this.patch(productId, "stock", amount)
     }
 
     addToStockOf(product, amount) {
         if (amount <= 0) return
-        return this.setStockOf(product, product.stock+amount)
+        return this.setStockOf(product, this.getStock(product)+amount)
     }
 
     removeFromStockOf(product, amount) {
         if (amount <= 0) return
-        return this.setStockOf(product.id, product.stock-amount)
+        return this.setStockOf(product.id, this.getStock(product)-amount)
+    }
+
+    async getStock(productId) {
+        return (await this.get(productId)).stock
     }
 }
 

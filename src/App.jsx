@@ -11,10 +11,13 @@ import { CurrencyProvider } from "./modules/albert/currency/CurrencyContext.jsx"
 import "./modules/campaign/index.js"
 import Campaign from "./modules/campaign/index.js";
 import "./modules/ShippingCalculator/index.js"
+import StockModule from './modules/stockmodule/index.js';
+import LoadAdmin from '../pages/Admin/Admin.jsx';
 
 export default function App() {
 
     const campaign = new Campaign()
+    const stockModule = new StockModule()
 
     return (
         <>
@@ -27,6 +30,7 @@ export default function App() {
                                 <Route index={true} path={"/"} element={<LoadProductList/>}/>
                                 <Route path={"/product/"} element={<ProductInfo/>}/>
                                 <Route path={"/user/"} element={<UserInfo/>}/>
+                                <Route path={"/admin/"} element={<LoadAdmin/>}/>
                             </Routes>
                         </CartContext>
                     </Toast>

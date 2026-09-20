@@ -5,8 +5,8 @@ export default class StockHistoryService extends ApiService{
         super("http://localhost:5050/stockHistory/")
     }
 
-    getFromOf(product, date) {
-        return this.getPeriodOf(product, date, new Date())
+    getFromOf(productId, date) {
+        return this.getPeriodOf(productId, date, new Date())
     }
 
     getFrom(date) {
@@ -17,13 +17,13 @@ export default class StockHistoryService extends ApiService{
         this.getPeriodOf(undefined, startDate, endDate)
     }
 
-    async getPeriodOf(product, startDate, endDate) {
+    async getPeriodOf(productId, startDate, endDate) {
         const period = []
         const history = await this.get()
         for(var i in history) {
             const e = history[i]
             const date = new Date(e.date)
-            if (product.id === e.productId && date >= startDate && date <= endDate) {
+            if (productId === e.productId && date >= startDate && date <= endDate) {
                 period.push(e)
             }
         };

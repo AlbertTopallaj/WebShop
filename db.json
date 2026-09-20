@@ -11977,6 +11977,30 @@
       "USD": 1
     }
   },
+  "stockWarnings": [
+    {
+      "productId": 1,
+      "date": "2026-09-19T05:39:49.674Z",
+      "warning": "Stock for \"Essence Mascara Lash Princess\" is down by 102, stock left: 99",
+      "id": "EYUzZoakZG0"
+    }
+  ],
+  "stockHistory": [
+    {
+      "productId": "1",
+      "stock": 102,
+      "amount": -2,
+      "date": "2026-09-19T05:39:42.424Z",
+      "id": "hwcKW8skq4g"
+    },
+    {
+      "productId": "1",
+      "stock": 100,
+      "amount": -1,
+      "date": "2026-09-19T05:39:49.666Z",
+      "id": "d0RA1ipyb70"
+    }
+  ],
   "carriers": [
     {
       "id": "postnord",
